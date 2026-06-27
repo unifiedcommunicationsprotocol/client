@@ -141,11 +141,73 @@ const valid = await verifyMessageSigner(msg, sig, "bob@example.com");
 3. **Key rotation automation**
 4. **BCC groups** (separate MLS per recipient)
 
-## Files Changed
-- Created: transport.ts, signing.ts, identity.ts, mls.ts, useTransport.ts, crypto/index.ts
-- Added dependency: tweetnacl@1.0.3
-- No modifications to existing code (backward compatible)
+## Files & Commits
+
+### Phase 1 Crypto Implementation (Complete)
+- **Commits:**
+  - 671ca9f: Biome auto-fix formatting (23 files)
+  - 69c877d: WebSocket transport + Ed25519 signing + identity resolution
+  - 5475b34: tweetnacl.js Buffer-based encoding (all crypto tested ✅)
+  - d8deb21: Refactor to functional + immutable (const only, no classes)
+  - 7b991cf: AppContext integration + OnboardingCrypto component
+  - 9326be8: Mock server + round-trip tests (5/5 pass ✅)
+
+### Files Changed
+- **New:** transport.ts, signing.ts, identity.ts, mls.ts, useTransport.ts, crypto/index.ts
+- **Refactored:** All crypto to functional (closures, no mutations, pure functions)
+- **AppContext:** Added transport state + actions, signing key state
+- **Onboarding:** New OnboardingCrypto.tsx component (Step 1: key generation)
+- **Testing:** mockServer.ts, __tests__/roundtrip.test.ts
+- **Dependencies:** tweetnacl@1.0.3 (Ed25519)
+- **Constraints:** Added functional programming rules (docs + memory)
+
+### Test Results
+```
+✅ Key generation: Ed25519 keypair (44-char public, 88-char secret)
+✅ Message signing: Canonical JSON with tweetnacl.js
+✅ Signature verification: Pass/fail detection working
+✅ Canonical JSON: {a:1,b:2} ≡ {b:2,a:1} → same signature
+✅ Server handshake: UCPHello/UCPHelloAck with challenge
+✅ Full round-trip: Key gen → sign → verify → handshake
+```
 
 ---
 
-*Updated: 2026-06-27 — All Phase 1 crypto foundations complete, ready for integration*
+## Next Steps (In Progress)
+
+### Immediate (Sprint 1)
+1. ✅ Implement Ed25519 signing/verification
+2. ✅ Implement WebSocket transport with handshake
+3. ✅ Implement identity resolution (with HTTP fallback stub)
+4. ✅ Wire transport into AppContext
+5. ✅ Implement onboarding Step 1 (key generation)
+6. ✅ Create mock server for testing
+7. ✅ Test full round-trip
+
+### Next (Sprint 1 Continuation)
+1. **Integrate OnboardingCrypto into main onboarding flow**
+   - Replace mock key generation in Onboarding.tsx
+   - Wire Step 1 → Step 2 transition
+
+2. **Implement Onboarding Step 2: Claim address**
+   - relay.im address claiming
+   - BYOD (bring your own domain) mode
+
+3. **Implement Onboarding Step 3: Connect transport**
+   - Generate auth token from signing key + challenge
+   - Connect to real/mock UCP server
+   - Display connection status
+
+4. **Create integration test**
+   - Client generates key → claims address → connects → sends message
+   - Mock server verifies message signature
+   - Client receives response
+
+### Phase 2 (Next Sprint)
+1. MLS group management (RFC 9420)
+2. IndexedDB storage (keys, threads, groups)
+3. Message encryption/decryption
+
+---
+
+*Updated: 2026-06-27 — Phase 1 crypto complete, AppContext integrated, Round-trip tested ✅*
