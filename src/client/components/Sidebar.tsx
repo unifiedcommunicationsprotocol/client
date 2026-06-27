@@ -77,6 +77,7 @@ export function Sidebar() {
                 </button>
                 <button
                   type="button"
+                  onClick={() => dispatch({ type: "setComposing", payload: true })}
                   style={{
                     width: "28px",
                     height: "28px",

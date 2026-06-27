@@ -1,5 +1,5 @@
 import { useAppContext } from "../AppContext";
-import { Inbox } from "./Inbox";
+import { ThreadView } from "./ThreadView";
 import { Sidebar } from "./Sidebar";
 import { SettingsPanel } from "./SettingsPanel";
 import { UserMenu } from "./UserMenu";
@@ -97,7 +97,7 @@ export function MainApp({ onLogout }: MainAppProps) {
 
     switch (state.view) {
       case "inbox":
-        return <Inbox />;
+        return <ThreadView />;
       case "messaging":
         return (
           <div

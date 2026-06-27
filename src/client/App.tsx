@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import "./index.css";
 import { MainApp } from "./components/MainApp";
 import { Onboarding } from "./components/Onboarding";
+import { ComposeModal } from "./components/ComposeModal";
 import { AppProvider, useAppContext } from "./AppContext";
 
 const darkModeTheme = {
@@ -58,7 +59,10 @@ function AppContent() {
       {!isAuthenticated ? (
         <Onboarding onComplete={() => setIsAuthenticated(true)} />
       ) : (
-        <MainApp onLogout={() => setIsAuthenticated(false)} />
+        <>
+          <MainApp onLogout={() => setIsAuthenticated(false)} />
+          <ComposeModal />
+        </>
       )}
     </div>
   );
