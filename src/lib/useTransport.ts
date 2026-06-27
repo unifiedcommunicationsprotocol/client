@@ -1,9 +1,13 @@
 /**
- * React hook for managing UCP WebSocket transport
+ * React hook for managing UCP WebSocket transport (Functional)
  */
 
 import { useEffect, useRef, useState } from "react";
-import { type TransportConfig, UCPTransport } from "./transport";
+import {
+  createTransport,
+  type Transport,
+  type TransportConfig,
+} from "./transport";
 
 export interface UseTransportState {
   isConnected: boolean;
@@ -13,8 +17,8 @@ export interface UseTransportState {
   lastMessage: unknown | null;
 }
 
-export function useTransport(config: TransportConfig | null) {
-  const transportRef = useRef<UCPTransport | null>(null);
+export const useTransport = (config: TransportConfig | null) => {
+  const transportRef = useRef<Transport | null>(null);
   const [state, setState] = useState<UseTransportState>({
     isConnected: false,
     isConnecting: false,
@@ -26,9 +30,8 @@ export function useTransport(config: TransportConfig | null) {
   useEffect(() => {
     if (!config) return;
 
-    // Create transport if needed
     if (!transportRef.current) {
-      transportRef.current = new UCPTransport(config, {
+      transportRef.current = createTransport(config, {
         onOpen: () => {
           setState((prev) => ({
             ...prev,
@@ -38,14 +41,14 @@ export function useTransport(config: TransportConfig | null) {
           }));
         },
 
-        onMessage: (msg) => {
+        onMessage: (msg: unknown) => {
           setState((prev) => ({
             ...prev,
             lastMessage: msg,
           }));
         },
 
-        onError: (err) => {
+        onError: (err: Error) => {
           setState((prev) => ({
             ...prev,
             error: err,
@@ -60,7 +63,7 @@ export function useTransport(config: TransportConfig | null) {
           }));
         },
 
-        onReconnect: (attempt) => {
+        onReconnect: (attempt: number) => {
           setState((prev) => ({
             ...prev,
             isConnecting: true,
@@ -70,9 +73,8 @@ export function useTransport(config: TransportConfig | null) {
       });
     }
 
-    // Connect
     setState((prev) => ({ ...prev, isConnecting: true }));
-    transportRef.current.connect().catch((err) => {
+    transportRef.current.connect().catch((err: Error) => {
       setState((prev) => ({
         ...prev,
         error: err,
@@ -80,7 +82,6 @@ export function useTransport(config: TransportConfig | null) {
       }));
     });
 
-    // Cleanup on unmount
     return () => {
       transportRef.current?.disconnect();
     };
@@ -97,4 +98,4 @@ export function useTransport(config: TransportConfig | null) {
       transportRef.current?.disconnect();
     },
   };
-}
+};

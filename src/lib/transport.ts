@@ -1,13 +1,13 @@
 /**
- * UCP Client WebSocket Transport Layer
+ * UCP Client WebSocket Transport Layer (Functional)
  * Handles connection, authentication, keepalive, and reconnection
  */
 
 export interface TransportConfig {
-  serverUrl: string; // WebSocket URL (e.g., wss://ucp.example.com)
-  authToken: string; // Auth token from session (base64)
-  clientId: string; // Client identifier
-  serverSigningKey?: string; // Public key to verify server signature (base64)
+  serverUrl: string;
+  authToken: string;
+  clientId: string;
+  serverSigningKey?: string;
 }
 
 export interface TransportCallbacks {
@@ -27,109 +27,64 @@ interface UCPHello {
 interface UCPHelloAck {
   version: string;
   server_id: string;
-  challenge: string; // 32-byte challenge (base64)
-  server_sig?: string; // Server signature over "server_hello:" || auth_token || server_id
+  challenge: string;
+  server_sig?: string;
 }
 
-export class UCPTransport {
-  private ws: WebSocket | null = null;
-  private config: TransportConfig;
-  private callbacks: TransportCallbacks;
-  private reconnectAttempt = 0;
-  private reconnectTimeout: ReturnType<typeof setTimeout> | null = null;
-  private keepaliveInterval: ReturnType<typeof setInterval> | null = null;
-  private challengeExpiry: number | null = null;
-  private currentChallenge: string | null = null;
-  private isConnecting = false;
-  private isAuthenticated = false;
+interface TransportState {
+  ws: WebSocket | null;
+  isConnecting: boolean;
+  isAuthenticated: boolean;
+  reconnectAttempt: number;
+  reconnectTimeout: ReturnType<typeof setTimeout> | null;
+  keepaliveInterval: ReturnType<typeof setInterval> | null;
+  challengeExpiry: number | null;
+  currentChallenge: string | null;
+}
 
-  constructor(config: TransportConfig, callbacks: TransportCallbacks = {}) {
-    this.config = config;
-    this.callbacks = callbacks;
-  }
+/**
+ * Create a new transport instance (closure-based factory)
+ */
+export const createTransport = (
+  config: TransportConfig,
+  callbacks: TransportCallbacks = {},
+) => {
+  let state: TransportState = {
+    ws: null,
+    isConnecting: false,
+    isAuthenticated: false,
+    reconnectAttempt: 0,
+    reconnectTimeout: null,
+    keepaliveInterval: null,
+    challengeExpiry: null,
+    currentChallenge: null,
+  };
 
-  /**
-   * Connect to UCP server and perform handshake
-   */
-  async connect(): Promise<void> {
-    if (this.isConnecting) return;
-    if (this.ws?.readyState === WebSocket.OPEN) return;
+  const updateState = (updates: Partial<TransportState>) => {
+    state = { ...state, ...updates };
+  };
 
-    this.isConnecting = true;
-
-    try {
-      // Establish WebSocket connection
-      this.ws = new WebSocket(this.config.serverUrl);
-
-      return new Promise((resolve, reject) => {
-        const timeout = setTimeout(() => {
-          reject(new Error("WebSocket connection timeout"));
-          this.ws?.close();
-        }, 10000);
-
-        this.ws!.onopen = async () => {
-          clearTimeout(timeout);
-          try {
-            await this.performHandshake();
-            this.reconnectAttempt = 0;
-            this.startKeepalive();
-            this.callbacks.onOpen?.();
-            resolve();
-          } catch (err) {
-            reject(err);
-          }
-        };
-
-        this.ws!.onerror = (event) => {
-          clearTimeout(timeout);
-          const error = new Error(`WebSocket error: ${event}`);
-          this.callbacks.onError?.(error);
-          reject(error);
-        };
-
-        this.ws!.onmessage = (event) => {
-          this.handleMessage(event.data);
-        };
-
-        this.ws!.onclose = () => {
-          this.isAuthenticated = false;
-          this.stopKeepalive();
-          this.callbacks.onClose?.();
-          this.isConnecting = false;
-          this.attemptReconnect();
-        };
-      });
-    } catch (err) {
-      this.isConnecting = false;
-      throw err;
-    }
-  }
-
-  /**
-   * Perform UCP handshake and authentication
-   */
-  private async performHandshake(): Promise<void> {
-    if (!this.ws || this.ws.readyState !== WebSocket.OPEN) {
+  const performHandshake = async (): Promise<void> => {
+    const ws = state.ws;
+    if (!ws || ws.readyState !== WebSocket.OPEN) {
       throw new Error("WebSocket not ready");
     }
 
-    // Send UCPHello
     const hello: UCPHello = {
       version: "1.0",
-      auth_token: this.config.authToken,
+      auth_token: config.authToken,
       capabilities: ["mls", "e2e_signing", "receipt_tracking"],
     };
 
-    this.ws.send(JSON.stringify({ type: "ucp_hello", ...hello }));
+    ws.send(JSON.stringify({ type: "ucp_hello", ...hello }));
 
-    // Wait for UCPHelloAck
     return new Promise((resolve, reject) => {
       const timeout = setTimeout(() => {
         reject(new Error("UCPHelloAck timeout"));
       }, 5000);
 
-      const originalOnMessage = this.ws!.onmessage;
-      this.ws!.onmessage = (event) => {
+      const originalOnMessage = ws.onmessage;
+      ws.onmessage = (event) => {
         clearTimeout(timeout);
 
         try {
@@ -137,151 +92,178 @@ export class UCPTransport {
 
           if (msg.type === "ucp_hello_ack") {
             const ack = msg as UCPHelloAck;
-            this.validateHelloAck(ack);
-            this.currentChallenge = ack.challenge;
-            this.challengeExpiry = Date.now() + 60000; // 60 second expiry
-            this.isAuthenticated = true;
-            this.ws!.onmessage = originalOnMessage;
+            const now = Date.now();
+            updateState({
+              currentChallenge: ack.challenge,
+              challengeExpiry: now + 60000,
+              isAuthenticated: true,
+            });
+            ws.onmessage = originalOnMessage;
             resolve();
           } else {
-            // Restore original handler for other messages
-            this.ws!.onmessage = originalOnMessage;
-            this.handleMessage(event.data);
+            ws.onmessage = originalOnMessage;
+            handleMessage(event.data);
           }
         } catch (err) {
-          this.ws!.onmessage = originalOnMessage;
+          ws.onmessage = originalOnMessage;
           reject(err);
         }
       };
     });
-  }
+  };
 
-  /**
-   * Validate UCPHelloAck signature (if server key available)
-   */
-  private validateHelloAck(ack: UCPHelloAck): void {
-    if (!this.config.serverSigningKey || !ack.server_sig) {
-      // Skip validation if no key provided
-      return;
-    }
-
-    // TODO: Verify server_sig over "server_hello:" || auth_token || server_id
-    // This requires the Ed25519 verification implementation
-    // For now, we'll trust the connection (should be HTTPS/WSS)
-  }
-
-  /**
-   * Handle incoming messages
-   */
-  private handleMessage(data: string): void {
-    try {
-      const msg = JSON.parse(data);
-
-      if (msg.type === "ping") {
-        // Respond to server pings
-        this.ws?.send(JSON.stringify({ type: "pong" }));
-        return;
-      }
-
-      // Pass message to callback
-      this.callbacks.onMessage?.(msg);
-    } catch (err) {
-      console.error("Failed to parse message:", err);
-    }
-  }
-
-  /**
-   * Send message to server
-   */
-  send(msg: unknown): void {
-    if (!this.ws || this.ws.readyState !== WebSocket.OPEN) {
-      throw new Error("WebSocket not connected");
-    }
-
-    if (!this.isAuthenticated) {
-      throw new Error("Not authenticated");
-    }
-
-    this.ws.send(JSON.stringify(msg));
-  }
-
-  /**
-   * Start keepalive pings (30 second interval)
-   */
-  private startKeepalive(): void {
-    this.keepaliveInterval = setInterval(() => {
-      if (this.ws?.readyState === WebSocket.OPEN) {
-        this.ws.send(JSON.stringify({ type: "ping" }));
+  const startKeepalive = () => {
+    const interval = setInterval(() => {
+      if (state.ws?.readyState === WebSocket.OPEN) {
+        state.ws.send(JSON.stringify({ type: "ping" }));
       }
     }, 30000);
-  }
+    updateState({ keepaliveInterval: interval });
+  };
 
-  /**
-   * Stop keepalive pings
-   */
-  private stopKeepalive(): void {
-    if (this.keepaliveInterval !== null) {
-      clearInterval(this.keepaliveInterval);
-      this.keepaliveInterval = null;
+  const stopKeepalive = () => {
+    if (state.keepaliveInterval !== null) {
+      clearInterval(state.keepaliveInterval);
+      updateState({ keepaliveInterval: null });
     }
-  }
+  };
 
-  /**
-   * Attempt to reconnect with exponential backoff
-   */
-  private attemptReconnect(): void {
-    // Calculate backoff: 1s, 2s, 4s, 8s, 16s, 32s, 60s
-    const baseDelay = Math.min(2 ** this.reconnectAttempt * 1000, 60000);
-    const jitter = (Math.random() - 0.5) * 0.4 * baseDelay; // ±20% jitter
+  const attemptReconnect = () => {
+    const baseDelay = Math.min(2 ** state.reconnectAttempt * 1000, 60000);
+    const jitter = (Math.random() - 0.5) * 0.4 * baseDelay;
     const delay = Math.max(1000, baseDelay + jitter);
 
-    this.reconnectTimeout = setTimeout(() => {
-      this.reconnectAttempt++;
-      this.callbacks.onReconnect?.(this.reconnectAttempt);
+    const timeout = setTimeout(() => {
+      updateState({ reconnectAttempt: state.reconnectAttempt + 1 });
+      callbacks.onReconnect?.(state.reconnectAttempt);
 
-      this.connect().catch((err) => {
+      connect().catch((err) => {
         console.error(
-          `Reconnection attempt ${this.reconnectAttempt} failed:`,
+          `Reconnection attempt ${state.reconnectAttempt} failed:`,
           err,
         );
       });
     }, delay);
-  }
 
-  /**
-   * Disconnect and clean up
-   */
-  disconnect(): void {
-    this.isConnecting = false;
-    this.isAuthenticated = false;
-    this.stopKeepalive();
+    updateState({ reconnectTimeout: timeout });
+  };
 
-    if (this.reconnectTimeout !== null) {
-      clearTimeout(this.reconnectTimeout);
-      this.reconnectTimeout = null;
+  const handleMessage = (data: string) => {
+    try {
+      const msg = JSON.parse(data);
+
+      if (msg.type === "ping") {
+        state.ws?.send(JSON.stringify({ type: "pong" }));
+        return;
+      }
+
+      callbacks.onMessage?.(msg);
+    } catch (err) {
+      console.error("Failed to parse message:", err);
+    }
+  };
+
+  const connect = async (): Promise<void> => {
+    if (state.isConnecting) return;
+    if (state.ws?.readyState === WebSocket.OPEN) return;
+
+    updateState({ isConnecting: true });
+
+    return new Promise((resolve, reject) => {
+      try {
+        const ws = new WebSocket(config.serverUrl);
+        updateState({ ws });
+
+        const timeout = setTimeout(() => {
+          reject(new Error("WebSocket connection timeout"));
+          ws.close();
+        }, 10000);
+
+        ws.onopen = async () => {
+          clearTimeout(timeout);
+          try {
+            await performHandshake();
+            updateState({ reconnectAttempt: 0 });
+            startKeepalive();
+            callbacks.onOpen?.();
+            resolve();
+          } catch (err) {
+            reject(err);
+          }
+        };
+
+        ws.onerror = (event) => {
+          clearTimeout(timeout);
+          const error = new Error(`WebSocket error: ${event}`);
+          callbacks.onError?.(error);
+          reject(error);
+        };
+
+        ws.onmessage = (event) => {
+          handleMessage(event.data);
+        };
+
+        ws.onclose = () => {
+          updateState({ isAuthenticated: false });
+          stopKeepalive();
+          callbacks.onClose?.();
+          updateState({ isConnecting: false });
+          attemptReconnect();
+        };
+      } catch (err) {
+        updateState({ isConnecting: false });
+        reject(err);
+      }
+    });
+  };
+
+  const send = (msg: unknown): void => {
+    if (!state.ws || state.ws.readyState !== WebSocket.OPEN) {
+      throw new Error("WebSocket not connected");
     }
 
-    if (this.ws) {
-      this.ws.close();
-      this.ws = null;
+    if (!state.isAuthenticated) {
+      throw new Error("Not authenticated");
     }
-  }
 
-  /**
-   * Check if currently authenticated and connected
-   */
-  isReady(): boolean {
-    return this.isAuthenticated && this.ws?.readyState === WebSocket.OPEN;
-  }
+    state.ws.send(JSON.stringify(msg));
+  };
 
-  /**
-   * Get current challenge (for signing operations)
-   */
-  getChallenge(): string | null {
-    if (this.challengeExpiry && Date.now() > this.challengeExpiry) {
-      this.currentChallenge = null;
-      this.challengeExpiry = null;
+  const disconnect = (): void => {
+    updateState({ isConnecting: false, isAuthenticated: false });
+    stopKeepalive();
+
+    if (state.reconnectTimeout !== null) {
+      clearTimeout(state.reconnectTimeout);
+      updateState({ reconnectTimeout: null });
     }
-    return this.currentChallenge;
-  }
-}
+
+    if (state.ws) {
+      state.ws.close();
+      updateState({ ws: null });
+    }
+  };
+
+  const isReady = (): boolean =>
+    state.isAuthenticated && state.ws?.readyState === WebSocket.OPEN;
+
+  const getChallenge = (): string | null => {
+    if (state.challengeExpiry && Date.now() > state.challengeExpiry) {
+      updateState({ currentChallenge: null, challengeExpiry: null });
+    }
+    return state.currentChallenge;
+  };
+
+  const getState = () => ({ ...state });
+
+  return {
+    connect,
+    send,
+    disconnect,
+    isReady,
+    getChallenge,
+    getState,
+  };
+};
+
+export type Transport = ReturnType<typeof createTransport>;

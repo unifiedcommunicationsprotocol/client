@@ -4,6 +4,22 @@ Hard constraints for UCP client. Must be respected unconditionally.
 
 ---
 
+## Programming Paradigm (Non-negotiable)
+
+### Functional & Immutable Code Only
+
+- ✅ **ALWAYS use `const`** — declare variables, functions, closures with const
+- ❌ **NEVER use `let` or `var`** — except in local variable shadowing (re-assignment forbidden)
+- ❌ **NO classes** — use functions, closures, higher-order functions, plain objects instead
+- ✅ **Immutable data** — no mutations, use spread operator `{...obj}` or structural copies
+- ✅ **Pure functions** — same input → same output, no side effects except at boundaries
+- ✅ **Composition** — chain functions, use map/filter/reduce, avoid imperative loops
+- ✅ **Closures** — factory functions return configured functions (e.g., `createTransport()` returns `{send, disconnect}`)
+
+**Why:** Functional code is easier to reason about, test, and parallelize. No hidden state mutations.
+
+---
+
 ## Critical Environment Constraint
 
 ### ⚠️ NEVER Run Git Commands in Home Directory

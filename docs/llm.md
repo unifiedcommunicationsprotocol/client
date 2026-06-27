@@ -112,6 +112,7 @@ client/
 
 ## Coding Conventions
 
+- **Functional + immutable** — `const` only, no `let`/`var`, no classes, closures + higher-order functions
 - **TypeScript strict mode** — all code is type-safe
 - **Ed25519 everywhere** — no password auth, all crypto via signing keys
 - **Canonical JSON** — messages signed over sorted-key, UTF-8 JSON
