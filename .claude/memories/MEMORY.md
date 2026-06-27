@@ -12,3 +12,10 @@
 
 **Frontend Implementation:**
 - [Relay Frontend v1.0](relay_frontend_v1.md) — Desktop UI complete, Biome + TypeScript 7 integrated, 4 violations to fix before crypto layer
+
+**Architecture:**
+- [Full-Stack Architecture v2.0](fullstack_architecture.md) — Bun serve() + Hono API + Drizzle DB (PostgreSQL); URL rewriting required
+- [Relay UI Design Complete](relay_design_complete.md) — 3-column layout, color system, onboarding flow, implementation roadmap (5 phases)
+
+**Configuration & Constraints:**
+- [Biome Immutable](biome_immutable.md) — Do NOT modify biome.jsonc; all changes require explicit user approval

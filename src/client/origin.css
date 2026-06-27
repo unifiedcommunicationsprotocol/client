@@ -39,120 +39,23 @@
 
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 html,
 body {
   height: 100%;
   overflow: hidden;
-  font-family: "Space Grotesk", sans-serif;
-  background-color: var(--r-bg);
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  background: var(--r-bg);
   color: var(--r-t1);
-  margin: 0;
-  padding: 0;
 }
 
 #root {
   height: 100%;
 }
 
-/* Buttons */
-button {
-  font-family: "Space Grotesk", sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  border: none;
-  border-radius: 6px;
-  padding: 10px 16px;
-  cursor: pointer;
-  transition: all 200ms;
-}
-
-button.primary {
-  background-color: var(--r-acc);
-  color: white;
-}
-
-button.primary:hover:not(:disabled) {
-  background-color: #4f46e5;
-  transform: translateY(-2px);
-}
-
-button.primary:active:not(:disabled) {
-  transform: translateY(0);
-}
-
-button.secondary {
-  background-color: var(--r-sf);
-  color: var(--r-t1);
-  border: 1px solid var(--r-bd);
-}
-
-button.secondary:hover:not(:disabled) {
-  background-color: var(--r-hov);
-}
-
-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-/* Inputs */
-input,
-textarea,
-select {
-  font-family: "Space Grotesk", sans-serif;
-  font-size: 14px;
-  border: 1px solid var(--r-bd);
-  border-radius: 6px;
-  padding: 10px 12px;
-  background-color: var(--r-bg);
-  color: var(--r-t1);
-  transition: all 200ms;
-}
-
-input:focus,
-textarea:focus,
-select:focus {
-  outline: none;
-  border-color: var(--r-acc);
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-}
-
-textarea {
-  resize: vertical;
-  font-family: "Space Mono", monospace;
-}
-
-.fade-in {
-  animation: fadeIn 0.3s ease-in-out;
-}
-
-.fade-up {
-  animation: fadeUp 0.3s ease-out;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Scrollbar styling */
 ::-webkit-scrollbar {
   width: 4px;
   height: 4px;
@@ -169,4 +72,107 @@ textarea {
 
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(128, 128, 128, 0.3);
+}
+
+/* Buttons */
+button {
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+button.primary {
+  background: var(--r-acc);
+  color: white;
+}
+
+button.primary:hover:not(:disabled) {
+  background: #4f46e5;
+  transform: translateY(-1px);
+}
+
+button.primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+button.secondary {
+  background: var(--r-sf);
+  color: var(--r-t1);
+  border: 1px solid var(--r-bd);
+}
+
+button.secondary:hover:not(:disabled) {
+  background: var(--r-hov);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Inputs */
+input,
+textarea,
+select {
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  font-size: 14px;
+  border: 1px solid var(--r-bd);
+  border-radius: 6px;
+  padding: 10px 12px;
+  background: var(--r-bg);
+  color: var(--r-t1);
+  transition: all 0.2s ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--r-acc);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+textarea {
+  resize: vertical;
+  font-family: "Space Mono", monospace;
+}
+
+/* Animations */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease;
+}
+
+.fade-up {
+  animation: fadeUp 0.3s ease;
 }

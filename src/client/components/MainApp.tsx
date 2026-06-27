@@ -30,7 +30,7 @@ export function MainApp({ onLogout }: MainAppProps) {
         return (
           <div style={{ padding: "20px" }}>
             <h2 style={{ fontSize: "18px", fontWeight: "600", marginBottom: "20px" }}>Settings</h2>
-            <button className="primary" onClick={onLogout}>
+            <button type="button" className="primary" onClick={onLogout}>
               Logout
             </button>
           </div>
@@ -51,8 +51,8 @@ export function MainApp({ onLogout }: MainAppProps) {
       {/* Icon Navigation */}
       <nav
         style={{
-          width: "60px",
-          backgroundColor: "var(--r-sf)",
+          width: "52px",
+          backgroundColor: "#0A0A0D",
           borderRight: "1px solid var(--r-bd)",
           display: "flex",
           flexDirection: "column",
@@ -71,6 +71,7 @@ export function MainApp({ onLogout }: MainAppProps) {
           { icon: "🤖", label: "Agents", id: "agents" as Section },
         ].map((item) => (
           <button
+            type="button"
             key={item.id}
             onClick={() => {
               setActiveSection(item.id);
@@ -99,6 +100,7 @@ export function MainApp({ onLogout }: MainAppProps) {
         <div style={{ flex: 1 }} />
 
         <button
+          type="button"
           onClick={() => setActiveSection("settings")}
           title="Settings"
           style={{

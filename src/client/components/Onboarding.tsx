@@ -25,12 +25,12 @@ export function Onboarding({ onComplete }: OnboardingProps) {
               Generate Identity Key
             </div>
             <button
+              type="button"
               className="primary"
               onClick={() => {
-                setIdentityKey(`ik_${Math.random().toString(36).substr(2, 32)}`);
-                setSigningKey(`sk_${Math.random().toString(36).substr(2, 32)}`);
+                setIdentityKey(`ik_${Math.random().toString(36).slice(2, 34)}`);
+                setSigningKey(`sk_${Math.random().toString(36).slice(2, 34)}`);
               }}
-              type="button"
             >
               Generate Keys
             </button>
@@ -159,13 +159,13 @@ export function Onboarding({ onComplete }: OnboardingProps) {
       description: "Bridge Gmail, Fastmail, or other accounts. Messages arrive encrypted.",
       content: (
         <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-          <button className="primary" style={{ width: "100%" }}>
+          <button type="button" className="primary" style={{ width: "100%" }}>
             <span style={{ marginRight: "8px" }}>📧</span> Connect Gmail
           </button>
-          <button className="secondary" style={{ width: "100%" }}>
+          <button type="button" className="secondary" style={{ width: "100%" }}>
             <span style={{ marginRight: "8px" }}>📬</span> Connect Fastmail
           </button>
-          <button className="secondary" style={{ width: "100%" }}>
+          <button type="button" className="secondary" style={{ width: "100%" }}>
             <span style={{ marginRight: "8px" }}>✉️</span> Connect Other Email
           </button>
           <p
@@ -235,9 +235,9 @@ export function Onboarding({ onComplete }: OnboardingProps) {
 
         {/* Progress */}
         <div style={{ display: "flex", gap: "8px", marginBottom: "32px" }}>
-          {steps.map((_, i) => (
+          {steps.map((s, i) => (
             <div
-              key={i}
+              key={s.title}
               style={{
                 flex: 1,
                 height: "4px",
@@ -255,6 +255,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
         {/* Actions */}
         <div style={{ display: "flex", gap: "12px" }}>
           <button
+            type="button"
             className="secondary"
             onClick={() => setStep(Math.max(0, step - 1))}
             disabled={step === 0}
@@ -263,6 +264,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
             Back
           </button>
           <button
+            type="button"
             className="primary"
             onClick={() => {
               if (step === steps.length - 1) {

@@ -3,7 +3,7 @@ interface InboxProps {
   onSelectThread: (id: string) => void;
 }
 
-export function Inbox({ selectedThreadId, onSelectThread }: InboxProps) {
+export function Inbox({ selectedThreadId }: InboxProps) {
   const threads = [
     {
       id: "1",
@@ -166,8 +166,12 @@ export function Inbox({ selectedThreadId, onSelectThread }: InboxProps) {
           }}
         />
         <div style={{ display: "flex", gap: "8px", justifyContent: "flex-end" }}>
-          <button className="secondary">Save as Draft</button>
-          <button className="primary">Send</button>
+          <button type="button" className="secondary">
+            Save as Draft
+          </button>
+          <button type="button" className="primary">
+            Send
+          </button>
         </div>
       </div>
     </div>

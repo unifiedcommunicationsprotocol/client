@@ -10,37 +10,72 @@ export function Sidebar({ activeSection }: SidebarProps) {
   const threads = [
     {
       id: "1",
-      from: "alex@example.com",
-      subject: "Q3 Review Discussion",
-      preview: "Following up on the feedback from last week...",
-      timestamp: "2 hours ago",
-      unread: 2,
-      avatar: "🔵",
+      from: "Sarah Chen",
+      subject: "Q3 Research Collaboration Proposal",
+      preview: "Following up on our call last week. I've been thinking more about the distributed consensus angles...",
+      timestamp: "Jun 16, 10:24 AM",
+      unread: 1,
+      avatar: "SC",
+      avatarColor: "#6366F1",
     },
     {
       id: "2",
-      from: "team@company.com",
-      subject: "Team sync notes",
-      preview: "Here are the notes from today's standup...",
-      timestamp: "4 hours ago",
+      from: "GitHub",
+      subject: "[relay/core] PR #42: WebTransport",
+      preview: "cheriko opened a pull request. A comprehensive approach to WebTransport...",
+      timestamp: "9:15 AM",
       unread: 0,
-      avatar: "👥",
+      avatar: "G",
+      avatarColor: "#EA4335",
     },
     {
       id: "3",
-      from: "sarah@example.com",
-      subject: "Weekend plans?",
-      preview: "Hey! Are you free this Saturday?",
-      timestamp: "1 day ago",
+      from: "scheduler-age...",
+      subject: "Suggested: Focus block Fri 2-...",
+      preview: "Based on your email patterns, I've...",
+      timestamp: "8:50 AM",
       unread: 0,
-      avatar: "👩",
+      avatar: "S",
+      avatarColor: "#9333EA",
+    },
+    {
+      id: "4",
+      from: "Miguel Torr...",
+      subject: "Dinner this Saturday?",
+      preview: "Hey! Thinking of setting a group...",
+      timestamp: "Yesterday",
+      unread: 1,
+      avatar: "MT",
+      avatarColor: "#0EA5E9",
+    },
+    {
+      id: "5",
+      from: "Relay Securi...",
+      subject: "Signing key rotation in 7 days",
+      preview: "Your current signing key (sk_a3f...",
+      timestamp: "Yesterday",
+      unread: 0,
+      avatar: "R",
+      avatarColor: "#22C55E",
+    },
+    {
+      id: "6",
+      from: "Fastmail",
+      subject: "Storage limit update",
+      preview: "We're excited to let you know about...",
+      timestamp: "Mon",
+      unread: 0,
+      avatar: "F",
+      avatarColor: "#FBBF24",
     },
   ];
+
+  const unreadCount = threads.filter((t) => t.unread > 0).length;
 
   const sidebarSections: Record<string, { title: string; items: string[] }> = {
     inbox: {
       title: "Inbox",
-      items: ["All Mail", "Unread", "Starred", "Sent", "Drafts"],
+      items: [],
     },
     messaging: {
       title: "Conversations",
@@ -70,7 +105,7 @@ export function Sidebar({ activeSection }: SidebarProps) {
   return (
     <div
       style={{
-        width: "250px",
+        width: "272px",
         backgroundColor: "var(--r-sf)",
         borderRight: "1px solid var(--r-bd)",
         display: "flex",
@@ -78,152 +113,212 @@ export function Sidebar({ activeSection }: SidebarProps) {
         overflow: "hidden",
       }}
     >
-      {/* Search */}
-      <div style={{ padding: "12px" }}>
-        <input
-          type="text"
-          placeholder="Search..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          style={{
-            width: "100%",
-            padding: "8px 12px",
-            fontSize: "13px",
-            border: "1px solid var(--r-bd)",
-            borderRadius: "6px",
-            backgroundColor: "var(--r-bg)",
-          }}
-        />
-      </div>
-
-      {/* Sidebar Items */}
-      <div style={{ padding: "12px", display: "flex", flexDirection: "column", gap: "4px" }}>
-        {section?.items.map((item) => (
-          <button
-            key={item}
-            style={{
-              textAlign: "left",
-              padding: "8px 12px",
-              fontSize: "14px",
-              border: "none",
-              backgroundColor: "transparent",
-              color: "var(--r-t1)",
-              cursor: "pointer",
-              borderRadius: "6px",
-              transition: "all 0.2s ease",
-            }}
-            onMouseEnter={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.backgroundColor = "var(--r-hov)";
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.backgroundColor = "transparent";
-            }}
-          >
-            {item}
-          </button>
-        ))}
-      </div>
-
-      {/* Thread List */}
+      {/* Inbox Section */}
       {activeSection === "inbox" && (
-        <div style={{ flex: 1, overflow: "auto", padding: "12px" }}>
-          <div
-            style={{
-              fontSize: "12px",
-              fontWeight: "600",
-              color: "var(--r-t3)",
-              marginBottom: "8px",
-              paddingLeft: "4px",
-            }}
-          >
-            THREADS
+        <>
+          {/* Header */}
+          <div style={{ padding: "16px 16px 12px 16px", borderBottom: "1px solid var(--r-bd)" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <div style={{ fontSize: "14px", fontWeight: "600", color: "var(--r-t1)" }}>Inbox</div>
+              {unreadCount > 0 && (
+                <div
+                  style={{
+                    backgroundColor: "var(--r-acc)",
+                    color: "white",
+                    fontSize: "11px",
+                    fontWeight: "700",
+                    borderRadius: "10px",
+                    padding: "2px 6px",
+                  }}
+                >
+                  {unreadCount}
+                </div>
+              )}
+            </div>
           </div>
-          {threads.map((thread) => (
-            <button
-              key={thread.id}
+
+          {/* Search */}
+          <div style={{ padding: "12px" }}>
+            <input
+              type="text"
+              placeholder="Search..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
               style={{
                 width: "100%",
-                textAlign: "left",
-                padding: "12px",
-                marginBottom: "4px",
-                border: "1px solid transparent",
-                backgroundColor: "var(--r-bg)",
+                padding: "8px 12px",
+                fontSize: "13px",
+                border: "1px solid var(--r-bd)",
                 borderRadius: "6px",
-                cursor: "pointer",
-                transition: "all 0.2s ease",
+                backgroundColor: "var(--r-bg)",
+                color: "var(--r-t1)",
               }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLButtonElement).style.backgroundColor = "var(--r-hov)";
-                (e.currentTarget as HTMLButtonElement).style.borderColor = "var(--r-bd)";
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLButtonElement).style.backgroundColor = "var(--r-bg)";
-                (e.currentTarget as HTMLButtonElement).style.borderColor = "transparent";
-              }}
-            >
-              <div
-                style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px" }}
+            />
+          </div>
+
+          {/* Thread List */}
+          <div style={{ flex: 1, overflow: "auto" }}>
+            {threads.map((thread) => (
+              <button
+                type="button"
+                key={thread.id}
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  gap: "12px",
+                  padding: "12px",
+                  margin: "0",
+                  border: "none",
+                  backgroundColor: "transparent",
+                  cursor: "pointer",
+                  transition: "background-color 200ms",
+                  borderLeft: thread.unread > 0 ? "3px solid var(--r-acc)" : "3px solid transparent",
+                }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLButtonElement).style.backgroundColor = "var(--r-hov)";
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLButtonElement).style.backgroundColor = "transparent";
+                }}
               >
-                <span style={{ fontSize: "20px" }}>{thread.avatar}</span>
-                <div style={{ flex: 1, minWidth: 0 }}>
+                {/* Avatar */}
+                <div
+                  style={{
+                    width: "32px",
+                    height: "32px",
+                    minWidth: "32px",
+                    borderRadius: "6px",
+                    backgroundColor: thread.avatarColor,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: "12px",
+                    fontWeight: "600",
+                    color: "white",
+                  }}
+                >
+                  {thread.avatar}
+                </div>
+
+                {/* Content */}
+                <div style={{ flex: 1, minWidth: 0, textAlign: "left" }}>
                   <div
                     style={{
-                      fontSize: "13px",
-                      fontWeight: thread.unread > 0 ? "600" : "500",
-                      color: "var(--r-t1)",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "flex-start",
+                      marginBottom: "4px",
                     }}
                   >
-                    {thread.from.split("@")[0]}
+                    <div
+                      style={{
+                        fontSize: "13px",
+                        fontWeight: thread.unread > 0 ? "600" : "500",
+                        color: "var(--r-t1)",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                        flex: 1,
+                      }}
+                    >
+                      {thread.from}
+                    </div>
+                    <div
+                      style={{
+                        fontSize: "12px",
+                        color: "var(--r-t3)",
+                        marginLeft: "8px",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {thread.timestamp}
+                    </div>
                   </div>
                   <div
                     style={{
                       fontSize: "12px",
-                      color: "var(--r-t3)",
-                      whiteSpace: "nowrap",
+                      fontWeight: "500",
+                      color: "var(--r-t1)",
+                      marginBottom: "4px",
                       overflow: "hidden",
                       textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
                     }}
                   >
-                    {thread.timestamp}
+                    {thread.subject}
                   </div>
-                </div>
-                {thread.unread > 0 && (
                   <div
                     style={{
-                      backgroundColor: "var(--r-acc)",
-                      color: "white",
-                      fontSize: "11px",
-                      fontWeight: "600",
-                      borderRadius: "10px",
-                      width: "20px",
-                      height: "20px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
+                      fontSize: "12px",
+                      color: "var(--r-t2)",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      display: "-webkit-box",
+                      WebkitLineClamp: 2,
+                      WebkitBoxOrient: "vertical",
+                      lineHeight: "1.4",
                     }}
                   >
-                    {thread.unread}
+                    {thread.preview}
                   </div>
-                )}
-              </div>
-              <div
+                </div>
+              </button>
+            ))}
+          </div>
+        </>
+      )}
+
+      {/* Other Sections */}
+      {activeSection !== "inbox" && (
+        <>
+          {/* Search */}
+          <div style={{ padding: "12px" }}>
+            <input
+              type="text"
+              placeholder="Search..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              style={{
+                width: "100%",
+                padding: "8px 12px",
+                fontSize: "13px",
+                border: "1px solid var(--r-bd)",
+                borderRadius: "6px",
+                backgroundColor: "var(--r-bg)",
+                color: "var(--r-t1)",
+              }}
+            />
+          </div>
+
+          {/* Sidebar Items */}
+          <div style={{ padding: "12px", display: "flex", flexDirection: "column", gap: "4px" }}>
+            {section?.items.map((item) => (
+              <button
+                type="button"
+                key={item}
                 style={{
-                  fontSize: "12px",
-                  color: "var(--r-t2)",
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  paddingLeft: "28px",
+                  textAlign: "left",
+                  padding: "8px 12px",
+                  fontSize: "14px",
+                  border: "none",
+                  backgroundColor: "transparent",
+                  color: "var(--r-t1)",
+                  cursor: "pointer",
+                  borderRadius: "6px",
+                  transition: "all 0.2s ease",
+                }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLButtonElement).style.backgroundColor = "var(--r-hov)";
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLButtonElement).style.backgroundColor = "transparent";
                 }}
               >
-                {thread.preview}
-              </div>
-            </button>
-          ))}
-        </div>
+                {item}
+              </button>
+            ))}
+          </div>
+        </>
       )}
     </div>
   );
