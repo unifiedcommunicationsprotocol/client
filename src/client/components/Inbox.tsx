@@ -69,6 +69,8 @@ export function Inbox({ selectedThreadId }: InboxProps) {
           justifyContent: "center",
           color: "var(--r-t3)",
           textAlign: "center",
+          flexDirection: "column",
+          gap: "24px",
         }}
       >
         <div>

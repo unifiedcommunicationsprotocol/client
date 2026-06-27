@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Inbox } from "./Inbox";
 import { Sidebar } from "./Sidebar";
+import { SettingsPanel } from "./SettingsPanel";
 
 interface MainAppProps {
   onLogout: () => void;
@@ -27,18 +28,20 @@ export function MainApp({ onLogout }: MainAppProps) {
       case "agents":
         return <div style={{ padding: "20px", color: "var(--r-t2)" }}>Agents (coming soon)</div>;
       case "settings":
-        return (
-          <div style={{ padding: "20px" }}>
-            <h2 style={{ fontSize: "18px", fontWeight: "600", marginBottom: "20px" }}>Settings</h2>
-            <button type="button" className="primary" onClick={onLogout}>
-              Logout
-            </button>
-          </div>
-        );
+        return <SettingsPanel onLogout={onLogout} />;
       default:
         return null;
     }
   };
+
+  const navItems = [
+    { icon: "📧", label: "Inbox", id: "inbox" as Section },
+    { icon: "💬", label: "Messages", id: "messaging" as Section },
+    { icon: "📅", label: "Calendar", id: "calendar" as Section },
+    { icon: "👥", label: "Contacts", id: "contacts" as Section },
+    { icon: "📝", label: "Notes", id: "notes" as Section },
+    { icon: "🤖", label: "Agents", id: "agents" as Section },
+  ];
 
   return (
     <div
@@ -48,7 +51,7 @@ export function MainApp({ onLogout }: MainAppProps) {
         backgroundColor: "var(--r-bg)",
       }}
     >
-      {/* Icon Navigation */}
+      {/* Left Navigation */}
       <nav
         style={{
           width: "52px",
@@ -57,19 +60,44 @@ export function MainApp({ onLogout }: MainAppProps) {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          padding: "12px 0",
+          paddingTop: "12px",
+          paddingBottom: "12px",
           gap: "8px",
           overflowY: "auto",
         }}
       >
-        {[
-          { icon: "📧", label: "Inbox", id: "inbox" as Section },
-          { icon: "💬", label: "Messaging", id: "messaging" as Section },
-          { icon: "📅", label: "Calendar", id: "calendar" as Section },
-          { icon: "👥", label: "Contacts", id: "contacts" as Section },
-          { icon: "📝", label: "Notes", id: "notes" as Section },
-          { icon: "🤖", label: "Agents", id: "agents" as Section },
-        ].map((item) => (
+        {/* Relay Logo */}
+        <button
+          type="button"
+          style={{
+            width: "40px",
+            height: "40px",
+            borderRadius: "8px",
+            border: "none",
+            backgroundColor: "var(--r-acc)",
+            color: "white",
+            fontSize: "20px",
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            transition: "all 0.2s ease",
+            marginBottom: "8px",
+          }}
+          title="Relay"
+          onMouseEnter={(e) => {
+            (e.currentTarget as HTMLButtonElement).style.boxShadow =
+              "0 4px 12px rgba(99, 102, 241, 0.3)";
+          }}
+          onMouseLeave={(e) => {
+            (e.currentTarget as HTMLButtonElement).style.boxShadow = "none";
+          }}
+        >
+          🔐
+        </button>
+
+        {/* Navigation Items */}
+        {navItems.map((item) => (
           <button
             type="button"
             key={item.id}
@@ -79,46 +107,84 @@ export function MainApp({ onLogout }: MainAppProps) {
             }}
             title={item.label}
             style={{
-              width: "44px",
-              height: "44px",
+              width: "40px",
+              height: "40px",
               borderRadius: "8px",
               border: "none",
-              backgroundColor: activeSection === item.id ? "var(--r-acc)" : "transparent",
-              color: activeSection === item.id ? "white" : "var(--r-t2)",
+              backgroundColor: activeSection === item.id ? "rgba(99, 102, 241, 0.2)" : "transparent",
+              color: activeSection === item.id ? "var(--r-acc)" : "var(--r-t2)",
               fontSize: "20px",
               cursor: "pointer",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               transition: "all 0.2s ease",
+              borderLeft:
+                activeSection === item.id ? "3px solid var(--r-acc)" : "3px solid transparent",
+              paddingRight: "3px",
             }}
           >
             {item.icon}
           </button>
         ))}
 
+        {/* Spacer */}
         <div style={{ flex: 1 }} />
 
+        {/* Settings Button */}
         <button
           type="button"
           onClick={() => setActiveSection("settings")}
           title="Settings"
           style={{
-            width: "44px",
-            height: "44px",
+            width: "40px",
+            height: "40px",
             borderRadius: "8px",
             border: "none",
-            backgroundColor: activeSection === "settings" ? "var(--r-acc)" : "transparent",
-            color: activeSection === "settings" ? "white" : "var(--r-t2)",
+            backgroundColor: activeSection === "settings" ? "rgba(99, 102, 241, 0.2)" : "transparent",
+            color: activeSection === "settings" ? "var(--r-acc)" : "var(--r-t2)",
             fontSize: "20px",
             cursor: "pointer",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             transition: "all 0.2s ease",
+            borderLeft:
+              activeSection === "settings" ? "3px solid var(--r-acc)" : "3px solid transparent",
+            paddingRight: "3px",
+            marginBottom: "4px",
           }}
         >
           ⚙️
+        </button>
+
+        {/* User Avatar */}
+        <button
+          type="button"
+          style={{
+            width: "40px",
+            height: "40px",
+            borderRadius: "8px",
+            backgroundColor: "#6366F1",
+            border: "none",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: "18px",
+            fontWeight: "600",
+            color: "white",
+            cursor: "pointer",
+            transition: "all 0.2s ease",
+          }}
+          title="User menu"
+          onMouseEnter={(e) => {
+            (e.currentTarget as HTMLButtonElement).style.opacity = "0.8";
+          }}
+          onMouseLeave={(e) => {
+            (e.currentTarget as HTMLButtonElement).style.opacity = "1";
+          }}
+        >
+          Y
         </button>
       </nav>
 

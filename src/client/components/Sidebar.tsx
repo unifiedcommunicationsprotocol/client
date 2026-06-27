@@ -117,23 +117,47 @@ export function Sidebar({ activeSection }: SidebarProps) {
       {activeSection === "inbox" && (
         <>
           {/* Header */}
-          <div style={{ padding: "16px 16px 12px 16px", borderBottom: "1px solid var(--r-bd)" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-              <div style={{ fontSize: "14px", fontWeight: "600", color: "var(--r-t1)" }}>Inbox</div>
-              {unreadCount > 0 && (
-                <div
-                  style={{
-                    backgroundColor: "var(--r-acc)",
-                    color: "white",
-                    fontSize: "11px",
-                    fontWeight: "700",
-                    borderRadius: "10px",
-                    padding: "2px 6px",
-                  }}
-                >
-                  {unreadCount}
+          <div style={{ padding: "12px 16px", borderBottom: "1px solid var(--r-bd)" }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <div style={{ fontSize: "14px", fontWeight: "600", color: "var(--r-t1)" }}>
+                  Inbox
                 </div>
-              )}
+                {unreadCount > 0 && (
+                  <div
+                    style={{
+                      backgroundColor: "var(--r-acc)",
+                      color: "white",
+                      fontSize: "11px",
+                      fontWeight: "700",
+                      borderRadius: "10px",
+                      padding: "2px 6px",
+                    }}
+                  >
+                    {unreadCount}
+                  </div>
+                )}
+              </div>
+              <button
+                type="button"
+                style={{
+                  width: "28px",
+                  height: "28px",
+                  borderRadius: "6px",
+                  border: "none",
+                  backgroundColor: "var(--r-acc)",
+                  color: "white",
+                  fontSize: "16px",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  transition: "all 0.2s ease",
+                }}
+                title="Compose new message"
+              >
+                +
+              </button>
             </div>
           </div>
 
