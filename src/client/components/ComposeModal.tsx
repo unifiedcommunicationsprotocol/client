@@ -65,16 +65,16 @@ export function ComposeModal() {
       >
         {/* To Field */}
         <div>
-          <label style={{ fontSize: "12px", fontWeight: "600", color: "var(--r-t2)" }}>
+          <label htmlFor="to-input" style={{ fontSize: "12px", fontWeight: "600", color: "var(--r-t2)", display: "block", marginBottom: "4px" }}>
             To
           </label>
           <input
+            id="to-input"
             type="text"
             placeholder="recipient@relay.im"
             style={{
               width: "100%",
               padding: "8px 12px",
-              marginTop: "4px",
               border: "1px solid var(--r-bd)",
               borderRadius: "6px",
               backgroundColor: "var(--r-bg)",
@@ -86,16 +86,16 @@ export function ComposeModal() {
 
         {/* Subject Field */}
         <div>
-          <label style={{ fontSize: "12px", fontWeight: "600", color: "var(--r-t2)" }}>
+          <label htmlFor="subject-input" style={{ fontSize: "12px", fontWeight: "600", color: "var(--r-t2)", display: "block", marginBottom: "4px" }}>
             Subject
           </label>
           <input
+            id="subject-input"
             type="text"
             placeholder="Subject..."
             style={{
               width: "100%",
               padding: "8px 12px",
-              marginTop: "4px",
               border: "1px solid var(--r-bd)",
               borderRadius: "6px",
               backgroundColor: "var(--r-bg)",
@@ -107,16 +107,16 @@ export function ComposeModal() {
 
         {/* Body Field */}
         <div>
-          <label style={{ fontSize: "12px", fontWeight: "600", color: "var(--r-t2)" }}>
+          <label htmlFor="message-input" style={{ fontSize: "12px", fontWeight: "600", color: "var(--r-t2)", display: "block", marginBottom: "4px" }}>
             Message
           </label>
           <textarea
+            id="message-input"
             placeholder="Type your message..."
             style={{
               width: "100%",
               minHeight: "120px",
               padding: "10px 12px",
-              marginTop: "4px",
               border: "1px solid var(--r-bd)",
               borderRadius: "6px",
               backgroundColor: "var(--r-bg)",

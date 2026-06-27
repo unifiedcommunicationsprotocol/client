@@ -1,35 +1,18 @@
-import { useState } from "react";
+import { useAppContext } from "../AppContext";
+import { CAL_EVENTS } from "../data";
 
 export function CalendarPanel() {
-  const [_selectedMonth] = useState(new Date());
+  const { state, dispatch } = useAppContext();
 
-  const upcomingEvents = [
-    {
-      id: "1",
-      title: "Team standup",
-      time: "Today at 10:00 AM",
-    },
-    {
-      id: "2",
-      title: "Design review",
-      time: "Tomorrow at 2:00 PM",
-    },
-    {
-      id: "3",
-      title: "All hands meeting",
-      time: "Friday at 3:00 PM",
-    },
-    {
-      id: "4",
-      title: "1:1 with manager",
-      time: "Next week",
-    },
-    {
-      id: "5",
-      title: "Project kickoff",
-      time: "Next Monday",
-    },
-  ];
+  const getTimeString = (startH: number, endH: number) => {
+    const pad = (n: number) => String(n).padStart(2, "0");
+    return `${pad(Math.floor(startH))}:${pad(Math.round((startH % 1) * 60))} - ${pad(Math.floor(endH))}:${pad(Math.round((endH % 1) * 60))}`;
+  };
+
+  const upcomingEvents = CAL_EVENTS.map((e) => ({
+    ...e,
+    time: getTimeString(e.startH, e.endH),
+  }));
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
@@ -56,14 +39,31 @@ export function CalendarPanel() {
         </div>
 
         {upcomingEvents.map((event) => (
-          <div
+          <button
+            type="button"
             key={event.id}
+            onClick={() => dispatch({ type: "setCalSelectedEvent", payload: event.id })}
             style={{
+              width: "100%",
+              textAlign: "left",
               padding: "10px 8px",
               marginBottom: "4px",
               borderRadius: "6px",
-              backgroundColor: "var(--r-sf2)",
+              backgroundColor: state.calSelectedEvent === event.id ? "var(--r-sel)" : "var(--r-sf2)",
               border: "1px solid var(--r-bd)",
+              cursor: "pointer",
+              transition: "background-color 150ms",
+              display: "block",
+            }}
+            onMouseEnter={(e) => {
+              if (state.calSelectedEvent !== event.id) {
+                (e.currentTarget as HTMLButtonElement).style.backgroundColor = "var(--r-hov)";
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (state.calSelectedEvent !== event.id) {
+                (e.currentTarget as HTMLButtonElement).style.backgroundColor = "var(--r-sf2)";
+              }
             }}
           >
             <div
@@ -82,7 +82,7 @@ export function CalendarPanel() {
             <div style={{ fontSize: "11px", color: "var(--r-t3)" }}>
               {event.time}
             </div>
-          </div>
+          </button>
         ))}
       </div>
     </div>

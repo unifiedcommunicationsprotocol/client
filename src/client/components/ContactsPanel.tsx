@@ -1,16 +1,17 @@
 import { useState } from "react";
+import { useAppContext } from "../AppContext";
+import { CONTACTS } from "../data";
 
 export function ContactsPanel() {
   const [searchQuery, setSearchQuery] = useState("");
+  const { state, dispatch } = useAppContext();
 
-  const contacts = [
-    { id: "1", name: "Sarah Chen", handle: "sarah@relay.im", onRelay: true, initials: "SC", color: "#6366F1" },
-    { id: "2", name: "Alex Johnson", handle: "alex@example.com", onRelay: true, initials: "AJ", color: "#EA4335" },
-    { id: "3", name: "Maya Patel", handle: "maya@relay.im", onRelay: true, initials: "MP", color: "#9333EA" },
-    { id: "4", name: "David Lee", handle: "david@acme.com", onRelay: false, initials: "DL", color: "#0EA5E9" },
-    { id: "5", name: "Emma Wilson", handle: "emma@company.io", onRelay: true, initials: "EW", color: "#22C55E" },
-    { id: "6", name: "Frank Brown", handle: "frank@relay.im", onRelay: false, initials: "FB", color: "#FBBF24" },
-  ];
+  const filteredContacts = CONTACTS.filter((contact) =>
+    searchQuery
+      ? contact.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        contact.handle.toLowerCase().includes(searchQuery.toLowerCase())
+      : true
+  );
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
@@ -59,17 +60,18 @@ export function ContactsPanel() {
 
       {/* Contact List */}
       <div style={{ flex: 1, overflow: "auto", padding: "6px 8px" }}>
-        {contacts.map((contact) => (
+        {filteredContacts.map((contact) => (
           <button
             key={contact.id}
             type="button"
+            onClick={() => dispatch({ type: "selectContact", payload: contact.id })}
             style={{
               width: "100%",
               textAlign: "left",
               padding: "8px 12px",
               marginBottom: "2px",
               border: "none",
-              backgroundColor: "transparent",
+              backgroundColor: state.selectedContact === contact.id ? "var(--r-sel)" : "transparent",
               color: "var(--r-t1)",
               cursor: "pointer",
               borderRadius: "6px",
@@ -79,10 +81,14 @@ export function ContactsPanel() {
               transition: "background-color 200ms",
             }}
             onMouseEnter={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.backgroundColor = "var(--r-hov)";
+              if (state.selectedContact !== contact.id) {
+                (e.currentTarget as HTMLButtonElement).style.backgroundColor = "var(--r-hov)";
+              }
             }}
             onMouseLeave={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.backgroundColor = "transparent";
+              if (state.selectedContact !== contact.id) {
+                (e.currentTarget as HTMLButtonElement).style.backgroundColor = "transparent";
+              }
             }}
           >
             <div

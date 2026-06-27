@@ -1,4 +1,5 @@
 export function AgentsPanel() {
+
   const agents = [
     {
       id: "1",
@@ -60,14 +61,27 @@ export function AgentsPanel() {
       {/* Agents List */}
       <div style={{ flex: 1, overflow: "auto", padding: "8px" }}>
         {agents.map((agent) => (
-          <div
+          <button
+            type="button"
             key={agent.id}
+            onClick={() => {}}
             style={{
+              width: "100%",
+              textAlign: "left",
               padding: "10px 12px",
               marginBottom: "6px",
               borderRadius: "6px",
               border: "1px solid var(--r-bd)",
               backgroundColor: "var(--r-sf2)",
+              cursor: "pointer",
+              transition: "background-color 150ms",
+              display: "block",
+            }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLButtonElement).style.backgroundColor = "var(--r-hov)";
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLButtonElement).style.backgroundColor = "var(--r-sf2)";
             }}
           >
             <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "6px" }}>
@@ -111,7 +125,7 @@ export function AgentsPanel() {
             >
               {agent.description}
             </div>
-          </div>
+          </button>
         ))}
       </div>
     </div>
