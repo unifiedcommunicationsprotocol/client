@@ -117,47 +117,74 @@ export function Sidebar({ activeSection }: SidebarProps) {
       {activeSection === "inbox" && (
         <>
           {/* Header */}
-          <div style={{ padding: "12px 16px", borderBottom: "1px solid var(--r-bd)" }}>
+          <div style={{ padding: "11px 12px 9px", borderBottom: "1px solid var(--r-bd)" }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                <div style={{ fontSize: "14px", fontWeight: "600", color: "var(--r-t1)" }}>
+                <span style={{ fontSize: "14px", fontWeight: "600", color: "var(--r-t1)" }}>
                   Inbox
-                </div>
+                </span>
                 {unreadCount > 0 && (
-                  <div
+                  <span
                     style={{
-                      backgroundColor: "var(--r-acc)",
-                      color: "white",
-                      fontSize: "11px",
+                      fontSize: "10px",
                       fontWeight: "700",
+                      color: "var(--r-acc)",
+                      backgroundColor: "var(--r-accd)",
+                      padding: "1px 6px",
                       borderRadius: "10px",
-                      padding: "2px 6px",
                     }}
                   >
                     {unreadCount}
-                  </div>
+                  </span>
                 )}
               </div>
-              <button
-                type="button"
-                style={{
-                  width: "28px",
-                  height: "28px",
-                  borderRadius: "6px",
-                  border: "none",
-                  backgroundColor: "var(--r-acc)",
-                  color: "white",
-                  fontSize: "16px",
-                  cursor: "pointer",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  transition: "all 0.2s ease",
-                }}
-                title="Compose new message"
-              >
-                +
-              </button>
+              <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                <button
+                  type="button"
+                  style={{
+                    padding: "3px 8px",
+                    border: "1px solid var(--r-bd)",
+                    borderRadius: "4px",
+                    backgroundColor: "transparent",
+                    color: "var(--r-t3)",
+                    fontSize: "10.5px",
+                    fontWeight: "600",
+                    cursor: "pointer",
+                    fontFamily: "inherit",
+                    letterSpacing: "0.02em",
+                  }}
+                  title="Toggle thread view variant"
+                >
+                  A/V
+                </button>
+                <button
+                  type="button"
+                  style={{
+                    width: "28px",
+                    height: "28px",
+                    border: "none",
+                    borderRadius: "5px",
+                    backgroundColor: "var(--r-acc)",
+                    color: "white",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    cursor: "pointer",
+                    flexShrink: 0,
+                  }}
+                  title="Compose new message"
+                >
+                  <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+                    <title>Compose</title>
+                    <path
+                      d="M5.5 1v9M1 5.5h9"
+                      stroke="white"
+                      strokeWidth="1.8"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </button>
+              </div>
             </div>
           </div>
 
