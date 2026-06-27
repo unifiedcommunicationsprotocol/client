@@ -1,11 +1,16 @@
 import { useState } from "react";
+import { MessagesPanel } from "./MessagesPanel";
+import { CalendarPanel } from "./CalendarPanel";
+import { ContactsPanel } from "./ContactsPanel";
+import { NotesPanel } from "./NotesPanel";
+import { AgentsPanel } from "./AgentsPanel";
 
 interface SidebarProps {
   activeSection: string;
 }
 
 export function Sidebar({ activeSection }: SidebarProps) {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState(""); // For Inbox search
 
   const threads = [
     {
@@ -71,36 +76,6 @@ export function Sidebar({ activeSection }: SidebarProps) {
   ];
 
   const unreadCount = threads.filter((t) => t.unread > 0).length;
-
-  const sidebarSections: Record<string, { title: string; items: string[] }> = {
-    inbox: {
-      title: "Inbox",
-      items: [],
-    },
-    messaging: {
-      title: "Conversations",
-      items: ["Direct Messages", "Groups", "Channels"],
-    },
-    calendar: {
-      title: "Calendars",
-      items: ["My Calendar", "Shared", "Holidays"],
-    },
-    contacts: {
-      title: "Contacts",
-      items: ["All Contacts", "Starred", "Recent"],
-    },
-    notes: {
-      title: "Notebooks",
-      items: ["Personal", "Work", "Ideas"],
-    },
-    agents: {
-      title: "Agents",
-      items: ["My Agents", "Shared", "Public"],
-    },
-  };
-
-  const section: typeof sidebarSections.inbox =
-    sidebarSections[activeSection] || sidebarSections.inbox;
 
   return (
     <div
@@ -319,58 +294,20 @@ export function Sidebar({ activeSection }: SidebarProps) {
         </>
       )}
 
-      {/* Other Sections */}
-      {activeSection !== "inbox" && (
-        <>
-          {/* Search */}
-          <div style={{ padding: "12px" }}>
-            <input
-              type="text"
-              placeholder="Search..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              style={{
-                width: "100%",
-                padding: "8px 12px",
-                fontSize: "13px",
-                border: "1px solid var(--r-bd)",
-                borderRadius: "6px",
-                backgroundColor: "var(--r-bg)",
-                color: "var(--r-t1)",
-              }}
-            />
-          </div>
+      {/* Messages Section */}
+      {activeSection === "messaging" && <MessagesPanel />}
 
-          {/* Sidebar Items */}
-          <div style={{ padding: "12px", display: "flex", flexDirection: "column", gap: "4px" }}>
-            {section?.items.map((item) => (
-              <button
-                type="button"
-                key={item}
-                style={{
-                  textAlign: "left",
-                  padding: "8px 12px",
-                  fontSize: "14px",
-                  border: "none",
-                  backgroundColor: "transparent",
-                  color: "var(--r-t1)",
-                  cursor: "pointer",
-                  borderRadius: "6px",
-                  transition: "all 0.2s ease",
-                }}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLButtonElement).style.backgroundColor = "var(--r-hov)";
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLButtonElement).style.backgroundColor = "transparent";
-                }}
-              >
-                {item}
-              </button>
-            ))}
-          </div>
-        </>
-      )}
+      {/* Calendar Section */}
+      {activeSection === "calendar" && <CalendarPanel />}
+
+      {/* Contacts Section */}
+      {activeSection === "contacts" && <ContactsPanel />}
+
+      {/* Notes Section */}
+      {activeSection === "notes" && <NotesPanel />}
+
+      {/* Agents Section */}
+      {activeSection === "agents" && <AgentsPanel />}
     </div>
   );
 }

@@ -97,15 +97,90 @@ export function MainApp({ onLogout }: MainAppProps) {
       case "inbox":
         return <Inbox selectedThreadId={selectedThreadId} onSelectThread={setSelectedThreadId} />;
       case "messaging":
-        return <div style={{ padding: "20px", color: "var(--r-t2)" }}>Messaging (coming soon)</div>;
+        return (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "100%",
+              color: "var(--r-t2)",
+              flexDirection: "column",
+              gap: "12px",
+            }}
+          >
+            <div style={{ fontSize: "48px" }}>💬</div>
+            <div>Select a conversation to start messaging</div>
+          </div>
+        );
       case "calendar":
-        return <div style={{ padding: "20px", color: "var(--r-t2)" }}>Calendar (coming soon)</div>;
+        return (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "100%",
+              color: "var(--r-t2)",
+              flexDirection: "column",
+              gap: "12px",
+            }}
+          >
+            <div style={{ fontSize: "48px" }}>📅</div>
+            <div>Select an event to view details</div>
+          </div>
+        );
       case "contacts":
-        return <div style={{ padding: "20px", color: "var(--r-t2)" }}>Contacts (coming soon)</div>;
+        return (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "100%",
+              color: "var(--r-t2)",
+              flexDirection: "column",
+              gap: "12px",
+            }}
+          >
+            <div style={{ fontSize: "48px" }}>👥</div>
+            <div>Select a contact to view profile</div>
+          </div>
+        );
       case "notes":
-        return <div style={{ padding: "20px", color: "var(--r-t2)" }}>Notes (coming soon)</div>;
+        return (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "100%",
+              color: "var(--r-t2)",
+              flexDirection: "column",
+              gap: "12px",
+            }}
+          >
+            <div style={{ fontSize: "48px" }}>📝</div>
+            <div>Select a note to edit</div>
+          </div>
+        );
       case "agents":
-        return <div style={{ padding: "20px", color: "var(--r-t2)" }}>Agents (coming soon)</div>;
+        return (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "100%",
+              color: "var(--r-t2)",
+              flexDirection: "column",
+              gap: "12px",
+            }}
+          >
+            <div style={{ fontSize: "48px" }}>🤖</div>
+            <div>Select an agent to view details</div>
+          </div>
+        );
       case "settings":
         return <SettingsPanel onLogout={onLogout} />;
       default:
