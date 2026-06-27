@@ -6,6 +6,18 @@
 
 ---
 
+## Memory Management
+
+**⚠️ IMPORTANT: Use only project-local memories. Never reference user home directory memories.**
+
+- ✅ **Use:** `.claude/memories/` (in this repo) — version controlled, shared with all contributors
+- ❌ **Don't use:** `~/.claude-me/` (user home directory) — personal, not version controlled
+- Project memories are the source of truth for this project
+- When memories need updating, update `.claude/memories/MEMORY.md` and commit to git
+- See `.claude/memories/MEMORY.md` for index of all project context
+
+---
+
 ## Project Overview
 
 **What:** Reference implementation of the **UCP Client** — TypeScript/Bun application that implements the client side of the Unified Communications Protocol (UCP), a modern encrypted messaging protocol replacing IMAP/SMTP/CalDAV/CardDAV.
