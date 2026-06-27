@@ -1,4 +1,4 @@
-import { useRef, type FormEvent } from "react";
+import { type FormEvent, useRef } from "react";
 
 export function APITester() {
   const responseInputRef = useRef<HTMLTextAreaElement>(null);
@@ -15,9 +15,13 @@ export function APITester() {
       const res = await fetch(url, { method });
 
       const data = await res.json();
-      responseInputRef.current!.value = JSON.stringify(data, null, 2);
+      if (responseInputRef.current) {
+        responseInputRef.current.value = JSON.stringify(data, null, 2);
+      }
     } catch (error) {
-      responseInputRef.current!.value = String(error);
+      if (responseInputRef.current) {
+        responseInputRef.current.value = String(error);
+      }
     }
   };
 
@@ -54,7 +58,7 @@ export function APITester() {
       </form>
       <textarea
         ref={responseInputRef}
-        readOnly
+        readOnly={true}
         placeholder="Response will appear here..."
         className="w-full min-h-[140px] bg-[#1a1a1a] border-2 border-[#fbf0df] rounded-xl p-3 text-[#fbf0df] font-mono resize-y focus:border-[#f3d5a3] placeholder-[#fbf0df]/40"
       />

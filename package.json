@@ -10,6 +10,9 @@
     "dev:frontend": "NODE_ENV=development bun --hot src/index.client.tsx",
     "build": "bun run build.ts",
     "start": "NODE_ENV=production bun src/index.server.ts",
+    "lint": "biome lint --write ./src",
+    "format": "biome format --write ./src",
+    "check": "biome check --write ./src",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -20,11 +23,12 @@
     "drizzle-orm": "latest"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.5.1",
     "@types/bun": "latest",
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
-    "typescript": "latest",
+    "@typescript/native-preview": "^7.0.0-dev.20260421.2",
     "concurrently": "latest"
   }
 }

@@ -4,11 +4,23 @@
 
 ## Status
 
-⏳ **Scaffolded (v1.0)**
-- API client stub (`src/lib/api.ts`)
-- TypeScript configuration ready
-- Bun build + test setup
-- Ready for core implementation
+🚀 **v1.0 Frontend UI Complete + Dev Infrastructure Ready**
+
+**Desktop Client (Bun Full-Stack Executable)**
+- ✅ Relay UI design implemented (Claude Design import)
+  - Onboarding modal (3-step cryptographic identity flow)
+  - Main app with 3-column layout (nav + sidebar + content)
+  - Inbox view with thread list and message viewer
+- ✅ Hono server + React frontend on same port
+- ✅ Design system: Space Grotesk/Mono fonts, semantic colors, dark/light theme
+- ✅ Biome linting + formatting (strict mode, TypeScript 7 preview)
+- ✅ TypeScript 7 preview type checking
+
+**Ready for Implementation**
+- [ ] Fix remaining Biome violations (4 label accessibility errors)
+- [ ] Database layer: Drizzle + SQLite (for local message storage)
+- [ ] Crypto layer: Ed25519 signing + MLS groups
+- [ ] WebSocket connection to UCP server
 
 ## Core Responsibilities
 
@@ -100,36 +112,44 @@ The UCP client is **cryptographically responsible** for:
 
 ## Implementation Phases
 
-### Phase 1: Foundation (Sprint 1-2)
+### Phase 1: Foundation (Sprint 1-2) — **IN PROGRESS**
 
-#### Authentication & Connection
+#### UI & Frontend ✅ **COMPLETE**
+- [x] Relay client design (3-column layout)
+- [x] Onboarding modal (3-step identity generation → address → email bridge)
+- [x] Thread list with unread indicators
+- [x] Message viewer + composer stub
+- [x] Navigation (Inbox, Messaging, Calendar, Contacts, Notes, Agents, Settings)
+- [x] Design system (Space Grotesk/Mono, semantic colors, dark/light theme)
+
+#### Developer Experience ✅ **COMPLETE**
+- [x] Biome linting + formatting (strict rules)
+- [x] TypeScript 7 preview type checking
+- [x] Hono server + React on same port
+- [x] `bun run check/lint/format/typecheck` scripts
+
+#### Next: Authentication & Connection
+- [ ] Fix Biome violations (4 label accessibility errors)
 - [ ] WebSocket connection establishment (try WebTransport first, fallback to WebSocket)
 - [ ] `UCPHello` handshake: send `{ version, auth_token, capabilities }`
 - [ ] Receive `UCPHelloAck`: verify `server_sig` against `_ucp-server` DNS key
-  - Binding string format: `"server_hello:" || auth_token || server_id`
-  - Verify signature covers both session token and server identity
 - [ ] Challenge-response authentication: single-use 32-byte challenge, 60-second expiry
 - [ ] WebSocket keepalive: 30-second pings, 10-second pong timeout
 - [ ] Exponential backoff reconnect: 1s → 60s with ±20% jitter
 
-#### Cryptography Basics
+#### Next: Cryptography Basics
 - [ ] Ed25519 key generation (`tweetnacl.js` or `libsodium.js`)
 - [ ] Message signing: canonical JSON (sorted keys, UTF-8, no whitespace)
 - [ ] Message verification: check signature before payload processing
-- [ ] Canonical form must match exactly: all fields sorted, `signature` field omitted before signing
 
-#### Identity & Key Resolution
+#### Next: Identity & Key Resolution
 - [ ] DNS SRV/TXT lookups: `_ucp-srv`, `_ucp-sign`, `_ucp-revoke`, `_ucp-server`
 - [ ] Fetch `/.well-known/ucp/identity/<address>` for current key state
-- [ ] Cache identity endpoint results for session (invalidate on key change or revocation)
 - [ ] Verify signing key binding to identity key via identity_sig
-- [ ] Check for revocation record; reject all messages from revoked identity
 
-#### Message Envelope Serialization
-- [ ] Build `UCPEnvelope`: `{ v, type, thread_id, from, to, signing_key, server_ts, mls }`
-- [ ] Note: `server_ts` is always null on send (server assigns on receipt)
-- [ ] Serialize MLS ciphertext to base64 for transport
-- [ ] Parse inbound envelopes; verify envelope fields before MLS decryption
+#### Next: Message Envelope Serialization
+- [ ] Build `UCPEnvelope` handling
+- [ ] Parse/serialize inbound/outbound envelopes
 
 ### Phase 2: MLS (Sprint 3-4)
 - [ ] MLS group creation
