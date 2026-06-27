@@ -1,5 +1,6 @@
-**Governance:**
+**Governance & Workflow:**
 - [Memory Governance](memory_governance.md) — Only use project-local .claude/memories/, never home directory; version control is source of truth
+- [Commit Workflow](commit_workflow.md) — ALWAYS update docs + memory BEFORE creating commits; keeps project coherent
 
 **Specification & Architecture:**
 - [UCP/1.0 Specification Summary](ucp_specification_summary.md) — Complete overview of transport, encryption, messages, AI, preferences, and bridge

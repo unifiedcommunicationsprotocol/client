@@ -4,21 +4,28 @@
 
 ## Status
 
-🚀 **v1.0 Frontend UI Complete + Dev Infrastructure Ready**
+🚀 **v1.0 Frontend Interactive MVP Complete**
 
-**Desktop Client (Bun Full-Stack Executable)**
-- ✅ Relay UI design implemented (Claude Design import)
-  - Onboarding modal (3-step cryptographic identity flow)
-  - Main app with 3-column layout (nav + sidebar + content)
-  - Inbox view with thread list and message viewer
-- ✅ Hono server + React frontend on same port
-- ✅ Design system: Space Grotesk/Mono fonts, semantic colors, dark/light theme
-- ✅ Biome linting + formatting (strict mode, TypeScript 7 preview)
-- ✅ TypeScript 7 preview type checking
+**Interactive Relay Client (Bun Full-Stack)**
+- ✅ Design system: Dark/light mode with JS-controlled CSS variables
+- ✅ Global state management: 60+ fields via AppContext + useReducer
+- ✅ Navigation system: All 6 sections interactive (Inbox, Messages, Calendar, Contacts, Notes, Agents)
+- ✅ Thread management: View messages, reply/forward inline, send replies
+- ✅ Message system: Channel/DM messaging with Enter-to-send
+- ✅ Note taking: View, edit, create notes with live updates
+- ✅ Calendar: Week grid navigation (56px/hour), event viewing, create slots
+- ✅ Contacts: View profiles, search by name/handle
+- ✅ Settings: Sidebar navigation, dark mode toggle, thread density selection
+- ✅ User menu: Fixed bottom-left positioning, dark mode toggle, settings, logout
+- ✅ Compose modal: New message composition (fixed bottom-right)
+- ✅ TypeScript strict mode + Biome linting (0 errors)
 
-**Ready for Implementation**
-- [ ] Fix remaining Biome violations (4 label accessibility errors)
-- [ ] Database layer: Drizzle + SQLite (for local message storage)
+**Ready for Next Phase**
+- [ ] Onboarding modal (4-step cryptographic identity flow)
+- [ ] Key generation ceremony (5-step with DNS verification)
+- [ ] Bridge modals (OAuth/IMAP/CalDAV flows)
+- [ ] Identity + keys views
+- [ ] Database layer: Drizzle + SQLite (local message storage)
 - [ ] Crypto layer: Ed25519 signing + MLS groups
 - [ ] WebSocket connection to UCP server
 

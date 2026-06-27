@@ -7,7 +7,7 @@ metadata:
 
 ## Relay Client v1.0 Frontend Implementation
 
-**Status:** Frontend UI complete, infrastructure ready, crypto/DB layer pending
+**Status:** Interactive MVP complete with full state management, crypto/DB layer pending
 
 ### What We Built
 
@@ -67,23 +67,41 @@ src/
         └── Inbox.tsx            # Thread + message view
 ```
 
-### Known Issues to Fix
+### Interactive Implementation Complete (June 27, 2026)
 
-**Biome Violations (4 errors)**
-- 3x `noLabelWithoutControl`: Labels in Onboarding.tsx need proper `htmlFor` associations
-- 1x `noAssignInExpressions`: Assignment in frontend.tsx JSX needs refactoring
+**Global State Management** (AppContext.tsx)
+- 60+ state fields via useReducer
+- Actions for all UI interactions (navigation, selection, toggles, input)
+- Context provider wraps entire app
+- useAppContext hook for component access
 
-**Dev Server Issue**
-- `bun run dev` fails: separate dev:api/dev:frontend scripts don't work for full-stack executable
-- Solution: Need single dev script that runs Hono with HMR
+**Interactive Features**
+- Navigation: All 6 sections (Inbox, Messages, Calendar, Contacts, Notes, Agents)
+- Thread management: View messages, reply/forward inline, send replies
+- Messaging: Channel/DM sending with Enter-to-send
+- Notes: Create, view, edit with live updates
+- Calendar: Week grid (56px/hour), navigate weeks, create event slots
+- Contacts: View profiles, search by name/handle
+- Settings: Sidebar navigation, dark mode toggle, thread density
+- Dark mode: JS-controlled CSS variables (2 theme objects: 17 colors each)
+- UserMenu: Bottom-left fixed position, shows above avatar
+- Compose modal: Bottom-right fixed position for new messages
+
+**Zero Linting Errors**
+- All accessibility issues fixed
+- TypeScript strict mode passes
+- Biome in strict mode (0 violations)
 
 ### Next Steps
 
-1. **Fix Biome violations** (4 errors) → pass strict checks
-2. **Drizzle + SQLite:** Set up local storage schema (threads, messages, groups, keys)
-3. **Crypto layer:** Ed25519 signing + MLS groups (tweetnacl.js)
-4. **WebSocket:** Connect to UCP server (challenge-response auth)
-5. **Full-stack build:** `bun run build` → single executable binary
+1. **Onboarding modal** — 4-step cryptographic identity flow (scaffolded, needs wiring)
+2. **Key generation ceremony** — 5-step with DNS table verification
+3. **Bridge modals** — OAuth/IMAP/CalDAV flows (need implementation)
+4. **Identity + Keys views** — Key management, revocation, DNS records
+5. **Drizzle + SQLite:** Set up local storage schema (threads, messages, groups, keys)
+6. **Crypto layer:** Ed25519 signing + MLS groups (tweetnacl.js)
+7. **WebSocket:** Connect to UCP server (challenge-response auth)
+8. **Full-stack build:** `bun run build` → single executable binary
 
 ### Dependencies
 
