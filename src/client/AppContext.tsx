@@ -106,6 +106,16 @@ export interface AppState {
   showRevokeModal: boolean;
   revokeReason: string;
   revokeConfirmText: string;
+  // Transport
+  transportServerUrl: string;
+  transportAuthToken: string;
+  transportConnected: boolean;
+  transportConnecting: boolean;
+  transportError: Error | null;
+  transportReconnectAttempt: number;
+  // Keys (crypto)
+  signingKeyPublic: string | null;
+  signingKeySecret: string | null;
 }
 
 export type AppAction =
@@ -185,7 +195,15 @@ export type AppAction =
   | { type: "setShowRevokeModal"; payload: boolean }
   | { type: "setRevokeReason"; payload: string }
   | { type: "setRevokeConfirmText"; payload: string }
-  | { type: "revokeIdentity" };
+  | { type: "revokeIdentity" }
+  | { type: "setTransportServerUrl"; payload: string }
+  | { type: "setTransportAuthToken"; payload: string }
+  | { type: "setTransportConnected"; payload: boolean }
+  | { type: "setTransportConnecting"; payload: boolean }
+  | { type: "setTransportError"; payload: Error | null }
+  | { type: "setTransportReconnectAttempt"; payload: number }
+  | { type: "setSigningKey"; payload: { publicKey: string; secretKey: string } }
+  | { type: "clearSigningKey" };
 
 const initialState: AppState = {
   view: "inbox",
@@ -263,6 +281,14 @@ const initialState: AppState = {
   showRevokeModal: false,
   revokeReason: "",
   revokeConfirmText: "",
+  transportServerUrl: "",
+  transportAuthToken: "",
+  transportConnected: false,
+  transportConnecting: false,
+  transportError: null,
+  transportReconnectAttempt: 0,
+  signingKeyPublic: null,
+  signingKeySecret: null,
 };
 
 function reducer(state: AppState, action: AppAction): AppState {
@@ -455,6 +481,26 @@ function reducer(state: AppState, action: AppAction): AppState {
         revokeReason: "",
         revokeConfirmText: "",
       };
+    case "setTransportServerUrl":
+      return { ...state, transportServerUrl: action.payload };
+    case "setTransportAuthToken":
+      return { ...state, transportAuthToken: action.payload };
+    case "setTransportConnected":
+      return { ...state, transportConnected: action.payload };
+    case "setTransportConnecting":
+      return { ...state, transportConnecting: action.payload };
+    case "setTransportError":
+      return { ...state, transportError: action.payload };
+    case "setTransportReconnectAttempt":
+      return { ...state, transportReconnectAttempt: action.payload };
+    case "setSigningKey":
+      return {
+        ...state,
+        signingKeyPublic: action.payload.publicKey,
+        signingKeySecret: action.payload.secretKey,
+      };
+    case "clearSigningKey":
+      return { ...state, signingKeyPublic: null, signingKeySecret: null };
     default:
       return state;
   }
