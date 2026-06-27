@@ -8,13 +8,12 @@ Hard constraints for UCP client. Must be respected unconditionally.
 
 ### ⚠️ NEVER Run Git Commands in Home Directory
 
-**DO NOT run `git` commands in `~` or `/home/erik` or any parent directory of this project.**
+**DO NOT run `git` commands in the user's home directory (`~`) or any parent directory of this project.**
 
-- ✅ Git operations are ONLY safe in `/home/erik/Code/unifiedcommunicationsprotocol/client` and subdirectories
+- ✅ Git operations are ONLY safe in the project root directory and subdirectories
 - ❌ Never run git commands like `git clone`, `git init`, `git status`, etc. in:
-  - `~` (home directory)
-  - `/home/erik` (user directory)
-  - `/home/erik/Code` (any parent)
+  - `~` (user's home directory)
+  - Any parent directory above the project root
 - ❌ This includes indirect git operations (e.g., cloning repos, checking status, pulling branches)
 - ✅ When fetching external repos (like UCP spec), use Bash tools to clone into `/tmp/claude-*` or project subdirectories only
 

@@ -162,8 +162,8 @@ client/
 ## Hard Constraints
 
 ### Environment
-- ❌ **NEVER** run git commands in `~`, `/home/erik`, or `/home/erik/Code` — only safe in this project directory
-- ✅ Git operations only in `/home/erik/Code/unifiedcommunicationsprotocol/client` and subdirectories
+- ❌ **NEVER** run git commands in home directory (`~`) or parent directories — only safe in this project directory
+- ✅ Git operations only in project root and subdirectories
 
 ### Cryptography
 - ❌ Never store identity key on device (back up offline)
