@@ -1,81 +1,24 @@
 import { useState } from "react";
+import { useAppContext } from "../AppContext";
 import { MessagesPanel } from "./MessagesPanel";
 import { CalendarPanel } from "./CalendarPanel";
 import { ContactsPanel } from "./ContactsPanel";
 import { NotesPanel } from "./NotesPanel";
 import { AgentsPanel } from "./AgentsPanel";
+import { THREADS } from "../data";
 
-interface SidebarProps {
-  activeSection: string;
-}
+export function Sidebar() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const { state, dispatch } = useAppContext();
 
-export function Sidebar({ activeSection }: SidebarProps) {
-  const [searchQuery, setSearchQuery] = useState(""); // For Inbox search
-
-  const threads = [
-    {
-      id: "1",
-      from: "Sarah Chen",
-      subject: "Q3 Research Collaboration Proposal",
-      preview: "Following up on our call last week. I've been thinking more about the distributed consensus angles...",
-      timestamp: "Jun 16, 10:24 AM",
-      unread: 1,
-      avatar: "SC",
-      avatarColor: "#6366F1",
-    },
-    {
-      id: "2",
-      from: "GitHub",
-      subject: "[relay/core] PR #42: WebTransport",
-      preview: "cheriko opened a pull request. A comprehensive approach to WebTransport...",
-      timestamp: "9:15 AM",
-      unread: 0,
-      avatar: "G",
-      avatarColor: "#EA4335",
-    },
-    {
-      id: "3",
-      from: "scheduler-age...",
-      subject: "Suggested: Focus block Fri 2-...",
-      preview: "Based on your email patterns, I've...",
-      timestamp: "8:50 AM",
-      unread: 0,
-      avatar: "S",
-      avatarColor: "#9333EA",
-    },
-    {
-      id: "4",
-      from: "Miguel Torr...",
-      subject: "Dinner this Saturday?",
-      preview: "Hey! Thinking of setting a group...",
-      timestamp: "Yesterday",
-      unread: 1,
-      avatar: "MT",
-      avatarColor: "#0EA5E9",
-    },
-    {
-      id: "5",
-      from: "Relay Securi...",
-      subject: "Signing key rotation in 7 days",
-      preview: "Your current signing key (sk_a3f...",
-      timestamp: "Yesterday",
-      unread: 0,
-      avatar: "R",
-      avatarColor: "#22C55E",
-    },
-    {
-      id: "6",
-      from: "Fastmail",
-      subject: "Storage limit update",
-      preview: "We're excited to let you know about...",
-      timestamp: "Mon",
-      unread: 0,
-      avatar: "F",
-      avatarColor: "#FBBF24",
-    },
-  ];
-
-  const unreadCount = threads.filter((t) => t.unread > 0).length;
+  const unreadCount = THREADS.filter((t) => t.unread > 0).length;
+  const filteredThreads = THREADS.filter((thread) =>
+    searchQuery
+      ? thread.from.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        thread.subject.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        thread.preview.toLowerCase().includes(searchQuery.toLowerCase())
+      : true
+  );
 
   return (
     <div
@@ -89,7 +32,7 @@ export function Sidebar({ activeSection }: SidebarProps) {
       }}
     >
       {/* Inbox Section */}
-      {activeSection === "inbox" && (
+      {state.view === "inbox" && (
         <>
           {/* Header */}
           <div style={{ padding: "11px 12px 9px", borderBottom: "1px solid var(--r-bd)" }}>
@@ -184,10 +127,11 @@ export function Sidebar({ activeSection }: SidebarProps) {
 
           {/* Thread List */}
           <div style={{ flex: 1, overflow: "auto" }}>
-            {threads.map((thread) => (
+            {filteredThreads.map((thread) => (
               <button
                 type="button"
                 key={thread.id}
+                onClick={() => dispatch({ type: "selectThread", payload: thread.id })}
                 style={{
                   width: "100%",
                   display: "flex",
@@ -195,16 +139,20 @@ export function Sidebar({ activeSection }: SidebarProps) {
                   padding: "12px",
                   margin: "0",
                   border: "none",
-                  backgroundColor: "transparent",
+                  backgroundColor: state.selectedThread === thread.id ? "var(--r-sel)" : "transparent",
                   cursor: "pointer",
                   transition: "background-color 200ms",
                   borderLeft: thread.unread > 0 ? "3px solid var(--r-acc)" : "3px solid transparent",
                 }}
                 onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLButtonElement).style.backgroundColor = "var(--r-hov)";
+                  if (state.selectedThread !== thread.id) {
+                    (e.currentTarget as HTMLButtonElement).style.backgroundColor = "var(--r-hov)";
+                  }
                 }}
                 onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLButtonElement).style.backgroundColor = "transparent";
+                  if (state.selectedThread !== thread.id) {
+                    (e.currentTarget as HTMLButtonElement).style.backgroundColor = "transparent";
+                  }
                 }}
               >
                 {/* Avatar */}
@@ -295,19 +243,19 @@ export function Sidebar({ activeSection }: SidebarProps) {
       )}
 
       {/* Messages Section */}
-      {activeSection === "messaging" && <MessagesPanel />}
+      {state.view === "messaging" && <MessagesPanel />}
 
       {/* Calendar Section */}
-      {activeSection === "calendar" && <CalendarPanel />}
+      {state.view === "calendar" && <CalendarPanel />}
 
       {/* Contacts Section */}
-      {activeSection === "contacts" && <ContactsPanel />}
+      {state.view === "contacts" && <ContactsPanel />}
 
       {/* Notes Section */}
-      {activeSection === "notes" && <NotesPanel />}
+      {state.view === "notes" && <NotesPanel />}
 
       {/* Agents Section */}
-      {activeSection === "agents" && <AgentsPanel />}
+      {state.view === "agents" && <AgentsPanel />}
     </div>
   );
 }

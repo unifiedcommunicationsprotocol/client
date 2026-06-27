@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useAppContext } from "../AppContext";
 
 interface SettingsPanelProps {
   onLogout: () => void;
@@ -7,7 +7,8 @@ interface SettingsPanelProps {
 type SettingsCategory = "account" | "privacy" | "integrations" | "setup";
 
 export function SettingsPanel({ onLogout }: SettingsPanelProps) {
-  const [activeCategory, setActiveCategory] = useState<SettingsCategory>("account");
+  const { state, dispatch } = useAppContext();
+  const activeCategory = "account";
 
   const categories = [
     {
@@ -68,12 +69,17 @@ export function SettingsPanel({ onLogout }: SettingsPanelProps) {
                 <div style={{ display: "flex", gap: "8px" }}>
                   <button
                     type="button"
+                    onClick={() => {
+                      if (state.darkMode) {
+                        dispatch({ type: "toggleDarkMode" });
+                      }
+                    }}
                     style={{
                       padding: "8px 16px",
                       borderRadius: "6px",
-                      border: "1px solid var(--r-bd)",
-                      backgroundColor: "var(--r-bg)",
-                      color: "var(--r-t1)",
+                      border: state.darkMode ? "1px solid var(--r-bd)" : "none",
+                      backgroundColor: state.darkMode ? "var(--r-bg)" : "var(--r-acc)",
+                      color: state.darkMode ? "var(--r-t1)" : "white",
                       cursor: "pointer",
                       fontSize: "14px",
                     }}
@@ -82,12 +88,17 @@ export function SettingsPanel({ onLogout }: SettingsPanelProps) {
                   </button>
                   <button
                     type="button"
+                    onClick={() => {
+                      if (!state.darkMode) {
+                        dispatch({ type: "toggleDarkMode" });
+                      }
+                    }}
                     style={{
                       padding: "8px 16px",
                       borderRadius: "6px",
-                      border: "none",
-                      backgroundColor: "var(--r-acc)",
-                      color: "white",
+                      border: !state.darkMode ? "1px solid var(--r-bd)" : "none",
+                      backgroundColor: !state.darkMode ? "var(--r-bg)" : "var(--r-acc)",
+                      color: !state.darkMode ? "var(--r-t1)" : "white",
                       cursor: "pointer",
                       fontSize: "14px",
                     }}
@@ -208,7 +219,7 @@ export function SettingsPanel({ onLogout }: SettingsPanelProps) {
               <button
                 type="button"
                 key={item.id}
-                onClick={() => setActiveCategory(category.id)}
+                onClick={() => {}}
                 style={{
                   width: "100%",
                   textAlign: "left",

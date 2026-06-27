@@ -1,13 +1,12 @@
-import { useState } from "react";
+import { useAppContext } from "../AppContext";
 import { Inbox } from "./Inbox";
 import { Sidebar } from "./Sidebar";
 import { SettingsPanel } from "./SettingsPanel";
+import { UserMenu } from "./UserMenu";
 
 interface MainAppProps {
   onLogout: () => void;
 }
-
-type Section = "inbox" | "messaging" | "calendar" | "contacts" | "notes" | "agents" | "settings";
 
 const Icons = {
   relay: (
@@ -89,13 +88,16 @@ const Icons = {
 };
 
 export function MainApp({ onLogout }: MainAppProps) {
-  const [activeSection, setActiveSection] = useState<Section>("inbox");
-  const [selectedThreadId, setSelectedThreadId] = useState<string | null>(null);
+  const { state, dispatch } = useAppContext();
 
   const renderSection = () => {
-    switch (activeSection) {
+    if (state.view.startsWith("settings")) {
+      return <SettingsPanel onLogout={onLogout} />;
+    }
+
+    switch (state.view) {
       case "inbox":
-        return <Inbox selectedThreadId={selectedThreadId} onSelectThread={setSelectedThreadId} />;
+        return <Inbox />;
       case "messaging":
         return (
           <div
@@ -181,20 +183,18 @@ export function MainApp({ onLogout }: MainAppProps) {
             <div>Select an agent to view details</div>
           </div>
         );
-      case "settings":
-        return <SettingsPanel onLogout={onLogout} />;
       default:
         return null;
     }
   };
 
   const navItems = [
-    { icon: Icons.inbox, label: "Inbox", id: "inbox" as Section },
-    { icon: Icons.messages, label: "Messages", id: "messaging" as Section },
-    { icon: Icons.calendar, label: "Calendar", id: "calendar" as Section },
-    { icon: Icons.contacts, label: "Contacts", id: "contacts" as Section },
-    { icon: Icons.notes, label: "Notes", id: "notes" as Section },
-    { icon: Icons.agents, label: "Agents", id: "agents" as Section },
+    { icon: Icons.inbox, label: "Inbox", id: "inbox" },
+    { icon: Icons.messages, label: "Messages", id: "messaging" },
+    { icon: Icons.calendar, label: "Calendar", id: "calendar" },
+    { icon: Icons.contacts, label: "Contacts", id: "contacts" },
+    { icon: Icons.notes, label: "Notes", id: "notes" },
+    { icon: Icons.agents, label: "Agents", id: "agents" },
   ];
 
   return (
@@ -248,10 +248,7 @@ export function MainApp({ onLogout }: MainAppProps) {
           <button
             type="button"
             key={item.id}
-            onClick={() => {
-              setActiveSection(item.id);
-              setSelectedThreadId(null);
-            }}
+            onClick={() => dispatch({ type: "setView", payload: item.id })}
             title={item.label}
             style={{
               width: "34px",
@@ -259,8 +256,8 @@ export function MainApp({ onLogout }: MainAppProps) {
               borderRadius: "6px",
               border: "none",
               backgroundColor:
-                activeSection === item.id ? "rgba(99, 102, 241, 0.15)" : "transparent",
-              color: activeSection === item.id ? "#6366F1" : "rgba(255,255,255,0.42)",
+                state.view === item.id ? "rgba(99, 102, 241, 0.15)" : "transparent",
+              color: state.view === item.id ? "#6366F1" : "rgba(255,255,255,0.42)",
               cursor: "pointer",
               display: "flex",
               alignItems: "center",
@@ -280,7 +277,7 @@ export function MainApp({ onLogout }: MainAppProps) {
         {/* Settings Button */}
         <button
           type="button"
-          onClick={() => setActiveSection("settings")}
+          onClick={() => dispatch({ type: "setView", payload: "settings/appearance" })}
           title="Settings"
           style={{
             width: "34px",
@@ -288,8 +285,8 @@ export function MainApp({ onLogout }: MainAppProps) {
             borderRadius: "6px",
             border: "none",
             backgroundColor:
-              activeSection === "settings" ? "rgba(99, 102, 241, 0.15)" : "transparent",
-            color: activeSection === "settings" ? "#6366F1" : "rgba(255,255,255,0.42)",
+              state.view.startsWith("settings") ? "rgba(99, 102, 241, 0.15)" : "transparent",
+            color: state.view.startsWith("settings") ? "#6366F1" : "rgba(255,255,255,0.42)",
             cursor: "pointer",
             display: "flex",
             alignItems: "center",
@@ -304,7 +301,9 @@ export function MainApp({ onLogout }: MainAppProps) {
         </button>
 
         {/* User Avatar */}
-        <div
+        <button
+          type="button"
+          onClick={() => dispatch({ type: "setShowUserMenu", payload: !state.showUserMenu })}
           style={{
             width: "28px",
             height: "28px",
@@ -320,17 +319,20 @@ export function MainApp({ onLogout }: MainAppProps) {
             transition: "all 0.2s ease",
             flexShrink: 0,
             userSelect: "none",
+            border: "none",
+            padding: 0,
           }}
           title="Account"
         >
           Y
-        </div>
+        </button>
+        {state.showUserMenu && <UserMenu onLogout={onLogout} />}
       </nav>
 
       {/* Content Area */}
       <div style={{ flex: 1, display: "flex", overflow: "hidden" }}>
         {/* Sidebar */}
-        <Sidebar activeSection={activeSection} />
+        <Sidebar />
 
         {/* Main Content */}
         <div
