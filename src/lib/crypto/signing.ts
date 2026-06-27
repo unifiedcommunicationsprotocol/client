@@ -3,14 +3,7 @@
  * Uses tweetnacl.js for Ed25519 operations
  */
 
-// Lazy load tweetnacl to avoid bundling issues in SSR context
-let nacl: any = null;
-
-async function getNacl() {
-  if (nacl) return nacl;
-  nacl = await import("tweetnacl");
-  return nacl;
-}
+import nacl from "tweetnacl";
 
 export interface KeyPair {
   publicKey: string; // base64
@@ -26,15 +19,28 @@ export interface SigningKeyPair {
 }
 
 /**
+ * Encode bytes to base64
+ */
+function bytesToBase64(bytes: Uint8Array): string {
+  return Buffer.from(bytes).toString("base64");
+}
+
+/**
+ * Decode base64 to bytes
+ */
+function base64ToBytes(base64: string): Uint8Array {
+  return new Uint8Array(Buffer.from(base64, "base64"));
+}
+
+/**
  * Generate a new Ed25519 keypair
  */
 export async function generateKeyPair(): Promise<KeyPair> {
-  const lib = await getNacl();
-  const keyPair = lib.sign.keyPair();
+  const keyPair = nacl.sign.keyPair();
 
   return {
-    publicKey: lib.util.encodeBase64(keyPair.publicKey),
-    secretKey: lib.util.encodeBase64(keyPair.secretKey),
+    publicKey: bytesToBase64(keyPair.publicKey),
+    secretKey: bytesToBase64(keyPair.secretKey),
   };
 }
 
@@ -63,20 +69,18 @@ export async function signMessage(
   message: unknown,
   secretKeyBase64: string,
 ): Promise<string> {
-  const lib = await getNacl();
-
   // Canonical JSON: sorted keys, no whitespace, UTF-8
   const canonical = canonicalJson(message);
   const messageBytes = new TextEncoder().encode(canonical);
 
   // Decode secret key
-  const secretKeyBytes = lib.util.decodeBase64(secretKeyBase64);
+  const secretKeyBytes = base64ToBytes(secretKeyBase64);
 
   // Sign
-  const signature = lib.sign.detached(messageBytes, secretKeyBytes);
+  const signature = nacl.sign.detached(messageBytes, secretKeyBytes);
 
   // Return as base64
-  return lib.util.encodeBase64(signature);
+  return bytesToBase64(signature);
 }
 
 /**
@@ -88,19 +92,17 @@ export async function verifySignature(
   signatureBase64: string,
   publicKeyBase64: string,
 ): Promise<boolean> {
-  const lib = await getNacl();
-
   try {
     // Canonical JSON
     const canonical = canonicalJson(message);
     const messageBytes = new TextEncoder().encode(canonical);
 
     // Decode signature and key
-    const signatureBytes = lib.util.decodeBase64(signatureBase64);
-    const publicKeyBytes = lib.util.decodeBase64(publicKeyBase64);
+    const signatureBytes = base64ToBytes(signatureBase64);
+    const publicKeyBytes = base64ToBytes(publicKeyBase64);
 
     // Verify
-    return lib.sign.detached.verify(
+    return nacl.sign.detached.verify(
       messageBytes,
       signatureBytes,
       publicKeyBytes,
