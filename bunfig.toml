@@ -1,4 +1,16 @@
+[build]
+entrypoints = ["src/index.server.ts", "src/index.client.tsx"]
+root = "src"
+outdir = "dist"
 
-[serve.static]
-plugins = ["bun-plugin-tailwind"]
-env = "BUN_PUBLIC_*"
+[build.splitting]
+# Frontend and backend built separately
+chunk_size = 100_000
+
+[install]
+# Ensure dependencies are resolved correctly
+peer = false
+
+[define]
+# Environment variables
+NODE_ENV = '"development"'

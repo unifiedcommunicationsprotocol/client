@@ -27,12 +27,16 @@
 
 | Layer | Technology | Notes |
 |-------|-----------|-------|
-| **Language** | TypeScript 5+ | Type safety for crypto operations |
-| **Runtime** | Bun 1.0+ | Fast builds, native APIs, zero-config |
+| **Language** | TypeScript (latest) | Type safety for crypto operations |
+| **Runtime** | Bun (latest) | Fast builds, native APIs, zero-config |
+| **Web Framework** | Hono (latest) | Lightweight, cloud-native, both frontend/API on same port |
 | **Build** | Bun build | No webpack/vite/esbuild needed |
+| **Database** | PostgreSQL 18+ (via Docker Compose) | Local dev via `compose.yml`, Drizzle ORM |
+| **Database ORM** | Drizzle (latest) | TypeScript-first ORM, migrations, type-safe |
+| **Validation** | Zod (latest) | Schema validation for API requests/responses |
 | **Crypto (Signing)** | tweetnacl.js or libsodium.js | Ed25519 signing/verification |
 | **Crypto (MLS)** | mlspp (FFI) or pure-JS | RFC 9420 required |
-| **Storage** | IndexedDB | Browser standard, async, large capacity |
+| **Frontend Storage** | IndexedDB | Browser standard, async, large capacity |
 | **Transport** | WebSocket API | Persistent push connection to server |
 | **Testing** | Bun test | Table-driven tests; no Jest |
 | **Deployment** | Web + Desktop + CLI | Bun build → static JS; Electron/Tauri for desktop |
@@ -44,35 +48,52 @@
 ```
 client/
 ├── src/
-│   ├── main.ts              # Entry point (web)
+│   ├── index.server.ts          # Hono API server + frontend fallback (same port)
+│   ├── index.client.tsx         # React frontend entry point
+│   ├── client/
+│   │   ├── App.tsx              # Root React component
+│   │   ├── index.html           # HTML template
+│   │   ├── index.css            # Styling
+│   │   ├── APITester.tsx        # Dev testing component
+│   │   └── [other components]
 │   ├── lib/
-│   │   ├── api.ts           # Server HTTP client (stubs)
+│   │   ├── api.ts               # Hono API client (RPC-style via Hono)
 │   │   ├── crypto/
-│   │   │   ├── signing.ts   # Ed25519 sign/verify
-│   │   │   ├── mls.ts       # RFC 9420 group management
-│   │   │   └── identity.ts  # DNS resolution, key verification
-│   │   ├── storage.ts       # IndexedDB adapter
-│   │   ├── transport.ts     # WebSocket connection + reconnect
-│   │   └── ui/              # UI components (TBD)
-│   └── mock-server.ts       # Test mock server
+│   │   │   ├── signing.ts       # Ed25519 sign/verify
+│   │   │   ├── mls.ts           # RFC 9420 group management
+│   │   │   └── identity.ts      # DNS resolution, key verification
+│   │   ├── storage.ts           # IndexedDB adapter
+│   │   ├── transport.ts         # WebSocket connection + reconnect
+│   │   ├── db.ts                # Drizzle ORM client
+│   │   └── db/
+│   │       ├── schema.ts        # Drizzle schema definitions
+│   │       └── migrations/      # Database migrations
+│   └── server/
+│       ├── routes/
+│       │   ├── auth.ts          # Authentication endpoints
+│       │   ├── messages.ts      # Message endpoints
+│       │   └── [other routes]
+│       └── middleware/
+│           ├── validate.ts      # Zod validation middleware
+│           └── auth.ts          # Auth middleware
 ├── docs/
-│   ├── IMPLEMENTATION.md    # Build + API guide
-│   ├── architecture.md      # System design
-│   ├── constraints.md       # Hard/soft constraints
-│   ├── decisions.md         # Architecture decision records
-│   ├── deployment.md        # Web/Desktop/CLI deployment
-│   ├── testing.md           # Test strategy
-│   ├── mls-implementation.md  # RFC 9420 implementation plan
-│   ├── context.md           # Domain language
-│   ├── spec.md              # Feature spec template
-│   └── llm.md               # This file
-├── package.json             # Dependencies + scripts
-├── tsconfig.json            # TypeScript config (strict)
-├── bunfig.toml              # Bun config
-├── .env                     # Configuration
-├── .env.example             # Configuration template
-├── .gitignore               # Git ignore rules
-└── README.md                # Project overview
+│   ├── IMPLEMENTATION.md        # Build + API guide
+│   ├── architecture.md          # System design
+│   ├── constraints.md           # Hard/soft constraints
+│   ├── decisions.md             # Architecture decision records
+│   ├── deployment.md            # Web/Desktop/CLI deployment
+│   ├── testing.md               # Test strategy
+│   ├── mls-implementation.md    # RFC 9420 implementation plan
+│   ├── context.md               # Domain language
+│   ├── spec.md                  # Feature spec template
+│   └── llm.md                   # This file
+├── package.json                 # Dependencies (Hono, Zod, Drizzle, etc.)
+├── tsconfig.json                # TypeScript config (strict)
+├── bunfig.toml                  # Bun config
+├── compose.yml                  # Docker Compose (PostgreSQL 18+)
+├── .env.example                 # Environment variables template
+├── .gitignore                   # Git ignore rules
+└── README.md                    # Project overview
 ```
 
 ---
@@ -83,10 +104,14 @@ client/
 - **Ed25519 everywhere** — no password auth, all crypto via signing keys
 - **Canonical JSON** — messages signed over sorted-key, UTF-8 JSON
 - **MLS mandatory** — all messages encrypted to group, server never decrypts
-- **Tests first** — table-driven tests, no external frameworks
+- **Hono for routing** — lightweight, type-safe HTTP framework (both frontend/API on same port)
+- **Zod for validation** — runtime schema validation on all API inputs
+- **Drizzle ORM** — type-safe queries, migrations, PostgreSQL 18+
+- **Tests first** — table-driven tests, Bun test runner
 - **No external dependencies** where possible — use Web Crypto API, standard APIs
-- **Async-only** — no sync operations (IndexedDB is async)
+- **Async-only** — no sync operations (IndexedDB, Drizzle are async)
 - **Named exports** — easier to trace in tools
+- **Docker Compose for local dev** — PostgreSQL 18+ via `compose.yml`
 
 ---
 
