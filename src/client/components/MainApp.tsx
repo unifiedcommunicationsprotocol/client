@@ -1,5 +1,9 @@
 import { useAppContext } from "../AppContext";
 import { ThreadView } from "./ThreadView";
+import { MessagingView } from "./MessagingView";
+import { CalendarView } from "./CalendarView";
+import { ContactDetail } from "./ContactDetail";
+import { NoteEditor } from "./NoteEditor";
 import { Sidebar } from "./Sidebar";
 import { SettingsPanel } from "./SettingsPanel";
 import { UserMenu } from "./UserMenu";
@@ -99,81 +103,21 @@ export function MainApp({ onLogout }: MainAppProps) {
       case "inbox":
         return <ThreadView />;
       case "messaging":
-        return (
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              height: "100%",
-              color: "var(--r-t2)",
-              flexDirection: "column",
-              gap: "12px",
-            }}
-          >
-            <div style={{ fontSize: "48px" }}>💬</div>
-            <div>Select a conversation to start messaging</div>
-          </div>
-        );
+        return <MessagingView />;
       case "calendar":
-        return (
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              height: "100%",
-              color: "var(--r-t2)",
-              flexDirection: "column",
-              gap: "12px",
-            }}
-          >
-            <div style={{ fontSize: "48px" }}>📅</div>
-            <div>Select an event to view details</div>
-          </div>
-        );
+        return <CalendarView />;
       case "contacts":
-        return (
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              height: "100%",
-              color: "var(--r-t2)",
-              flexDirection: "column",
-              gap: "12px",
-            }}
-          >
-            <div style={{ fontSize: "48px" }}>👥</div>
-            <div>Select a contact to view profile</div>
-          </div>
-        );
+        return <ContactDetail />;
       case "notes":
-        return (
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              height: "100%",
-              color: "var(--r-t2)",
-              flexDirection: "column",
-              gap: "12px",
-            }}
-          >
-            <div style={{ fontSize: "48px" }}>📝</div>
-            <div>Select a note to edit</div>
-          </div>
-        );
+        return <NoteEditor />;
       case "agents":
         return (
           <div
             style={{
+              flex: 1,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              height: "100%",
               color: "var(--r-t2)",
               flexDirection: "column",
               gap: "12px",
