@@ -56,7 +56,14 @@ export function SettingsPanel({ onLogout }: SettingsPanelProps) {
     if (state.view.startsWith("settings/appearance")) {
       return (
         <div>
-          <h2 style={{ fontSize: "20px", fontWeight: "600", marginBottom: "24px", color: "var(--r-t1)" }}>
+          <h2
+            style={{
+              fontSize: "20px",
+              fontWeight: "600",
+              marginBottom: "24px",
+              color: "var(--r-t1)",
+            }}
+          >
             Appearance
           </h2>
           <div
@@ -68,10 +75,23 @@ export function SettingsPanel({ onLogout }: SettingsPanelProps) {
             }}
           >
             <div style={{ marginBottom: "20px" }}>
-              <div style={{ fontSize: "14px", fontWeight: "500", marginBottom: "8px", color: "var(--r-t1)" }}>
+              <div
+                style={{
+                  fontSize: "14px",
+                  fontWeight: "500",
+                  marginBottom: "8px",
+                  color: "var(--r-t1)",
+                }}
+              >
                 Color scheme
               </div>
-              <div style={{ fontSize: "12px", color: "var(--r-t2)", marginBottom: "12px" }}>
+              <div
+                style={{
+                  fontSize: "12px",
+                  color: "var(--r-t2)",
+                  marginBottom: "12px",
+                }}
+              >
                 Light or dark
               </div>
               <div style={{ display: "flex", gap: "8px" }}>
@@ -86,7 +106,9 @@ export function SettingsPanel({ onLogout }: SettingsPanelProps) {
                     padding: "8px 16px",
                     borderRadius: "6px",
                     border: state.darkMode ? "1px solid var(--r-bd)" : "none",
-                    backgroundColor: state.darkMode ? "var(--r-bg)" : "var(--r-acc)",
+                    backgroundColor: state.darkMode
+                      ? "var(--r-bg)"
+                      : "var(--r-acc)",
                     color: state.darkMode ? "var(--r-t1)" : "white",
                     cursor: "pointer",
                     fontSize: "14px",
@@ -105,7 +127,9 @@ export function SettingsPanel({ onLogout }: SettingsPanelProps) {
                     padding: "8px 16px",
                     borderRadius: "6px",
                     border: !state.darkMode ? "1px solid var(--r-bd)" : "none",
-                    backgroundColor: !state.darkMode ? "var(--r-bg)" : "var(--r-acc)",
+                    backgroundColor: !state.darkMode
+                      ? "var(--r-bg)"
+                      : "var(--r-acc)",
                     color: !state.darkMode ? "var(--r-t1)" : "white",
                     cursor: "pointer",
                     fontSize: "14px",
@@ -117,10 +141,23 @@ export function SettingsPanel({ onLogout }: SettingsPanelProps) {
             </div>
 
             <div style={{ marginBottom: "20px" }}>
-              <div style={{ fontSize: "14px", fontWeight: "500", marginBottom: "8px", color: "var(--r-t1)" }}>
+              <div
+                style={{
+                  fontSize: "14px",
+                  fontWeight: "500",
+                  marginBottom: "8px",
+                  color: "var(--r-t1)",
+                }}
+              >
                 Thread list density
               </div>
-              <div style={{ fontSize: "12px", color: "var(--r-t2)", marginBottom: "12px" }}>
+              <div
+                style={{
+                  fontSize: "12px",
+                  color: "var(--r-t2)",
+                  marginBottom: "12px",
+                }}
+              >
                 Compact or spacious rows
               </div>
               <div style={{ display: "flex", gap: "8px" }}>
@@ -130,8 +167,10 @@ export function SettingsPanel({ onLogout }: SettingsPanelProps) {
                   style={{
                     padding: "8px 16px",
                     borderRadius: "6px",
-                    border: state.variant === "A" ? "none" : "1px solid var(--r-bd)",
-                    backgroundColor: state.variant === "A" ? "var(--r-acc)" : "var(--r-bg)",
+                    border:
+                      state.variant === "A" ? "none" : "1px solid var(--r-bd)",
+                    backgroundColor:
+                      state.variant === "A" ? "var(--r-acc)" : "var(--r-bg)",
                     color: state.variant === "A" ? "white" : "var(--r-t1)",
                     cursor: "pointer",
                     fontSize: "14px",
@@ -145,8 +184,10 @@ export function SettingsPanel({ onLogout }: SettingsPanelProps) {
                   style={{
                     padding: "8px 16px",
                     borderRadius: "6px",
-                    border: state.variant === "B" ? "none" : "1px solid var(--r-bd)",
-                    backgroundColor: state.variant === "B" ? "var(--r-acc)" : "var(--r-bg)",
+                    border:
+                      state.variant === "B" ? "none" : "1px solid var(--r-bd)",
+                    backgroundColor:
+                      state.variant === "B" ? "var(--r-acc)" : "var(--r-bg)",
                     color: state.variant === "B" ? "white" : "var(--r-t1)",
                     cursor: "pointer",
                     fontSize: "14px",
@@ -163,7 +204,14 @@ export function SettingsPanel({ onLogout }: SettingsPanelProps) {
 
     return (
       <div>
-        <h2 style={{ fontSize: "20px", fontWeight: "600", marginBottom: "24px", color: "var(--r-t1)" }}>
+        <h2
+          style={{
+            fontSize: "20px",
+            fontWeight: "600",
+            marginBottom: "24px",
+            color: "var(--r-t1)",
+          }}
+        >
           {getSettingTitle()}
         </h2>
         <div style={{ color: "var(--r-t2)" }}>Coming soon...</div>
@@ -203,27 +251,39 @@ export function SettingsPanel({ onLogout }: SettingsPanelProps) {
               <button
                 type="button"
                 key={item.id}
-                onClick={() => dispatch({ type: "setView", payload: `settings/${item.id}` })}
+                onClick={() =>
+                  dispatch({ type: "setView", payload: `settings/${item.id}` })
+                }
                 style={{
                   width: "100%",
                   textAlign: "left",
                   padding: "8px 12px",
                   fontSize: "14px",
                   border: "none",
-                  backgroundColor: state.view === `settings/${item.id}` ? "rgba(99, 102, 241, 0.1)" : "transparent",
-                  color: state.view === `settings/${item.id}` ? "var(--r-acc)" : "var(--r-t1)",
+                  backgroundColor:
+                    state.view === `settings/${item.id}`
+                      ? "rgba(99, 102, 241, 0.1)"
+                      : "transparent",
+                  color:
+                    state.view === `settings/${item.id}`
+                      ? "var(--r-acc)"
+                      : "var(--r-t1)",
                   cursor: "pointer",
                   borderRadius: "6px",
                   transition: "all 0.2s ease",
                 }}
                 onMouseEnter={(e) => {
                   if (state.view !== `settings/${item.id}`) {
-                    (e.currentTarget as HTMLButtonElement).style.backgroundColor = "var(--r-hov)";
+                    (
+                      e.currentTarget as HTMLButtonElement
+                    ).style.backgroundColor = "var(--r-hov)";
                   }
                 }}
                 onMouseLeave={(e) => {
                   if (state.view !== `settings/${item.id}`) {
-                    (e.currentTarget as HTMLButtonElement).style.backgroundColor = "transparent";
+                    (
+                      e.currentTarget as HTMLButtonElement
+                    ).style.backgroundColor = "transparent";
                   }
                 }}
               >
@@ -251,10 +311,12 @@ export function SettingsPanel({ onLogout }: SettingsPanelProps) {
             transition: "all 0.2s ease",
           }}
           onMouseEnter={(e) => {
-            (e.currentTarget as HTMLButtonElement).style.backgroundColor = "rgba(239, 68, 68, 0.1)";
+            (e.currentTarget as HTMLButtonElement).style.backgroundColor =
+              "rgba(239, 68, 68, 0.1)";
           }}
           onMouseLeave={(e) => {
-            (e.currentTarget as HTMLButtonElement).style.backgroundColor = "transparent";
+            (e.currentTarget as HTMLButtonElement).style.backgroundColor =
+              "transparent";
           }}
         >
           Logout

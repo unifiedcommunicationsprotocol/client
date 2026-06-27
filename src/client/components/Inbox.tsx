@@ -1,12 +1,13 @@
 import { useAppContext } from "../AppContext";
-import { THREADS, THREAD_MSGS } from "../data";
+import { THREAD_MSGS, THREADS } from "../data";
 
 export function Inbox() {
   const { state } = useAppContext();
 
   const selectedThread = THREADS.find((t) => t.id === state.selectedThread);
-  const threadMessages = state.selectedThread ? (THREAD_MSGS[state.selectedThread] || []) : [];
-
+  const threadMessages = state.selectedThread
+    ? THREAD_MSGS[state.selectedThread] || []
+    : [];
 
   if (!selectedThread) {
     return (
@@ -24,7 +25,9 @@ export function Inbox() {
       >
         <div>
           <div style={{ fontSize: "48px", marginBottom: "16px" }}>📧</div>
-          <div style={{ fontSize: "16px", fontWeight: "500", marginBottom: "8px" }}>
+          <div
+            style={{ fontSize: "16px", fontWeight: "500", marginBottom: "8px" }}
+          >
             No thread selected
           </div>
           <div style={{ fontSize: "14px", color: "var(--r-t3)" }}>
@@ -52,10 +55,14 @@ export function Inbox() {
           backgroundColor: "var(--r-bg)",
         }}
       >
-        <h2 style={{ fontSize: "16px", fontWeight: "600", marginBottom: "4px" }}>
+        <h2
+          style={{ fontSize: "16px", fontWeight: "600", marginBottom: "4px" }}
+        >
           {selectedThread.subject}
         </h2>
-        <div style={{ fontSize: "13px", color: "var(--r-t2)" }}>{selectedThread.from}</div>
+        <div style={{ fontSize: "13px", color: "var(--r-t2)" }}>
+          {selectedThread.from}
+        </div>
       </div>
 
       {/* Messages */}
@@ -74,7 +81,8 @@ export function Inbox() {
             key={msg.id}
             style={{
               padding: "16px",
-              backgroundColor: msg.from === "you@relay.im" ? "var(--r-sel)" : "var(--r-sf)",
+              backgroundColor:
+                msg.from === "you@relay.im" ? "var(--r-sel)" : "var(--r-sf)",
               borderRadius: "8px",
               borderLeft: `4px solid ${msg.from === "you@relay.im" ? "var(--r-acc)" : "var(--r-bd)"}`,
             }}
@@ -87,12 +95,26 @@ export function Inbox() {
                 marginBottom: "8px",
               }}
             >
-              <div style={{ fontWeight: "600", fontSize: "14px", color: "var(--r-t1)" }}>
+              <div
+                style={{
+                  fontWeight: "600",
+                  fontSize: "14px",
+                  color: "var(--r-t1)",
+                }}
+              >
                 {msg.from === "you@relay.im" ? "You" : msg.from}
               </div>
-              <div style={{ fontSize: "12px", color: "var(--r-t3)" }}>{msg.timestamp}</div>
+              <div style={{ fontSize: "12px", color: "var(--r-t3)" }}>
+                {msg.timestamp}
+              </div>
             </div>
-            <div style={{ fontSize: "14px", color: "var(--r-t1)", lineHeight: "1.5" }}>
+            <div
+              style={{
+                fontSize: "14px",
+                color: "var(--r-t1)",
+                lineHeight: "1.5",
+              }}
+            >
               {msg.body}
             </div>
           </div>
@@ -116,7 +138,9 @@ export function Inbox() {
             fontFamily: "'Space Grotesk', system-ui, sans-serif",
           }}
         />
-        <div style={{ display: "flex", gap: "8px", justifyContent: "flex-end" }}>
+        <div
+          style={{ display: "flex", gap: "8px", justifyContent: "flex-end" }}
+        >
           <button type="button" className="secondary">
             Save as Draft
           </button>

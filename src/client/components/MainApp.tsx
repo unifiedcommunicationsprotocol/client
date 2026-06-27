@@ -1,11 +1,11 @@
 import { useAppContext } from "../AppContext";
-import { ThreadView } from "./ThreadView";
-import { MessagingView } from "./MessagingView";
 import { CalendarView } from "./CalendarView";
 import { ContactDetail } from "./ContactDetail";
+import { MessagingView } from "./MessagingView";
 import { NoteEditor } from "./NoteEditor";
-import { Sidebar } from "./Sidebar";
 import { SettingsPanel } from "./SettingsPanel";
+import { Sidebar } from "./Sidebar";
+import { ThreadView } from "./ThreadView";
 import { UserMenu } from "./UserMenu";
 
 interface MainAppProps {
@@ -28,7 +28,15 @@ const Icons = {
   inbox: (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
       <title>Inbox</title>
-      <rect x="1.5" y="3" width="13" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.3" />
+      <rect
+        x="1.5"
+        y="3"
+        width="13"
+        height="10"
+        rx="1.5"
+        stroke="currentColor"
+        strokeWidth="1.3"
+      />
       <path d="M1.5 6l6.5 3.5L14.5 6" stroke="currentColor" strokeWidth="1.3" />
     </svg>
   ),
@@ -46,8 +54,21 @@ const Icons = {
   calendar: (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
       <title>Calendar</title>
-      <rect x="1.5" y="3" width="13" height="11" rx="1.5" stroke="currentColor" strokeWidth="1.3" />
-      <path d="M1.5 7h13M5 1.5v3M11 1.5v3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+      <rect
+        x="1.5"
+        y="3"
+        width="13"
+        height="11"
+        rx="1.5"
+        stroke="currentColor"
+        strokeWidth="1.3"
+      />
+      <path
+        d="M1.5 7h13M5 1.5v3M11 1.5v3"
+        stroke="currentColor"
+        strokeWidth="1.3"
+        strokeLinecap="round"
+      />
     </svg>
   ),
   contacts: (
@@ -65,9 +86,24 @@ const Icons = {
   notes: (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
       <title>Notes</title>
-      <path d="M4 1.5h5.5L13 5v9.5H4V1.5z" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />
-      <path d="M9.5 1.5V5H13" stroke="currentColor" strokeWidth="1.3" strokeLinejoin="round" />
-      <path d="M6.5 9h4M6.5 11.5h2.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+      <path
+        d="M4 1.5h5.5L13 5v9.5H4V1.5z"
+        stroke="currentColor"
+        strokeWidth="1.3"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M9.5 1.5V5H13"
+        stroke="currentColor"
+        strokeWidth="1.3"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M6.5 9h4M6.5 11.5h2.5"
+        stroke="currentColor"
+        strokeWidth="1.3"
+        strokeLinecap="round"
+      />
     </svg>
   ),
   agents: (
@@ -86,7 +122,12 @@ const Icons = {
   compose: (
     <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
       <title>Compose</title>
-      <path d="M5.5 1v9M1 5.5h9" stroke="white" strokeWidth="1.8" strokeLinecap="round" />
+      <path
+        d="M5.5 1v9M1 5.5h9"
+        stroke="white"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+      />
     </svg>
   ),
 };
@@ -200,8 +241,11 @@ export function MainApp({ onLogout }: MainAppProps) {
               borderRadius: "6px",
               border: "none",
               backgroundColor:
-                state.view === item.id ? "rgba(99, 102, 241, 0.15)" : "transparent",
-              color: state.view === item.id ? "#6366F1" : "rgba(255,255,255,0.42)",
+                state.view === item.id
+                  ? "rgba(99, 102, 241, 0.15)"
+                  : "transparent",
+              color:
+                state.view === item.id ? "#6366F1" : "rgba(255,255,255,0.42)",
               cursor: "pointer",
               display: "flex",
               alignItems: "center",
@@ -221,16 +265,21 @@ export function MainApp({ onLogout }: MainAppProps) {
         {/* Settings Button */}
         <button
           type="button"
-          onClick={() => dispatch({ type: "setView", payload: "settings/appearance" })}
+          onClick={() =>
+            dispatch({ type: "setView", payload: "settings/appearance" })
+          }
           title="Settings"
           style={{
             width: "34px",
             height: "34px",
             borderRadius: "6px",
             border: "none",
-            backgroundColor:
-              state.view.startsWith("settings") ? "rgba(99, 102, 241, 0.15)" : "transparent",
-            color: state.view.startsWith("settings") ? "#6366F1" : "rgba(255,255,255,0.42)",
+            backgroundColor: state.view.startsWith("settings")
+              ? "rgba(99, 102, 241, 0.15)"
+              : "transparent",
+            color: state.view.startsWith("settings")
+              ? "#6366F1"
+              : "rgba(255,255,255,0.42)",
             cursor: "pointer",
             display: "flex",
             alignItems: "center",
@@ -247,7 +296,9 @@ export function MainApp({ onLogout }: MainAppProps) {
         {/* User Avatar */}
         <button
           type="button"
-          onClick={() => dispatch({ type: "setShowUserMenu", payload: !state.showUserMenu })}
+          onClick={() =>
+            dispatch({ type: "setShowUserMenu", payload: !state.showUserMenu })
+          }
           style={{
             width: "28px",
             height: "28px",

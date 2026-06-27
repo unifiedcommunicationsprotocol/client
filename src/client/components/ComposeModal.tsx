@@ -33,7 +33,9 @@ export function ComposeModal() {
           alignItems: "center",
         }}
       >
-        <h2 style={{ fontSize: "16px", fontWeight: "600", color: "var(--r-t1)" }}>
+        <h2
+          style={{ fontSize: "16px", fontWeight: "600", color: "var(--r-t1)" }}
+        >
           Compose
         </h2>
         <button
@@ -65,7 +67,16 @@ export function ComposeModal() {
       >
         {/* To Field */}
         <div>
-          <label htmlFor="to-input" style={{ fontSize: "12px", fontWeight: "600", color: "var(--r-t2)", display: "block", marginBottom: "4px" }}>
+          <label
+            htmlFor="to-input"
+            style={{
+              fontSize: "12px",
+              fontWeight: "600",
+              color: "var(--r-t2)",
+              display: "block",
+              marginBottom: "4px",
+            }}
+          >
             To
           </label>
           <input
@@ -86,7 +97,16 @@ export function ComposeModal() {
 
         {/* Subject Field */}
         <div>
-          <label htmlFor="subject-input" style={{ fontSize: "12px", fontWeight: "600", color: "var(--r-t2)", display: "block", marginBottom: "4px" }}>
+          <label
+            htmlFor="subject-input"
+            style={{
+              fontSize: "12px",
+              fontWeight: "600",
+              color: "var(--r-t2)",
+              display: "block",
+              marginBottom: "4px",
+            }}
+          >
             Subject
           </label>
           <input
@@ -107,7 +127,16 @@ export function ComposeModal() {
 
         {/* Body Field */}
         <div>
-          <label htmlFor="message-input" style={{ fontSize: "12px", fontWeight: "600", color: "var(--r-t2)", display: "block", marginBottom: "4px" }}>
+          <label
+            htmlFor="message-input"
+            style={{
+              fontSize: "12px",
+              fontWeight: "600",
+              color: "var(--r-t2)",
+              display: "block",
+              marginBottom: "4px",
+            }}
+          >
             Message
           </label>
           <textarea

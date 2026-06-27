@@ -4,7 +4,9 @@ import { CAL_EVENTS } from "../data";
 export function CalendarView() {
   const { state, dispatch } = useAppContext();
 
-  const selectedEvent = state.calSelectedEvent ? CAL_EVENTS.find((e) => e.id === state.calSelectedEvent) : null;
+  const selectedEvent = state.calSelectedEvent
+    ? CAL_EVENTS.find((e) => e.id === state.calSelectedEvent)
+    : null;
 
   const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
   const hours = Array.from({ length: 24 }, (_, i) => i);
@@ -29,13 +31,25 @@ export function CalendarView() {
           alignItems: "center",
         }}
       >
-        <h2 style={{ fontSize: "18px", fontWeight: "600", color: "var(--r-t1)", margin: "0" }}>
+        <h2
+          style={{
+            fontSize: "18px",
+            fontWeight: "600",
+            color: "var(--r-t1)",
+            margin: "0",
+          }}
+        >
           Calendar
         </h2>
         <div style={{ display: "flex", gap: "8px" }}>
           <button
             type="button"
-            onClick={() => dispatch({ type: "setCalWeekOffset", payload: state.calWeekOffset - 1 })}
+            onClick={() =>
+              dispatch({
+                type: "setCalWeekOffset",
+                payload: state.calWeekOffset - 1,
+              })
+            }
             style={{
               padding: "6px 12px",
               borderRadius: "4px",
@@ -65,7 +79,12 @@ export function CalendarView() {
           </button>
           <button
             type="button"
-            onClick={() => dispatch({ type: "setCalWeekOffset", payload: state.calWeekOffset + 1 })}
+            onClick={() =>
+              dispatch({
+                type: "setCalWeekOffset",
+                payload: state.calWeekOffset + 1,
+              })
+            }
             style={{
               padding: "6px 12px",
               borderRadius: "4px",
@@ -82,10 +101,30 @@ export function CalendarView() {
       </div>
 
       {/* Calendar Grid */}
-      <div style={{ flex: 1, overflow: "auto", display: "flex", flexDirection: "column" }}>
+      <div
+        style={{
+          flex: 1,
+          overflow: "auto",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
         {/* Day headers */}
-        <div style={{ display: "flex", borderBottom: "1px solid var(--r-bd)", backgroundColor: "var(--r-bg)" }}>
-          <div style={{ width: "60px", padding: "8px", borderRight: "1px solid var(--r-bd)", flexShrink: 0 }} />
+        <div
+          style={{
+            display: "flex",
+            borderBottom: "1px solid var(--r-bd)",
+            backgroundColor: "var(--r-bg)",
+          }}
+        >
+          <div
+            style={{
+              width: "60px",
+              padding: "8px",
+              borderRight: "1px solid var(--r-bd)",
+              flexShrink: 0,
+            }}
+          />
           {days.map((day) => (
             <div
               key={day}
@@ -106,7 +145,14 @@ export function CalendarView() {
 
         {/* Time slots */}
         {hours.map((hour) => (
-          <div key={hour} style={{ display: "flex", borderBottom: "1px solid var(--r-bd)", minHeight: "56px" }}>
+          <div
+            key={hour}
+            style={{
+              display: "flex",
+              borderBottom: "1px solid var(--r-bd)",
+              minHeight: "56px",
+            }}
+          >
             <div
               style={{
                 width: "60px",
@@ -140,10 +186,12 @@ export function CalendarView() {
                   transition: "background-color 150ms",
                 }}
                 onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLButtonElement).style.backgroundColor = "var(--r-hov)";
+                  (e.currentTarget as HTMLButtonElement).style.backgroundColor =
+                    "var(--r-hov)";
                 }}
                 onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLButtonElement).style.backgroundColor = "transparent";
+                  (e.currentTarget as HTMLButtonElement).style.backgroundColor =
+                    "transparent";
                 }}
               />
             ))}
@@ -162,13 +210,29 @@ export function CalendarView() {
             overflowY: "auto",
           }}
         >
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "12px" }}>
-            <h3 style={{ fontSize: "16px", fontWeight: "600", color: "var(--r-t1)", margin: "0" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "flex-start",
+              marginBottom: "12px",
+            }}
+          >
+            <h3
+              style={{
+                fontSize: "16px",
+                fontWeight: "600",
+                color: "var(--r-t1)",
+                margin: "0",
+              }}
+            >
               {selectedEvent.title}
             </h3>
             <button
               type="button"
-              onClick={() => dispatch({ type: "setCalSelectedEvent", payload: null })}
+              onClick={() =>
+                dispatch({ type: "setCalSelectedEvent", payload: null })
+              }
               style={{
                 background: "none",
                 border: "none",
@@ -182,7 +246,11 @@ export function CalendarView() {
           </div>
           <div style={{ fontSize: "13px", color: "var(--r-t2)" }}>
             {String(Math.floor(selectedEvent.startH)).padStart(2, "0")}:
-            {String(Math.round((selectedEvent.startH % 1) * 60)).padStart(2, "0")} - {String(Math.floor(selectedEvent.endH)).padStart(2, "0")}:
+            {String(Math.round((selectedEvent.startH % 1) * 60)).padStart(
+              2,
+              "0",
+            )}{" "}
+            - {String(Math.floor(selectedEvent.endH)).padStart(2, "0")}:
             {String(Math.round((selectedEvent.endH % 1) * 60)).padStart(2, "0")}
           </div>
           <div style={{ display: "flex", gap: "8px", marginTop: "12px" }}>

@@ -4,9 +4,11 @@ import { NOTES } from "../data";
 export function NoteEditor() {
   const { state, dispatch } = useAppContext();
 
-  const selectedNote = state.selectedNote !== null
-    ? NOTES.find((n) => n.id === state.selectedNote) || state.customNotes.find((n) => n.id === state.selectedNote)
-    : null;
+  const selectedNote =
+    state.selectedNote !== null
+      ? NOTES.find((n) => n.id === state.selectedNote) ||
+        state.customNotes.find((n) => n.id === state.selectedNote)
+      : null;
 
   if (!selectedNote) {
     return (
@@ -22,12 +24,17 @@ export function NoteEditor() {
         }}
       >
         <div style={{ fontSize: "48px" }}>📝</div>
-        <div style={{ fontSize: "16px", fontWeight: "500" }}>Select a note to edit</div>
+        <div style={{ fontSize: "16px", fontWeight: "500" }}>
+          Select a note to edit
+        </div>
       </div>
     );
   }
 
-  const note = state.noteEdits[selectedNote.id] || { title: selectedNote.title, body: selectedNote.body };
+  const note = state.noteEdits[selectedNote.id] || {
+    title: selectedNote.title,
+    body: selectedNote.body,
+  };
 
   return (
     <div
@@ -52,7 +59,11 @@ export function NoteEditor() {
           onChange={(e) =>
             dispatch({
               type: "setNoteEdits",
-              payload: { id: selectedNote.id, title: e.target.value, body: note.body },
+              payload: {
+                id: selectedNote.id,
+                title: e.target.value,
+                body: note.body,
+              },
             })
           }
           placeholder="Note title..."
@@ -83,7 +94,11 @@ export function NoteEditor() {
           onChange={(e) =>
             dispatch({
               type: "setNoteEdits",
-              payload: { id: selectedNote.id, title: note.title, body: e.target.value },
+              payload: {
+                id: selectedNote.id,
+                title: note.title,
+                body: e.target.value,
+              },
             })
           }
           placeholder="Start typing your note..."

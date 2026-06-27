@@ -1,5 +1,4 @@
 export function AgentsPanel() {
-
   const agents = [
     {
       id: "1",
@@ -24,8 +23,19 @@ export function AgentsPanel() {
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
       {/* Header */}
-      <div style={{ padding: "11px 12px 9px", borderBottom: "1px solid var(--r-bd)", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <span style={{ fontSize: "14px", fontWeight: "600", color: "var(--r-t1)" }}>
+      <div
+        style={{
+          padding: "11px 12px 9px",
+          borderBottom: "1px solid var(--r-bd)",
+          flexShrink: 0,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <span
+          style={{ fontSize: "14px", fontWeight: "600", color: "var(--r-t1)" }}
+        >
           Agents
         </span>
         <button
@@ -46,11 +56,13 @@ export function AgentsPanel() {
           }}
           title="Add agent"
           onMouseEnter={(e) => {
-            (e.currentTarget as HTMLButtonElement).style.borderColor = "var(--r-acc)";
+            (e.currentTarget as HTMLButtonElement).style.borderColor =
+              "var(--r-acc)";
             (e.currentTarget as HTMLButtonElement).style.color = "var(--r-acc)";
           }}
           onMouseLeave={(e) => {
-            (e.currentTarget as HTMLButtonElement).style.borderColor = "var(--r-bd)";
+            (e.currentTarget as HTMLButtonElement).style.borderColor =
+              "var(--r-bd)";
             (e.currentTarget as HTMLButtonElement).style.color = "var(--r-t2)";
           }}
         >
@@ -78,19 +90,29 @@ export function AgentsPanel() {
               display: "block",
             }}
             onMouseEnter={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.backgroundColor = "var(--r-hov)";
+              (e.currentTarget as HTMLButtonElement).style.backgroundColor =
+                "var(--r-hov)";
             }}
             onMouseLeave={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.backgroundColor = "var(--r-sf2)";
+              (e.currentTarget as HTMLButtonElement).style.backgroundColor =
+                "var(--r-sf2)";
             }}
           >
-            <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "6px" }}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+                marginBottom: "6px",
+              }}
+            >
               <div
                 style={{
                   width: "8px",
                   height: "8px",
                   borderRadius: "50%",
-                  backgroundColor: agent.status === "active" ? "#22C55E" : "#9CA3AF",
+                  backgroundColor:
+                    agent.status === "active" ? "#22C55E" : "#9CA3AF",
                   flexShrink: 0,
                 }}
               />

@@ -9,8 +9,19 @@ export function NotesPanel() {
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
       {/* Header */}
-      <div style={{ padding: "11px 12px 9px", borderBottom: "1px solid var(--r-bd)", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <span style={{ fontSize: "14px", fontWeight: "600", color: "var(--r-t1)" }}>
+      <div
+        style={{
+          padding: "11px 12px 9px",
+          borderBottom: "1px solid var(--r-bd)",
+          flexShrink: 0,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <span
+          style={{ fontSize: "14px", fontWeight: "600", color: "var(--r-t1)" }}
+        >
           Notes
         </span>
         <button
@@ -57,7 +68,10 @@ export function NotesPanel() {
               padding: "10px 12px",
               marginBottom: "4px",
               border: "none",
-              backgroundColor: state.selectedNote === note.id ? "var(--r-sel)" : "var(--r-sf2)",
+              backgroundColor:
+                state.selectedNote === note.id
+                  ? "var(--r-sel)"
+                  : "var(--r-sf2)",
               color: "var(--r-t1)",
               cursor: "pointer",
               borderRadius: "6px",
@@ -65,16 +79,25 @@ export function NotesPanel() {
             }}
             onMouseEnter={(e) => {
               if (state.selectedNote !== note.id) {
-                (e.currentTarget as HTMLButtonElement).style.backgroundColor = "var(--r-hov)";
+                (e.currentTarget as HTMLButtonElement).style.backgroundColor =
+                  "var(--r-hov)";
               }
             }}
             onMouseLeave={(e) => {
               if (state.selectedNote !== note.id) {
-                (e.currentTarget as HTMLButtonElement).style.backgroundColor = "var(--r-sf2)";
+                (e.currentTarget as HTMLButtonElement).style.backgroundColor =
+                  "var(--r-sf2)";
               }
             }}
           >
-            <div style={{ display: "flex", alignItems: "flex-start", gap: "8px", marginBottom: "4px" }}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "flex-start",
+                gap: "8px",
+                marginBottom: "4px",
+              }}
+            >
               {note.pinned && (
                 <span style={{ fontSize: "12px", marginTop: "1px" }}>📌</span>
               )}

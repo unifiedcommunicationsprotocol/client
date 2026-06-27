@@ -20,7 +20,9 @@ export function ContactDetail() {
         }}
       >
         <div style={{ fontSize: "48px" }}>👥</div>
-        <div style={{ fontSize: "16px", fontWeight: "500" }}>Select a contact to view profile</div>
+        <div style={{ fontSize: "16px", fontWeight: "500" }}>
+          Select a contact to view profile
+        </div>
       </div>
     );
   }
@@ -63,10 +65,23 @@ export function ContactDetail() {
           {contact.initials}
         </div>
         <div style={{ flex: 1 }}>
-          <h2 style={{ fontSize: "20px", fontWeight: "600", color: "var(--r-t1)", margin: "0 0 4px 0" }}>
+          <h2
+            style={{
+              fontSize: "20px",
+              fontWeight: "600",
+              color: "var(--r-t1)",
+              margin: "0 0 4px 0",
+            }}
+          >
             {contact.name}
           </h2>
-          <div style={{ fontSize: "14px", color: "var(--r-t2)", marginBottom: "8px" }}>
+          <div
+            style={{
+              fontSize: "14px",
+              color: "var(--r-t2)",
+              marginBottom: "8px",
+            }}
+          >
             {contact.handle}
           </div>
           {contact.onRelay && (
@@ -79,7 +94,14 @@ export function ContactDetail() {
                 color: "#22C55E",
               }}
             >
-              <span style={{ width: "6px", height: "6px", borderRadius: "50%", backgroundColor: "#22C55E" }} />
+              <span
+                style={{
+                  width: "6px",
+                  height: "6px",
+                  borderRadius: "50%",
+                  backgroundColor: "#22C55E",
+                }}
+              />
               On Relay
             </div>
           )}
@@ -89,7 +111,15 @@ export function ContactDetail() {
       {/* Details */}
       <div style={{ flex: 1, padding: "20px" }}>
         <section style={{ marginBottom: "32px" }}>
-          <h3 style={{ fontSize: "13px", fontWeight: "600", color: "var(--r-t2)", textTransform: "uppercase", marginBottom: "12px" }}>
+          <h3
+            style={{
+              fontSize: "13px",
+              fontWeight: "600",
+              color: "var(--r-t2)",
+              textTransform: "uppercase",
+              marginBottom: "12px",
+            }}
+          >
             Contact Info
           </h3>
           <div
@@ -101,7 +131,13 @@ export function ContactDetail() {
             }}
           >
             <div style={{ marginBottom: "12px" }}>
-              <div style={{ fontSize: "12px", color: "var(--r-t3)", marginBottom: "4px" }}>
+              <div
+                style={{
+                  fontSize: "12px",
+                  color: "var(--r-t3)",
+                  marginBottom: "4px",
+                }}
+              >
                 Email
               </div>
               <div style={{ fontSize: "14px", color: "var(--r-t1)" }}>
@@ -109,7 +145,13 @@ export function ContactDetail() {
               </div>
             </div>
             <div>
-              <div style={{ fontSize: "12px", color: "var(--r-t3)", marginBottom: "4px" }}>
+              <div
+                style={{
+                  fontSize: "12px",
+                  color: "var(--r-t3)",
+                  marginBottom: "4px",
+                }}
+              >
                 Network
               </div>
               <div style={{ fontSize: "14px", color: "var(--r-t1)" }}>
@@ -120,7 +162,15 @@ export function ContactDetail() {
         </section>
 
         <section>
-          <h3 style={{ fontSize: "13px", fontWeight: "600", color: "var(--r-t2)", textTransform: "uppercase", marginBottom: "12px" }}>
+          <h3
+            style={{
+              fontSize: "13px",
+              fontWeight: "600",
+              color: "var(--r-t2)",
+              textTransform: "uppercase",
+              marginBottom: "12px",
+            }}
+          >
             Actions
           </h3>
           <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>

@@ -38,11 +38,24 @@ export function UserMenu({ onLogout }: UserMenuProps) {
         }}
       >
         {/* User Info */}
-        <div style={{ padding: "12px 14px", borderBottom: "1px solid var(--r-bd)" }}>
-          <div style={{ fontSize: "12px", fontWeight: "600", color: "var(--r-t1)" }}>
+        <div
+          style={{
+            padding: "12px 14px",
+            borderBottom: "1px solid var(--r-bd)",
+          }}
+        >
+          <div
+            style={{
+              fontSize: "12px",
+              fontWeight: "600",
+              color: "var(--r-t1)",
+            }}
+          >
             You
           </div>
-          <div style={{ fontSize: "11px", color: "var(--r-t3)", marginTop: "2px" }}>
+          <div
+            style={{ fontSize: "11px", color: "var(--r-t3)", marginTop: "2px" }}
+          >
             you@relay.im
           </div>
         </div>
@@ -68,10 +81,12 @@ export function UserMenu({ onLogout }: UserMenuProps) {
               transition: "background-color 150ms",
             }}
             onMouseEnter={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.backgroundColor = "var(--r-hov)";
+              (e.currentTarget as HTMLButtonElement).style.backgroundColor =
+                "var(--r-hov)";
             }}
             onMouseLeave={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.backgroundColor = "transparent";
+              (e.currentTarget as HTMLButtonElement).style.backgroundColor =
+                "transparent";
             }}
           >
             <span>{state.darkMode ? "Light mode" : "Dark mode"}</span>
@@ -80,7 +95,9 @@ export function UserMenu({ onLogout }: UserMenuProps) {
           {/* Settings */}
           <button
             type="button"
-            onClick={() => dispatch({ type: "setView", payload: "settings/appearance" })}
+            onClick={() =>
+              dispatch({ type: "setView", payload: "settings/appearance" })
+            }
             style={{
               width: "100%",
               padding: "9px 14px",
@@ -94,10 +111,12 @@ export function UserMenu({ onLogout }: UserMenuProps) {
               borderTop: "1px solid var(--r-bd)",
             }}
             onMouseEnter={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.backgroundColor = "var(--r-hov)";
+              (e.currentTarget as HTMLButtonElement).style.backgroundColor =
+                "var(--r-hov)";
             }}
             onMouseLeave={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.backgroundColor = "transparent";
+              (e.currentTarget as HTMLButtonElement).style.backgroundColor =
+                "transparent";
             }}
           >
             Settings
@@ -122,10 +141,12 @@ export function UserMenu({ onLogout }: UserMenuProps) {
               transition: "background-color 150ms",
             }}
             onMouseEnter={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.backgroundColor = "var(--r-hov)";
+              (e.currentTarget as HTMLButtonElement).style.backgroundColor =
+                "var(--r-hov)";
             }}
             onMouseLeave={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.backgroundColor = "transparent";
+              (e.currentTarget as HTMLButtonElement).style.backgroundColor =
+                "transparent";
             }}
           >
             Logout

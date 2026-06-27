@@ -10,20 +10,34 @@ export function ContactsPanel() {
     searchQuery
       ? contact.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         contact.handle.toLowerCase().includes(searchQuery.toLowerCase())
-      : true
+      : true,
   );
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
       {/* Header */}
-      <div style={{ padding: "11px 12px 9px", borderBottom: "1px solid var(--r-bd)", flexShrink: 0 }}>
-        <span style={{ fontSize: "14px", fontWeight: "600", color: "var(--r-t1)" }}>
+      <div
+        style={{
+          padding: "11px 12px 9px",
+          borderBottom: "1px solid var(--r-bd)",
+          flexShrink: 0,
+        }}
+      >
+        <span
+          style={{ fontSize: "14px", fontWeight: "600", color: "var(--r-t1)" }}
+        >
           Contacts
         </span>
       </div>
 
       {/* Search */}
-      <div style={{ padding: "7px 10px", borderBottom: "1px solid var(--r-bd)", flexShrink: 0 }}>
+      <div
+        style={{
+          padding: "7px 10px",
+          borderBottom: "1px solid var(--r-bd)",
+          flexShrink: 0,
+        }}
+      >
         <div
           style={{
             display: "flex",
@@ -35,10 +49,27 @@ export function ContactsPanel() {
             border: "1px solid var(--r-bd)",
           }}
         >
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style={{ color: "var(--r-t3)", flexShrink: 0 }}>
+          <svg
+            width="12"
+            height="12"
+            viewBox="0 0 12 12"
+            fill="none"
+            style={{ color: "var(--r-t3)", flexShrink: 0 }}
+          >
             <title>Search</title>
-            <circle cx="5" cy="5" r="3.5" stroke="currentColor" strokeWidth="1.2" />
-            <path d="M8.5 8.5l2 2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+            <circle
+              cx="5"
+              cy="5"
+              r="3.5"
+              stroke="currentColor"
+              strokeWidth="1.2"
+            />
+            <path
+              d="M8.5 8.5l2 2"
+              stroke="currentColor"
+              strokeWidth="1.2"
+              strokeLinecap="round"
+            />
           </svg>
           <input
             type="text"
@@ -64,14 +95,19 @@ export function ContactsPanel() {
           <button
             key={contact.id}
             type="button"
-            onClick={() => dispatch({ type: "selectContact", payload: contact.id })}
+            onClick={() =>
+              dispatch({ type: "selectContact", payload: contact.id })
+            }
             style={{
               width: "100%",
               textAlign: "left",
               padding: "8px 12px",
               marginBottom: "2px",
               border: "none",
-              backgroundColor: state.selectedContact === contact.id ? "var(--r-sel)" : "transparent",
+              backgroundColor:
+                state.selectedContact === contact.id
+                  ? "var(--r-sel)"
+                  : "transparent",
               color: "var(--r-t1)",
               cursor: "pointer",
               borderRadius: "6px",
@@ -82,12 +118,14 @@ export function ContactsPanel() {
             }}
             onMouseEnter={(e) => {
               if (state.selectedContact !== contact.id) {
-                (e.currentTarget as HTMLButtonElement).style.backgroundColor = "var(--r-hov)";
+                (e.currentTarget as HTMLButtonElement).style.backgroundColor =
+                  "var(--r-hov)";
               }
             }}
             onMouseLeave={(e) => {
               if (state.selectedContact !== contact.id) {
-                (e.currentTarget as HTMLButtonElement).style.backgroundColor = "transparent";
+                (e.currentTarget as HTMLButtonElement).style.backgroundColor =
+                  "transparent";
               }
             }}
           >

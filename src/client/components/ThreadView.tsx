@@ -1,11 +1,13 @@
 import { useAppContext } from "../AppContext";
-import { THREADS, THREAD_MSGS } from "../data";
+import { THREAD_MSGS, THREADS } from "../data";
 
 export function ThreadView() {
   const { state, dispatch } = useAppContext();
 
   const selectedThread = THREADS.find((t) => t.id === state.selectedThread);
-  const threadMessages = state.selectedThread ? (THREAD_MSGS[state.selectedThread] || []) : [];
+  const threadMessages = state.selectedThread
+    ? THREAD_MSGS[state.selectedThread] || []
+    : [];
 
   if (!selectedThread) {
     return (
@@ -23,7 +25,9 @@ export function ThreadView() {
       >
         <div>
           <div style={{ fontSize: "48px", marginBottom: "16px" }}>📧</div>
-          <div style={{ fontSize: "16px", fontWeight: "500", marginBottom: "8px" }}>
+          <div
+            style={{ fontSize: "16px", fontWeight: "500", marginBottom: "8px" }}
+          >
             No thread selected
           </div>
           <div style={{ fontSize: "14px", color: "var(--r-t3)" }}>
@@ -51,10 +55,19 @@ export function ThreadView() {
           backgroundColor: "var(--r-bg)",
         }}
       >
-        <h2 style={{ fontSize: "16px", fontWeight: "600", marginBottom: "4px", color: "var(--r-t1)" }}>
+        <h2
+          style={{
+            fontSize: "16px",
+            fontWeight: "600",
+            marginBottom: "4px",
+            color: "var(--r-t1)",
+          }}
+        >
           {selectedThread.subject}
         </h2>
-        <div style={{ fontSize: "13px", color: "var(--r-t2)" }}>{selectedThread.from}</div>
+        <div style={{ fontSize: "13px", color: "var(--r-t2)" }}>
+          {selectedThread.from}
+        </div>
       </div>
 
       {/* Messages */}
@@ -73,7 +86,8 @@ export function ThreadView() {
             key={msg.id}
             style={{
               padding: "16px",
-              backgroundColor: msg.from === "you@relay.im" ? "var(--r-sel)" : "var(--r-sf)",
+              backgroundColor:
+                msg.from === "you@relay.im" ? "var(--r-sel)" : "var(--r-sf)",
               borderRadius: "8px",
               borderLeft: `4px solid ${msg.from === "you@relay.im" ? "var(--r-acc)" : "var(--r-bd)"}`,
             }}
@@ -86,16 +100,36 @@ export function ThreadView() {
                 marginBottom: "8px",
               }}
             >
-              <div style={{ fontWeight: "600", fontSize: "14px", color: "var(--r-t1)" }}>
+              <div
+                style={{
+                  fontWeight: "600",
+                  fontSize: "14px",
+                  color: "var(--r-t1)",
+                }}
+              >
                 {msg.from === "you@relay.im" ? "You" : msg.from}
               </div>
-              <div style={{ fontSize: "12px", color: "var(--r-t3)" }}>{msg.timestamp}</div>
+              <div style={{ fontSize: "12px", color: "var(--r-t3)" }}>
+                {msg.timestamp}
+              </div>
             </div>
-            <div style={{ fontSize: "14px", color: "var(--r-t1)", lineHeight: "1.5" }}>
+            <div
+              style={{
+                fontSize: "14px",
+                color: "var(--r-t1)",
+                lineHeight: "1.5",
+              }}
+            >
               {msg.body}
             </div>
             {msg.encrypted && (
-              <div style={{ fontSize: "11px", color: "var(--r-safe)", marginTop: "8px" }}>
+              <div
+                style={{
+                  fontSize: "11px",
+                  color: "var(--r-safe)",
+                  marginTop: "8px",
+                }}
+              >
                 ✓ Encrypted end-to-end
               </div>
             )}
@@ -112,14 +146,23 @@ export function ThreadView() {
             backgroundColor: "var(--r-bg)",
           }}
         >
-          <div style={{ marginBottom: "12px", fontSize: "13px", color: "var(--r-t2)" }}>
-            {state.replyIsForward ? "Forwarding to:" : "Replying to:"} {state.replyTo}
+          <div
+            style={{
+              marginBottom: "12px",
+              fontSize: "13px",
+              color: "var(--r-t2)",
+            }}
+          >
+            {state.replyIsForward ? "Forwarding to:" : "Replying to:"}{" "}
+            {state.replyTo}
             {state.replyShowCc && state.replyCc && `, ${state.replyCc}`}
             {state.replyShowBcc && state.replyBcc && `, ${state.replyBcc}`}
           </div>
           <textarea
             value={state.replyText}
-            onChange={(e) => dispatch({ type: "setReplyText", payload: e.target.value })}
+            onChange={(e) =>
+              dispatch({ type: "setReplyText", payload: e.target.value })
+            }
             placeholder="Type your reply..."
             style={{
               width: "100%",
@@ -135,7 +178,9 @@ export function ThreadView() {
               resize: "vertical",
             }}
           />
-          <div style={{ display: "flex", gap: "8px", justifyContent: "flex-end" }}>
+          <div
+            style={{ display: "flex", gap: "8px", justifyContent: "flex-end" }}
+          >
             <button
               type="button"
               onClick={() => dispatch({ type: "setReplyOpen", payload: false })}
@@ -164,7 +209,9 @@ export function ThreadView() {
                         id: `${state.selectedThread}-reply-${Date.now()}`,
                         from: "you@relay.im",
                         timestamp: new Date().toLocaleString(),
-                        subject: state.replyIsForward ? `Fwd: ${selectedThread.subject}` : `Re: ${selectedThread.subject}`,
+                        subject: state.replyIsForward
+                          ? `Fwd: ${selectedThread.subject}`
+                          : `Re: ${selectedThread.subject}`,
                         body: state.replyText,
                         encrypted: true,
                       },

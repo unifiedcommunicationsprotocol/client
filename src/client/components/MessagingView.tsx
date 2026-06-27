@@ -1,5 +1,5 @@
-import type { MsgEntry } from "../data";
 import { useAppContext } from "../AppContext";
+import type { MsgEntry } from "../data";
 import { MSG_CHANNELS, MSG_DMS } from "../data";
 
 export function MessagingView() {
@@ -8,7 +8,9 @@ export function MessagingView() {
   const channel = MSG_CHANNELS.find((c) => c.id === state.selectedChannel);
   const dm = MSG_DMS.find((d) => d.id === state.selectedDM);
 
-  const displayName = channel?.name ? `#${channel.name}` : dm?.name || "Select a conversation";
+  const displayName = channel?.name
+    ? `#${channel.name}`
+    : dm?.name || "Select a conversation";
   const currentConversation = channel || dm;
 
   if (!currentConversation) {
@@ -25,12 +27,16 @@ export function MessagingView() {
         }}
       >
         <div style={{ fontSize: "48px" }}>💬</div>
-        <div style={{ fontSize: "16px", fontWeight: "500" }}>Select a conversation to start messaging</div>
+        <div style={{ fontSize: "16px", fontWeight: "500" }}>
+          Select a conversation to start messaging
+        </div>
       </div>
     );
   }
 
-  const messages = state.selectedChannel ? (state.customChanMsgs[state.selectedChannel] || []) : [];
+  const messages = state.selectedChannel
+    ? state.customChanMsgs[state.selectedChannel] || []
+    : [];
 
   return (
     <div
@@ -49,11 +55,20 @@ export function MessagingView() {
           backgroundColor: "var(--r-bg)",
         }}
       >
-        <h2 style={{ fontSize: "16px", fontWeight: "600", color: "var(--r-t1)", margin: "0" }}>
+        <h2
+          style={{
+            fontSize: "16px",
+            fontWeight: "600",
+            color: "var(--r-t1)",
+            margin: "0",
+          }}
+        >
           {displayName}
         </h2>
         {channel && (
-          <div style={{ fontSize: "13px", color: "var(--r-t2)", marginTop: "4px" }}>
+          <div
+            style={{ fontSize: "13px", color: "var(--r-t2)", marginTop: "4px" }}
+          >
             {channel.members} members
           </div>
         )}
@@ -71,7 +86,13 @@ export function MessagingView() {
         }}
       >
         {messages.length === 0 ? (
-          <div style={{ color: "var(--r-t3)", textAlign: "center", marginTop: "40px" }}>
+          <div
+            style={{
+              color: "var(--r-t3)",
+              textAlign: "center",
+              marginTop: "40px",
+            }}
+          >
             No messages yet. Start the conversation!
           </div>
         ) : (
@@ -93,12 +114,26 @@ export function MessagingView() {
                   marginBottom: "4px",
                 }}
               >
-                <div style={{ fontWeight: "600", fontSize: "13px", color: "var(--r-t1)" }}>
+                <div
+                  style={{
+                    fontWeight: "600",
+                    fontSize: "13px",
+                    color: "var(--r-t1)",
+                  }}
+                >
                   {msg.from}
                 </div>
-                <div style={{ fontSize: "11px", color: "var(--r-t3)" }}>{msg.timestamp}</div>
+                <div style={{ fontSize: "11px", color: "var(--r-t3)" }}>
+                  {msg.timestamp}
+                </div>
               </div>
-              <div style={{ fontSize: "13px", color: "var(--r-t1)", lineHeight: "1.4" }}>
+              <div
+                style={{
+                  fontSize: "13px",
+                  color: "var(--r-t1)",
+                  lineHeight: "1.4",
+                }}
+              >
                 {msg.body}
               </div>
             </div>
@@ -123,9 +158,15 @@ export function MessagingView() {
           <input
             type="text"
             value={state.msgInputText}
-            onChange={(e) => dispatch({ type: "setMsgInputText", payload: e.target.value })}
+            onChange={(e) =>
+              dispatch({ type: "setMsgInputText", payload: e.target.value })
+            }
             onKeyDown={(e) => {
-              if (e.key === "Enter" && state.msgInputText.trim() && state.selectedChannel) {
+              if (
+                e.key === "Enter" &&
+                state.msgInputText.trim() &&
+                state.selectedChannel
+              ) {
                 dispatch({
                   type: "addChanMsg",
                   payload: {

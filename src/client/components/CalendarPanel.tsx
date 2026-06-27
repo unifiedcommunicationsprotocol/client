@@ -17,8 +17,16 @@ export function CalendarPanel() {
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
       {/* Header */}
-      <div style={{ padding: "11px 12px 9px", borderBottom: "1px solid var(--r-bd)", flexShrink: 0 }}>
-        <span style={{ fontSize: "14px", fontWeight: "600", color: "var(--r-t1)" }}>
+      <div
+        style={{
+          padding: "11px 12px 9px",
+          borderBottom: "1px solid var(--r-bd)",
+          flexShrink: 0,
+        }}
+      >
+        <span
+          style={{ fontSize: "14px", fontWeight: "600", color: "var(--r-t1)" }}
+        >
           Calendar
         </span>
       </div>
@@ -42,14 +50,19 @@ export function CalendarPanel() {
           <button
             type="button"
             key={event.id}
-            onClick={() => dispatch({ type: "setCalSelectedEvent", payload: event.id })}
+            onClick={() =>
+              dispatch({ type: "setCalSelectedEvent", payload: event.id })
+            }
             style={{
               width: "100%",
               textAlign: "left",
               padding: "10px 8px",
               marginBottom: "4px",
               borderRadius: "6px",
-              backgroundColor: state.calSelectedEvent === event.id ? "var(--r-sel)" : "var(--r-sf2)",
+              backgroundColor:
+                state.calSelectedEvent === event.id
+                  ? "var(--r-sel)"
+                  : "var(--r-sf2)",
               border: "1px solid var(--r-bd)",
               cursor: "pointer",
               transition: "background-color 150ms",
@@ -57,12 +70,14 @@ export function CalendarPanel() {
             }}
             onMouseEnter={(e) => {
               if (state.calSelectedEvent !== event.id) {
-                (e.currentTarget as HTMLButtonElement).style.backgroundColor = "var(--r-hov)";
+                (e.currentTarget as HTMLButtonElement).style.backgroundColor =
+                  "var(--r-hov)";
               }
             }}
             onMouseLeave={(e) => {
               if (state.calSelectedEvent !== event.id) {
-                (e.currentTarget as HTMLButtonElement).style.backgroundColor = "var(--r-sf2)";
+                (e.currentTarget as HTMLButtonElement).style.backgroundColor =
+                  "var(--r-sf2)";
               }
             }}
           >

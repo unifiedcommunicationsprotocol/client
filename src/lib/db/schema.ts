@@ -1,11 +1,11 @@
 import {
+  boolean,
+  integer,
+  jsonb,
   pgTable,
   text,
   timestamp,
   uuid,
-  integer,
-  boolean,
-  jsonb,
 } from "drizzle-orm/pg-core";
 
 // Identity & Keys

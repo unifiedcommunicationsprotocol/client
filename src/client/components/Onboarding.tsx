@@ -15,12 +15,18 @@ export function Onboarding({ onComplete }: OnboardingProps) {
   const steps = [
     {
       title: "Your cryptographic identity",
-      description: "UCP uses Ed25519 keypairs for identity. Your identity key stays offline.",
+      description:
+        "UCP uses Ed25519 keypairs for identity. Your identity key stays offline.",
       content: (
         <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
           <div>
             <div
-              style={{ display: "block", marginBottom: "8px", fontWeight: "500", fontSize: "14px" }}
+              style={{
+                display: "block",
+                marginBottom: "8px",
+                fontWeight: "500",
+                fontSize: "14px",
+              }}
             >
               Generate Identity Key
             </div>
@@ -48,13 +54,25 @@ export function Onboarding({ onComplete }: OnboardingProps) {
                 }}
               >
                 <div style={{ marginBottom: "8px" }}>
-                  <div style={{ fontSize: "11px", color: "var(--r-t3)", marginBottom: "4px" }}>
+                  <div
+                    style={{
+                      fontSize: "11px",
+                      color: "var(--r-t3)",
+                      marginBottom: "4px",
+                    }}
+                  >
                     Identity Key (back up offline)
                   </div>
                   {identityKey}
                 </div>
                 <div>
-                  <div style={{ fontSize: "11px", color: "var(--r-t3)", marginBottom: "4px" }}>
+                  <div
+                    style={{
+                      fontSize: "11px",
+                      color: "var(--r-t3)",
+                      marginBottom: "4px",
+                    }}
+                  >
                     Signing Key (device)
                   </div>
                   {signingKey}
@@ -80,7 +98,11 @@ export function Onboarding({ onComplete }: OnboardingProps) {
                 fontSize: "14px",
               }}
             >
-              <input type="radio" checked={!useOwnDomain} onChange={() => setUseOwnDomain(false)} />
+              <input
+                type="radio"
+                checked={!useOwnDomain}
+                onChange={() => setUseOwnDomain(false)}
+              />
               Use relay.im address
             </label>
           </div>
@@ -107,7 +129,9 @@ export function Onboarding({ onComplete }: OnboardingProps) {
                   onChange={(e) => setAddress(e.target.value)}
                   style={{ flex: 1 }}
                 />
-                <span style={{ padding: "10px 12px", color: "var(--r-t2)" }}>@relay.im</span>
+                <span style={{ padding: "10px 12px", color: "var(--r-t2)" }}>
+                  @relay.im
+                </span>
               </div>
             </div>
           ) : (
@@ -131,7 +155,13 @@ export function Onboarding({ onComplete }: OnboardingProps) {
                 onChange={(e) => setDomain(e.target.value)}
                 style={{ width: "100%" }}
               />
-              <p style={{ fontSize: "13px", color: "var(--r-t3)", marginTop: "8px" }}>
+              <p
+                style={{
+                  fontSize: "13px",
+                  color: "var(--r-t3)",
+                  marginTop: "8px",
+                }}
+              >
                 Publish DNS records for identity verification
               </p>
             </div>
@@ -147,7 +177,11 @@ export function Onboarding({ onComplete }: OnboardingProps) {
                 fontSize: "14px",
               }}
             >
-              <input type="radio" checked={useOwnDomain} onChange={() => setUseOwnDomain(true)} />
+              <input
+                type="radio"
+                checked={useOwnDomain}
+                onChange={() => setUseOwnDomain(true)}
+              />
               Use my own domain
             </label>
           </div>
@@ -156,7 +190,8 @@ export function Onboarding({ onComplete }: OnboardingProps) {
     },
     {
       title: "Connect existing email",
-      description: "Bridge Gmail, Fastmail, or other accounts. Messages arrive encrypted.",
+      description:
+        "Bridge Gmail, Fastmail, or other accounts. Messages arrive encrypted.",
       content: (
         <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
           <button type="button" className="primary" style={{ width: "100%" }}>
@@ -176,7 +211,8 @@ export function Onboarding({ onComplete }: OnboardingProps) {
               textAlign: "center",
             }}
           >
-            Existing emails are encrypted and stored locally. Bridge is read-only for v1.0.
+            Existing emails are encrypted and stored locally. Bridge is
+            read-only for v1.0.
           </p>
         </div>
       ),
@@ -209,7 +245,11 @@ export function Onboarding({ onComplete }: OnboardingProps) {
       >
         {/* Header */}
         <div style={{ marginBottom: "32px" }}>
-          <div style={{ fontSize: "24px", fontWeight: "700", marginBottom: "8px" }}>🔐 Relay</div>
+          <div
+            style={{ fontSize: "24px", fontWeight: "700", marginBottom: "8px" }}
+          >
+            🔐 Relay
+          </div>
           <div
             style={{
               fontSize: "13px",
@@ -230,7 +270,9 @@ export function Onboarding({ onComplete }: OnboardingProps) {
           >
             {steps[step]?.title}
           </h1>
-          <p style={{ fontSize: "14px", color: "var(--r-t2)" }}>{steps[step]?.description}</p>
+          <p style={{ fontSize: "14px", color: "var(--r-t2)" }}>
+            {steps[step]?.description}
+          </p>
         </div>
 
         {/* Progress */}

@@ -1,6 +1,16 @@
-import { createContext, useReducer, useContext } from "react";
 import type { ReactNode } from "react";
-import type { BridgeAccount, CalEvent, DavFields, ImapFields, Keyset, KeygenKeys, MsgEntry, Note, ThreadMsg } from "./data";
+import { createContext, useContext, useReducer } from "react";
+import type {
+  BridgeAccount,
+  CalEvent,
+  DavFields,
+  ImapFields,
+  KeygenKeys,
+  Keyset,
+  MsgEntry,
+  Note,
+  ThreadMsg,
+} from "./data";
 
 export interface MsgAttachment {
   id: string;
@@ -146,7 +156,10 @@ export type AppAction =
   | { type: "setNotifEnabled"; payload: boolean }
   | { type: "setNotifSound"; payload: boolean }
   | { type: "setNotifBadge"; payload: boolean }
-  | { type: "setNoteEdits"; payload: { id: number; title: string; body: string } }
+  | {
+      type: "setNoteEdits";
+      payload: { id: number; title: string; body: string };
+    }
   | { type: "addCustomNote"; payload: Note }
   | { type: "setKeygenStep"; payload: number }
   | { type: "setKeygenKeys"; payload: KeygenKeys | null }
@@ -287,7 +300,10 @@ function reducer(state: AppState, action: AppAction): AppState {
     case "setEmailConnectStep":
       return { ...state, emailConnectStep: action.payload };
     case "addConnectedEmail":
-      return { ...state, connectedEmails: [...state.connectedEmails, action.payload] };
+      return {
+        ...state,
+        connectedEmails: [...state.connectedEmails, action.payload],
+      };
     case "setReplyOpen":
       return { ...state, replyOpen: action.payload };
     case "setReplyText":
@@ -329,7 +345,13 @@ function reducer(state: AppState, action: AppAction): AppState {
     case "setBridgeAccountType":
       return { ...state, bridgeAccountType: action.payload };
     case "addBridgeAccount":
-      return { ...state, settingsBridgeAccounts: [...state.settingsBridgeAccounts, action.payload] };
+      return {
+        ...state,
+        settingsBridgeAccounts: [
+          ...state.settingsBridgeAccounts,
+          action.payload,
+        ],
+      };
     case "setImapFields":
       return { ...state, imapFields: action.payload };
     case "setCaldavFields":
@@ -402,7 +424,10 @@ function reducer(state: AppState, action: AppAction): AppState {
     case "setCalShowDetail":
       return { ...state, calShowDetail: action.payload };
     case "addCalEvent":
-      return { ...state, customCalEvents: [...state.customCalEvents, action.payload] };
+      return {
+        ...state,
+        customCalEvents: [...state.customCalEvents, action.payload],
+      };
     case "setCalCreating":
       return { ...state, calCreating: action.payload };
     case "setCalNewTitle":

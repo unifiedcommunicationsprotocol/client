@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./index.css";
+import { AppProvider, useAppContext } from "./AppContext";
+import { ComposeModal } from "./components/ComposeModal";
 import { MainApp } from "./components/MainApp";
 import { Onboarding } from "./components/Onboarding";
-import { ComposeModal } from "./components/ComposeModal";
-import { AppProvider, useAppContext } from "./AppContext";
 
 const darkModeTheme = {
   "--r-bg": "#09090B",

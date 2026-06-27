@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useAppContext } from "../AppContext";
-import { MessagesPanel } from "./MessagesPanel";
+import { THREADS } from "../data";
+import { AgentsPanel } from "./AgentsPanel";
 import { CalendarPanel } from "./CalendarPanel";
 import { ContactsPanel } from "./ContactsPanel";
+import { MessagesPanel } from "./MessagesPanel";
 import { NotesPanel } from "./NotesPanel";
-import { AgentsPanel } from "./AgentsPanel";
-import { THREADS } from "../data";
 
 export function Sidebar() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -17,7 +17,7 @@ export function Sidebar() {
       ? thread.from.toLowerCase().includes(searchQuery.toLowerCase()) ||
         thread.subject.toLowerCase().includes(searchQuery.toLowerCase()) ||
         thread.preview.toLowerCase().includes(searchQuery.toLowerCase())
-      : true
+      : true,
   );
 
   return (
@@ -35,10 +35,29 @@ export function Sidebar() {
       {state.view === "inbox" && (
         <>
           {/* Header */}
-          <div style={{ padding: "11px 12px 9px", borderBottom: "1px solid var(--r-bd)" }}>
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                <span style={{ fontSize: "14px", fontWeight: "600", color: "var(--r-t1)" }}>
+          <div
+            style={{
+              padding: "11px 12px 9px",
+              borderBottom: "1px solid var(--r-bd)",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <div
+                style={{ display: "flex", alignItems: "center", gap: "8px" }}
+              >
+                <span
+                  style={{
+                    fontSize: "14px",
+                    fontWeight: "600",
+                    color: "var(--r-t1)",
+                  }}
+                >
                   Inbox
                 </span>
                 {unreadCount > 0 && (
@@ -56,7 +75,9 @@ export function Sidebar() {
                   </span>
                 )}
               </div>
-              <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+              <div
+                style={{ display: "flex", alignItems: "center", gap: "4px" }}
+              >
                 <button
                   type="button"
                   style={{
@@ -77,7 +98,9 @@ export function Sidebar() {
                 </button>
                 <button
                   type="button"
-                  onClick={() => dispatch({ type: "setComposing", payload: true })}
+                  onClick={() =>
+                    dispatch({ type: "setComposing", payload: true })
+                  }
                   style={{
                     width: "28px",
                     height: "28px",
@@ -132,7 +155,9 @@ export function Sidebar() {
               <button
                 type="button"
                 key={thread.id}
-                onClick={() => dispatch({ type: "selectThread", payload: thread.id })}
+                onClick={() =>
+                  dispatch({ type: "selectThread", payload: thread.id })
+                }
                 style={{
                   width: "100%",
                   display: "flex",
@@ -140,19 +165,29 @@ export function Sidebar() {
                   padding: "12px",
                   margin: "0",
                   border: "none",
-                  backgroundColor: state.selectedThread === thread.id ? "var(--r-sel)" : "transparent",
+                  backgroundColor:
+                    state.selectedThread === thread.id
+                      ? "var(--r-sel)"
+                      : "transparent",
                   cursor: "pointer",
                   transition: "background-color 200ms",
-                  borderLeft: thread.unread > 0 ? "3px solid var(--r-acc)" : "3px solid transparent",
+                  borderLeft:
+                    thread.unread > 0
+                      ? "3px solid var(--r-acc)"
+                      : "3px solid transparent",
                 }}
                 onMouseEnter={(e) => {
                   if (state.selectedThread !== thread.id) {
-                    (e.currentTarget as HTMLButtonElement).style.backgroundColor = "var(--r-hov)";
+                    (
+                      e.currentTarget as HTMLButtonElement
+                    ).style.backgroundColor = "var(--r-hov)";
                   }
                 }}
                 onMouseLeave={(e) => {
                   if (state.selectedThread !== thread.id) {
-                    (e.currentTarget as HTMLButtonElement).style.backgroundColor = "transparent";
+                    (
+                      e.currentTarget as HTMLButtonElement
+                    ).style.backgroundColor = "transparent";
                   }
                 }}
               >
