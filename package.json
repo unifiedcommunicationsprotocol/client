@@ -5,9 +5,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"bun run dev:api\" \"bun run dev:frontend\"",
-    "dev:api": "NODE_ENV=development bun --hot src/index.server.ts",
-    "dev:frontend": "NODE_ENV=development bun --hot src/index.client.tsx",
+    "dev": "NODE_ENV=development bun --hot src/index.server.ts",
     "build": "bun run build.ts",
     "start": "NODE_ENV=production bun src/index.server.ts",
     "lint": "biome lint --write ./src",

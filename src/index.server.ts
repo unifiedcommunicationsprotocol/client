@@ -1,13 +1,13 @@
 import { Hono } from "hono";
 
 // UCP Client Server
-// Serves both frontend and API on the same port
-// Frontend: SPA served at root (*)
-// API: /api/* routes
+// Full-stack Bun executable: serves API + React frontend on same port
+// Development: Hot module reloading enabled
+// Production: Static build from dist/
 
 const app = new Hono();
-
 const PORT = parseInt(process.env.PORT || "3000", 10);
+const isDev = process.env.NODE_ENV !== "production";
 
 // API Routes
 app.post("/api/auth/challenge", async (c) => {
@@ -57,8 +57,6 @@ app.get("/health", async (c) => {
 
 // Frontend routes (SPA)
 app.get("*", async (c) => {
-  // In development with HMR, return placeholder
-  // In production, this would serve the built SPA
   return c.html(`
     <!DOCTYPE html>
     <html lang="en">
@@ -69,17 +67,22 @@ app.get("*", async (c) => {
       </head>
       <body>
         <div id="root"></div>
-        <script type="module" src="/src/index.client.tsx"></script>
+        ${isDev ? `<script type="module" src="/src/index.client.tsx"></script>` : `<script type="module" src="/app.js"></script>`}
       </body>
     </html>
   `);
 });
 
-console.log(`🚀 Relay Client running at http://localhost:${PORT}`);
+console.log(
+  `🚀 Relay Client ${isDev ? "(development)" : "(production)"} running at http://localhost:${PORT}`,
+);
 console.log(`   Frontend: http://localhost:${PORT}`);
 console.log(`   API: http://localhost:${PORT}/api`);
 
 export default {
   port: PORT,
   fetch: app.fetch,
+  development: isDev && {
+    hmr: true,
+  },
 };

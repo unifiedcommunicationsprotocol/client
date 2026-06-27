@@ -19,17 +19,18 @@ export function Onboarding({ onComplete }: OnboardingProps) {
       content: (
         <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
           <div>
-            <label
+            <div
               style={{ display: "block", marginBottom: "8px", fontWeight: "500", fontSize: "14px" }}
             >
               Generate Identity Key
-            </label>
+            </div>
             <button
               className="primary"
               onClick={() => {
                 setIdentityKey(`ik_${Math.random().toString(36).substr(2, 32)}`);
                 setSigningKey(`sk_${Math.random().toString(36).substr(2, 32)}`);
               }}
+              type="button"
             >
               Generate Keys
             </button>
@@ -87,6 +88,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
           {!useOwnDomain ? (
             <div>
               <label
+                htmlFor="address-input"
                 style={{
                   display: "block",
                   marginBottom: "8px",
@@ -98,6 +100,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
               </label>
               <div style={{ display: "flex", gap: "8px" }}>
                 <input
+                  id="address-input"
                   type="text"
                   placeholder="alice"
                   value={address}
@@ -110,6 +113,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
           ) : (
             <div>
               <label
+                htmlFor="domain-input"
                 style={{
                   display: "block",
                   marginBottom: "8px",
@@ -120,6 +124,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
                 Your Domain
               </label>
               <input
+                id="domain-input"
                 type="text"
                 placeholder="yourdomain.com"
                 value={domain}
