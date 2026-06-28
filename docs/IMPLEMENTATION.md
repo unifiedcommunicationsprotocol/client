@@ -4,30 +4,46 @@
 
 ## Status
 
-🚀 **v1.0 Frontend Interactive MVP Complete**
+🚀 **v1.0 Frontend Phase 2 Complete: Full Inbox View**
 
-**Interactive Relay Client (Bun Full-Stack)**
-- ✅ Design system: Dark/light mode with JS-controlled CSS variables
+**Phase 1: Layout Shell & Navigation (Complete)**
+- ✅ 3-column layout: LeftNav (52px) + Secondary (280px) + Main (flex:1)
+- ✅ Navigation system: All 6 sections (Inbox, Messages, Calendar, Contacts, Notes, Agents)
+- ✅ Design system: Dark/light mode, CSS variables, Tailwind v4
 - ✅ Global state management: 60+ fields via AppContext + useReducer
-- ✅ Navigation system: All 6 sections interactive (Inbox, Messages, Calendar, Contacts, Notes, Agents)
-- ✅ Thread management: View messages, reply/forward inline, send replies
-- ✅ Message system: Channel/DM messaging with Enter-to-send
+- ✅ User menu: Avatar, theme toggle, settings link
+
+**Phase 2: Inbox View (Complete)**
+- ✅ InboxThreadList: Thread list with compact/spacious variants, search, compose button, badges
+- ✅ ThreadDetail: Selected thread display, message cards, E2E lock indicators
+- ✅ ComposeArea: Inline reply/forward with CC/BCC toggles, auto-expanding textarea
+- ✅ FileUploadModal: Drag & drop file upload with file preview
+- ✅ State management: selectedThread, replyOpen, replyText, customThreadMsgs, etc.
+- ✅ TypeScript strict mode + Biome linting (0 errors)
+
+**Interactive Features (Relay Client)**
+- ✅ Message system: View threads, reply/forward inline
 - ✅ Note taking: View, edit, create notes with live updates
 - ✅ Calendar: Week grid navigation (56px/hour), event viewing, create slots
 - ✅ Contacts: View profiles, search by name/handle
 - ✅ Settings: Sidebar navigation, dark mode toggle, thread density selection
-- ✅ User menu: Fixed bottom-left positioning, dark mode toggle, settings, logout
-- ✅ Compose modal: New message composition (fixed bottom-right)
-- ✅ TypeScript strict mode + Biome linting (0 errors)
+- ✅ Compose modal: New message composition (root-level overlay)
 
-**Ready for Next Phase**
-- [ ] Onboarding modal (4-step cryptographic identity flow)
-- [ ] Key generation ceremony (5-step with DNS verification)
-- [ ] Bridge modals (OAuth/IMAP/CalDAV flows)
-- [ ] Identity + keys views
-- [ ] Database layer: Drizzle + SQLite (local message storage)
-- [ ] Crypto layer: Ed25519 signing + MLS groups
-- [ ] WebSocket connection to UCP server
+**Phase 3: Messaging View (Next)**
+- [ ] ChannelList + MessageThread components
+- [ ] Real-time message streaming via WebSocket
+- [ ] Online indicators, typing status
+- [ ] Channel/DM management
+
+**Future Phases**
+- [ ] Phase 4: Notes View (ProseMirror rich editor, pin/favorite, collab)
+- [ ] Phase 5: Calendar View (Caldav sync, event CRUD)
+- [ ] Phase 6: Contacts + Agents
+- [ ] Phase 7: Settings (identity, keys, bridges) with key generation ceremony
+- [ ] Phase 8: Onboarding modal (4-step cryptographic identity flow)
+- [ ] Crypto layer: Ed25519 signing + MLS groups (Phase 1 complete, integrate with messaging)
+- [ ] Database layer: Drizzle + PostgreSQL (local message storage)
+- [ ] WebSocket connection to UCP server (Phase 1 stub complete)
 
 ## Core Responsibilities
 

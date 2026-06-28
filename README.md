@@ -2,7 +2,7 @@
 
 > TypeScript + Bun reference client for the Unified Communications Protocol
 
-**Status:** v1.0 scaffolded, ready for implementation
+**Status:** v1.0 Phase 2 In Progress (Phase 1 & 2 Complete, Phase 3+ Planned)
 
 ## What's Here
 
@@ -35,15 +35,30 @@ bun run build
 
 Production bundle in `dist/`.
 
-## Features (Scaffolded)
+## Features
 
-- ✅ API client stub (`src/lib/api.ts`)
-- ✅ TypeScript setup with strict mode
-- ✅ Bun test runner configured
-- ✅ Env config ready
-- ⏳ UI implementation (ready for your code)
-- ⏳ MLS encryption client (ready for your code)
-- ⏳ WebSocket sync (ready for your code)
+**Phase 1: Layout & Navigation (Complete)**
+- ✅ 3-column layout shell (52px nav + 280px secondary + flex main)
+- ✅ Left navigation with 6 sections (Inbox, Messages, Calendar, Notes, Contacts, Agents)
+- ✅ User menu (avatar, theme toggle, settings, logout)
+- ✅ Design system (dark/light mode, CSS variables, Tailwind v4)
+
+**Phase 2: Inbox View (Complete)**
+- ✅ Thread list with compact/spacious variants
+- ✅ Thread detail with message cards + E2E indicators
+- ✅ Inline reply/forward with CC/BCC support
+- ✅ File upload modal (drag & drop)
+- ✅ Global state management (AppContext, 60+ fields)
+
+**Phase 3+: Planned**
+- ⏳ Messaging View (channels + DMs, real-time)
+- ⏳ Notes (ProseMirror rich editor)
+- ⏳ Calendar (week/month, event CRUD, CalDAV sync)
+- ⏳ Contacts (view/search, CardDAV sync)
+- ⏳ Settings (identity, keys, bridges)
+- ⏳ Onboarding (4-step crypto identity flow)
+- ⏳ MLS encryption client (RFC 9420)
+- ⏳ WebSocket transport with keepalive
 
 ## Architecture
 

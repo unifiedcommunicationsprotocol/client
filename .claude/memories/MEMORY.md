@@ -12,6 +12,7 @@
 - [Spec Sync Gaps](spec_sync_gaps.md) — 15 documented gaps between local docs and spec; priorities for updates
 - [Docs Updated](docs_update_2026_06_27.md) — All critical gaps fixed; Phase 1 checklist expanded with binding strings, timing, caching
 - [Anonymization](anonymization_2026_06_27.md) — Removed user-specific paths; use relative terms like project root, home directory
+- [Phase 2 Inbox Complete](phase2_inbox_complete.md) — InboxThreadList, ThreadDetail, ComposeArea, FileUploadModal implemented; ready for Phase 3
 
 **Frontend Implementation:**
 - [Relay Frontend v1.0](relay_frontend_v1.md) — Desktop UI complete, Biome + TypeScript 7 integrated, 4 violations to fix before crypto layer
