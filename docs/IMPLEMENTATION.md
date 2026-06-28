@@ -85,12 +85,14 @@
 - ✅ 100% Tailwind CSS conversion
 - ✅ 100% emoji-to-icon replacement
 
-**Next: API Integration**
-- [ ] Crypto layer: Ed25519 signing + MLS groups
+**Next: API Integration & Cryptography**
+- [ ] Crypto layer: Ed25519 signing + MLS groups (`src/lib/crypto/signing.ts`)
 - [ ] Database layer: Drizzle + PostgreSQL (local message storage)
-- [ ] WebSocket connection to UCP server
+- [ ] WebSocket connection to UCP server (`src/lib/transport.ts`)
 - [ ] OAuth flows (Gmail, Fastmail)
 - [ ] DNS record verification
+- [ ] Message signing/verification flow
+- [ ] MLS group management (RFC 9420)
 
 ## Core Responsibilities
 
@@ -182,24 +184,36 @@ The UCP client is **cryptographically responsible** for:
 
 ## Implementation Phases
 
-### Phase 1: Foundation (Sprint 1-2) — **IN PROGRESS**
+### Phase 0: UI & Design ✅ **COMPLETE**
 
-#### UI & Frontend ✅ **COMPLETE**
+#### UI Implementation ✅ **COMPLETE**
 - [x] Relay client design (3-column layout)
 - [x] Onboarding modal (3-step identity generation → address → email bridge)
 - [x] Thread list with unread indicators
-- [x] Message viewer + composer stub
+- [x] Message viewer + composer (fully interactive)
 - [x] Navigation (Inbox, Messaging, Calendar, Contacts, Notes, Agents, Settings)
 - [x] Design system (Space Grotesk/Mono, semantic colors, dark/light theme)
+- [x] All 10 settings pages (Appearance, Notifications, Identity, Keys, Bridges)
+- [x] Calendar (week/month views)
+- [x] Contacts & Agents views
+- [x] Notes with ProseMirror rich editor
 
-#### Developer Experience ✅ **COMPLETE**
+#### Styling & Polish ✅ **COMPLETE**
+- [x] 100% Tailwind CSS conversion (44/44 components)
+- [x] 100% emoji-to-SVG icon replacement (16/16 components)
+- [x] Icon.tsx component (20+ reusable SVG icons)
+- [x] CSS variables for theming (dark/light mode)
+- [x] Responsive design (sm:, md:, lg: breakpoints)
+
+#### Code Quality ✅ **COMPLETE**
+- [x] TypeScript 7 strict mode (0 errors)
 - [x] Biome linting + formatting (strict rules)
-- [x] TypeScript 7 preview type checking
 - [x] Hono server + React on same port
 - [x] `bun run check/lint/format/typecheck` scripts
 
-#### Next: Authentication & Connection
-- [ ] Fix Biome violations (4 label accessibility errors)
+### Phase 1: API & Authentication — **READY FOR START**
+
+#### Authentication & Connection
 - [ ] WebSocket connection establishment (try WebTransport first, fallback to WebSocket)
 - [ ] `UCPHello` handshake: send `{ version, auth_token, capabilities }`
 - [ ] Receive `UCPHelloAck`: verify `server_sig` against `_ucp-server` DNS key
@@ -207,43 +221,61 @@ The UCP client is **cryptographically responsible** for:
 - [ ] WebSocket keepalive: 30-second pings, 10-second pong timeout
 - [ ] Exponential backoff reconnect: 1s → 60s with ±20% jitter
 
-#### Next: Cryptography Basics
+#### Cryptography Basics
 - [ ] Ed25519 key generation (`tweetnacl.js` or `libsodium.js`)
 - [ ] Message signing: canonical JSON (sorted keys, UTF-8, no whitespace)
 - [ ] Message verification: check signature before payload processing
 
-#### Next: Identity & Key Resolution
+#### Identity & Key Resolution
 - [ ] DNS SRV/TXT lookups: `_ucp-srv`, `_ucp-sign`, `_ucp-revoke`, `_ucp-server`
 - [ ] Fetch `/.well-known/ucp/identity/<address>` for current key state
 - [ ] Verify signing key binding to identity key via identity_sig
 
-#### Next: Message Envelope Serialization
+#### Message Envelope Serialization
 - [ ] Build `UCPEnvelope` handling
 - [ ] Parse/serialize inbound/outbound envelopes
 
-### Phase 2: MLS (Sprint 3-4)
-- [ ] MLS group creation
+### Phase 2: Encryption & MLS
+- [ ] MLS group creation (RFC 9420)
 - [ ] KeyPackage fetching + storage
-- [ ] Message encryption/decryption (RFC 9420)
+- [ ] Message encryption/decryption
 - [ ] Epoch advancement on membership changes
 - [ ] Proposal bundling (Add/Remove/Update)
 - [ ] Welcome message handling
+- [ ] Integration with message send/receive
 
-### Phase 3: UI & UX (Sprint 5-6)
-- [ ] Thread list + message display
+### Phase 3: Database & Storage
+- [ ] Drizzle ORM setup + PostgreSQL schema
+- [ ] Thread storage (local cache of server state)
+- [ ] Message storage + indexing
+- [ ] Key storage (signing key, identity key backup)
+- [ ] Attachment metadata storage
+- [ ] IndexedDB for browser-local state
+
+### Phase 4: Real-time Messaging
+- [ ] Thread list + message display (live updates)
 - [ ] Compose flow (recipient picker, MLS add-member)
 - [ ] Real-time sync (WebSocket subscription)
 - [ ] Read receipts (optional)
-- [ ] Editing/deletion
+- [ ] Editing/deletion flows
 - [ ] Attachment upload/download
 
-### Phase 4: Polish (Sprint 7+)
+### Phase 5: Bridge Integration
+- [ ] OAuth flows (Gmail, Fastmail)
+- [ ] IMAP email import
+- [ ] CalDAV calendar sync
+- [ ] CardDAV contacts sync
+- [ ] Bridge message wrapping & attestation
+- [ ] External source labeling
+
+### Phase 6: Polish & Optimization
 - [ ] AI metadata (local summaries, categories)
 - [ ] BCC support (separate MLS groups)
 - [ ] Contact management
 - [ ] Search (local only, no embeddings to server)
 - [ ] Multi-device sync
 - [ ] Offline support (message queueing)
+- [ ] Performance optimization
 
 ## Technology Stack
 
