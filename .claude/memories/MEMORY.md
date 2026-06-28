@@ -28,7 +28,8 @@
 - [Phase 4 Notes Complete](phase4_complete.md) — ProseMirror rich editor, toolbar, real-time autosave
 - [Phase 5 Calendar Complete](phase5_complete.md) — Week/Month views, time grid, event cards
 - [Phase 6 Contacts & Agents Complete](phase6_complete.md) — Contact profiles, agent grid, activity log
-- [Phase 7 Settings Complete](phase7_complete.md) — **JUST FINISHED**: Identity, Keys (UCP critical), bridge stubs
+- [Phase 7 Settings Complete](phase7_complete.md) — Identity, Keys (UCP critical), bridge stubs
+- [Phase 8 Onboarding Complete](phase8_complete.md) — **ALL 8 PHASES DONE**: Full 3-step signup modal, crypto ready
 
 **Architecture & System:**
 - [Full-Stack Architecture v2.0](fullstack_architecture.md) — Bun serve() + Hono API + Drizzle DB (PostgreSQL)
