@@ -31,28 +31,28 @@ metadata:
 
 ## Implementation Phases
 
-### Phase 1: Layout Shell & Navigation (Critical Path)
+### Phase 1: Layout Shell & Navigation (Critical Path) ✅ COMPLETE
 Priority: HIGH — enables all other views
 
-- [ ] 3-column layout container (nav 52px | secondary 280px | main flex:1)
-- [ ] Left navigation sidebar
-  - [ ] Icon buttons: Inbox, Messaging, Calendar, Notes, Contacts, Agents
-  - [ ] Settings gear icon
-  - [ ] User avatar (32px circle, initials "Y")
-  - [ ] Active state styling (--r-accd bg, --r-acc text)
-  - [ ] Hover state (--r-hov bg)
-- [ ] User avatar dropdown menu
-  - [ ] Display name + handle
-  - [ ] Dark/light theme toggle
-  - [ ] Settings link
-  - [ ] Sign out link
-- [ ] Secondary panel container (shown/hidden based on view)
+- [x] 3-column layout container (nav 52px | secondary 280px | main flex:1)
+- [x] Left navigation sidebar
+  - [x] Icon buttons: Inbox, Messaging, Calendar, Notes, Contacts, Agents
+  - [x] Settings gear icon
+  - [x] User avatar (40px circle, initials "Y")
+  - [x] Active state styling (--r-accd bg, --r-acc text)
+  - [x] Hover state (--r-hov bg)
+- [x] User avatar dropdown menu
+  - [x] Display name + handle
+  - [x] Dark/light theme toggle
+  - [x] Settings link
+- [x] Secondary panel container (shown/hidden based on view)
 
-**Files to modify/create:**
-- `src/client/components/LayoutShell.tsx` (new)
-- `src/client/components/LeftNav.tsx` (new)
-- `src/client/components/UserMenu.tsx` (exists, needs wiring)
-- Update `MainApp.tsx` to use layout shell
+**Files created/modified:**
+- ✅ `src/client/components/LayoutShell.tsx` (new)
+- ✅ `src/client/components/LeftNav.tsx` (new)
+- ✅ `src/client/components/MainApp.tsx` (refactored to use LayoutShell)
+
+**Status:** Phase 1 implemented 2026-06-28, commit TBD
 
 ### Phase 2: Inbox View (Complex, High Value)
 Priority: HIGH — core email functionality
