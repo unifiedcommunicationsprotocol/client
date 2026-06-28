@@ -1,6 +1,7 @@
 import { useAppContext } from "../AppContext";
 import { MSG_CHANNELS, MSG_DMS } from "../data";
 import { ComposeBar } from "./ComposeBar";
+import { Icon } from "./Icon";
 
 export function MessageThread() {
   const { state } = useAppContext();
@@ -134,7 +135,8 @@ export function MessageThread() {
               fontWeight: "500",
             }}
           >
-            🔒 End-to-end encrypted
+            <Icon name="lock" size={18} />
+            End-to-end encrypted
           </div>
         )}
       </div>

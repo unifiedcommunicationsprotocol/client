@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Icon } from "./Icon";
 
 interface OnboardingProps {
   onComplete: () => void;
@@ -195,13 +196,22 @@ export function Onboarding({ onComplete }: OnboardingProps) {
       content: (
         <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
           <button type="button" className="primary" style={{ width: "100%" }}>
-            <span style={{ marginRight: "8px" }}>📧</span> Connect Gmail
+            <span style={{ marginRight: "8px", display: "inline-flex" }}>
+              <Icon name="email" size={16} />
+            </span>
+            Connect Gmail
           </button>
           <button type="button" className="secondary" style={{ width: "100%" }}>
-            <span style={{ marginRight: "8px" }}>📬</span> Connect Fastmail
+            <span style={{ marginRight: "8px", display: "inline-flex" }}>
+              <Icon name="email" size={16} />
+            </span>
+            Connect Fastmail
           </button>
           <button type="button" className="secondary" style={{ width: "100%" }}>
-            <span style={{ marginRight: "8px" }}>✉️</span> Connect Other Email
+            <span style={{ marginRight: "8px", display: "inline-flex" }}>
+              <Icon name="email" size={16} />
+            </span>
+            Connect Other Email
           </button>
           <p
             style={{

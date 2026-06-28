@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAppContext } from "../AppContext";
+import { Icon } from "./Icon";
 
 export function ComposeBar() {
   const { state, dispatch } = useAppContext();
@@ -45,7 +46,7 @@ export function ComposeBar() {
         className="w-7 h-7 p-0 border-none rounded bg-transparent text-[var(--r-t2)] cursor-pointer flex items-center justify-center text-base flex-shrink-0 hover:bg-[var(--r-hov)]"
         title="Attach file"
       >
-        📎
+        <Icon name="paperclip" size={16} />
       </button>
 
       {/* Textarea */}
@@ -70,7 +71,7 @@ export function ComposeBar() {
         }`}
         title="Send message"
       >
-        ➜
+        <Icon name="send" size={16} />
       </button>
     </div>
   );

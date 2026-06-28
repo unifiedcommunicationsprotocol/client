@@ -1,6 +1,7 @@
 import { useAppContext } from "../AppContext";
 import { THREAD_MSGS, THREADS } from "../data";
 import { ComposeArea } from "./ComposeArea";
+import { Icon } from "./Icon";
 
 export function ThreadDetail() {
   const { state, dispatch } = useAppContext();
@@ -27,7 +28,9 @@ export function ThreadDetail() {
         }}
       >
         <div>
-          <div style={{ fontSize: "48px", marginBottom: "16px" }}>📧</div>
+          <div style={{ fontSize: "48px", marginBottom: "16px" }}>
+            <Icon name="email" size={48} />
+          </div>
           <div
             style={{ fontSize: "16px", fontWeight: "500", marginBottom: "8px" }}
           >
@@ -208,25 +211,15 @@ export function ThreadDetail() {
                   }}
                 >
                   {encrypted ? (
-                    <span
-                      title="End-to-end encrypted"
-                      style={{
-                        fontSize: "16px",
-                        color: "#22C55E",
-                      }}
-                    >
-                      🔒
-                    </span>
+                    <Icon
+                      name="lock"
+                      size={18}
+                    />
                   ) : (
-                    <span
-                      title="Not end-to-end encrypted (bridge)"
-                      style={{
-                        fontSize: "16px",
-                        color: "#D97706",
-                      }}
-                    >
-                      🔓
-                    </span>
+                    <Icon
+                      name="unlock"
+                      size={18}
+                    />
                   )}
                   <div
                     style={{

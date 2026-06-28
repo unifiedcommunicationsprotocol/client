@@ -1,5 +1,6 @@
 import { useAppContext } from "../AppContext";
 import { THREAD_MSGS, THREADS } from "../data";
+import { Icon } from "./Icon";
 
 export function Inbox() {
   const { state } = useAppContext();
@@ -24,7 +25,9 @@ export function Inbox() {
         }}
       >
         <div>
-          <div style={{ fontSize: "48px", marginBottom: "16px" }}>📧</div>
+          <div style={{ fontSize: "48px", marginBottom: "16px" }}>
+            <Icon name="email" size={48} />
+          </div>
           <div
             style={{ fontSize: "16px", fontWeight: "500", marginBottom: "8px" }}
           >

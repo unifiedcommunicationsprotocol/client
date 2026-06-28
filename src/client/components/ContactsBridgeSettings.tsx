@@ -1,12 +1,13 @@
 import { useAppContext } from "../AppContext";
+import { Icon } from "./Icon";
 
 export function ContactsBridgeSettings() {
   const { state, dispatch } = useAppContext();
 
   const providers = [
-    { id: "google", name: "Google Contacts", icon: "G", color: "#EA4335" },
-    { id: "fastmail", name: "Fastmail Contacts", icon: "F", color: "#1C6EF2" },
-    { id: "carddav", name: "Any CardDAV source", icon: "⇆", color: "#666666" },
+    { id: "google", name: "Google Contacts", icon: "google", color: "#EA4335" },
+    { id: "fastmail", name: "Fastmail Contacts", icon: "fastmail", color: "#1C6EF2" },
+    { id: "carddav", name: "Any CardDAV source", icon: "carddav", color: "#666666" },
   ];
 
   return (
@@ -38,7 +39,10 @@ export function ContactsBridgeSettings() {
                     background: account.provider === "google" ? "#EA4335" : account.provider === "fastmail" ? "#1C6EF2" : "#666666",
                   }}
                 >
-                  {account.provider === "google" ? "G" : account.provider === "fastmail" ? "F" : "⇆"}
+                  <Icon
+                    name={account.provider === "google" ? "google" : account.provider === "fastmail" ? "fastmail" : "carddav"}
+                    size={16}
+                  />
                 </div>
                 <div className="flex-1">
                   <div className="text-sm font-medium text-[var(--r-t1)]">
@@ -81,10 +85,10 @@ export function ContactsBridgeSettings() {
               className="flex flex-col items-center justify-center gap-3 p-5 rounded-md bg-[var(--r-sf)] border border-[var(--r-bd)] cursor-pointer hover:border-[var(--r-acc)] hover:bg-[var(--r-accd)] transition-all"
             >
               <div
-                className="w-10 h-10 rounded flex items-center justify-center text-white text-lg font-semibold"
+                className="w-10 h-10 rounded flex items-center justify-center text-white"
                 style={{ background: provider.color }}
               >
-                {provider.icon}
+                <Icon name={provider.icon} size={20} />
               </div>
               <div className="text-center">
                 <div className="text-xs font-semibold text-[var(--r-t1)]">

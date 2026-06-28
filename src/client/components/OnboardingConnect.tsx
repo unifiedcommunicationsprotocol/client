@@ -6,6 +6,7 @@ import { useState } from "react";
 import { createAppTransport } from "@/lib/appTransport";
 import { signMessage } from "@/lib/crypto/signing";
 import { useAppContext } from "../AppContext";
+import { Icon } from "./Icon";
 
 export interface OnboardingConnectProps {
   onComplete: (step: number) => void;
@@ -173,9 +174,13 @@ export const OnboardingConnect = ({
             borderRadius: "6px",
             color: "var(--r-acc)",
             fontSize: "13px",
+            display: "flex",
+            alignItems: "center",
+            gap: "8px",
           }}
         >
-          ⏳ Connecting to server...
+          <Icon name="calendar" size={14} />
+          Connecting to server...
           {state.transportReconnectAttempt > 0 &&
             ` (attempt ${state.transportReconnectAttempt})`}
         </div>
@@ -190,9 +195,13 @@ export const OnboardingConnect = ({
             borderRadius: "6px",
             color: "var(--r-safe)",
             fontSize: "13px",
+            display: "flex",
+            alignItems: "center",
+            gap: "8px",
           }}
         >
-          ✓ Connected to server!
+          <Icon name="check" size={14} />
+          Connected to server!
           {challenge && (
             <div style={{ marginTop: "8px", fontSize: "11px" }}>
               Challenge: {challenge.slice(0, 16)}...
@@ -210,9 +219,13 @@ export const OnboardingConnect = ({
             borderRadius: "6px",
             color: "var(--r-danger)",
             fontSize: "13px",
+            display: "flex",
+            alignItems: "center",
+            gap: "8px",
           }}
         >
-          ❌ {error.message}
+          <Icon name="close" size={14} />
+          {error.message}
         </div>
       )}
 

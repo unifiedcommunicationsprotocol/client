@@ -1,5 +1,6 @@
 import { useAppContext } from "../AppContext";
 import { CAL_EVENTS } from "../data";
+import { Icon } from "./Icon";
 
 export function CalendarWeek() {
   const { state, dispatch } = useAppContext();
@@ -244,10 +245,13 @@ export function CalendarWeek() {
                 border: "none",
                 color: "var(--r-t2)",
                 cursor: "pointer",
-                fontSize: "16px",
+                padding: "0",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
               }}
             >
-              ✕
+              <Icon name="close" size={16} />
             </button>
           </div>
           <div style={{ fontSize: "13px", color: "var(--r-t2)" }}>

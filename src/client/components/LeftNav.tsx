@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAppContext } from "../AppContext";
+import { Icon } from "./Icon";
 
 export function LeftNav() {
   const { state, dispatch } = useAppContext();
@@ -112,7 +113,7 @@ export function LeftNav() {
             }
           }}
         >
-          ⚙️
+          <Icon name="settings" size={18} />
         </button>
 
         <div style={{ position: "relative" }}>
@@ -222,7 +223,17 @@ export function LeftNav() {
                       "transparent";
                   }}
                 >
-                  <span>{state.darkMode ? "🌙 Dark" : "☀️ Light"}</span>
+                  <span>
+                    {state.darkMode ? (
+                      <>
+                        <Icon name="moon" size={12} /> Dark
+                      </>
+                    ) : (
+                      <>
+                        <Icon name="sun" size={12} /> Light
+                      </>
+                    )}
+                  </span>
                 </div>
 
                 {/* Settings link */}
@@ -306,6 +317,6 @@ function getNavIcon(viewId: string): React.ReactNode {
         </svg>
       );
     default:
-      return "•";
+      return <Icon name="dot" size={14} />;
   }
 }

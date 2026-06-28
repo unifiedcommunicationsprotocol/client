@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { useAppContext } from "../AppContext";
+import { Icon } from "./Icon";
 
 export function FileUploadModal() {
   const { state, dispatch } = useAppContext();
@@ -141,7 +142,7 @@ export function FileUploadModal() {
               padding: "0",
             }}
           >
-            ✕
+            <Icon name="close" size={20} />
           </button>
         </div>
 
@@ -175,11 +176,10 @@ export function FileUploadModal() {
               >
                 <div
                   style={{
-                    fontSize: "32px",
                     marginBottom: "12px",
                   }}
                 >
-                  📁
+                  <Icon name="inbox" size={32} />
                 </div>
                 <div
                   style={{
@@ -225,7 +225,9 @@ export function FileUploadModal() {
                   gap: "12px",
                 }}
               >
-                <div style={{ fontSize: "24px" }}>📄</div>
+                <div>
+                  <Icon name="notes" size={24} />
+                </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div
                     style={{
@@ -265,7 +267,7 @@ export function FileUploadModal() {
                     padding: "0",
                   }}
                 >
-                  ✕
+                  <Icon name="close" size={16} />
                 </button>
               </div>
             </div>

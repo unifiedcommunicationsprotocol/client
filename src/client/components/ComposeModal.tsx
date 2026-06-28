@@ -1,4 +1,5 @@
 import { useAppContext } from "../AppContext";
+import { Icon } from "./Icon";
 
 export function ComposeModal() {
   const { state, dispatch } = useAppContext();
@@ -50,7 +51,7 @@ export function ComposeModal() {
             padding: "0",
           }}
         >
-          ✕
+          <Icon name="close" size={20} />
         </button>
       </div>
 

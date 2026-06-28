@@ -1,5 +1,6 @@
 import { useAppContext } from "../AppContext";
 import { THREAD_MSGS, THREADS } from "../data";
+import { Icon } from "./Icon";
 
 export function ThreadView() {
   const { state, dispatch } = useAppContext();
@@ -13,7 +14,9 @@ export function ThreadView() {
     return (
       <div className="flex-1 flex flex-col items-center justify-center gap-6 text-[var(--r-t3)] text-center">
         <div>
-          <div className="text-6xl mb-4">📧</div>
+          <div className="text-6xl mb-4">
+            <Icon name="email" size={48} />
+          </div>
           <div className="text-base font-medium mb-2">No thread selected</div>
           <div className="text-sm text-[var(--r-t3)]">
             Select a thread from the sidebar to view messages
@@ -54,8 +57,9 @@ export function ThreadView() {
               {msg.body}
             </div>
             {msg.encrypted && (
-              <div className="text-[10px] text-[var(--r-safe)] mt-2">
-                ✓ Encrypted end-to-end
+              <div className="flex items-center gap-1.5 text-[10px] text-[var(--r-safe)] mt-2">
+                <Icon name="check" size={12} />
+                Encrypted end-to-end
               </div>
             )}
           </div>

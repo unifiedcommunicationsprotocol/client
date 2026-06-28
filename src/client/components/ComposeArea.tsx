@@ -1,4 +1,5 @@
 import { useAppContext } from "../AppContext";
+import { Icon } from "./Icon";
 
 export function ComposeArea() {
   const { state, dispatch } = useAppContext();
@@ -140,7 +141,7 @@ export function ComposeArea() {
               cursor: "pointer",
             }}
           >
-            ✕
+            <Icon name="close" size={16} />
           </button>
         </div>
       </div>
@@ -275,7 +276,7 @@ export function ComposeArea() {
           }}
           title="Attach file"
         >
-          📎
+          <Icon name="paperclip" size={16} />
         </button>
 
         <button

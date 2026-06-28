@@ -1,12 +1,13 @@
 import { setBlockType, toggleMark, wrapIn } from "prosemirror-commands";
 import { EditorView } from "prosemirror-view";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { prosemirrorSetup } from "../../lib/prosemirror-setup";
 import { useAppContext } from "../AppContext";
 import { NOTES } from "../data";
+import { Icon } from "./Icon";
 
 interface ToolbarButton {
-  icon: string;
+  icon: string | ReactNode;
   title: string;
   active?: (editorView: EditorView) => boolean;
   run: (editorView: EditorView) => void;
@@ -27,7 +28,9 @@ export function NoteEditor() {
   if (!selectedNote) {
     return (
       <div className="flex-1 flex items-center justify-center text-[var(--r-t3)] flex-col gap-4">
-        <div className="text-6xl">📝</div>
+        <div style={{ fontSize: "48px" }}>
+          <Icon name="notes" size={48} />
+        </div>
         <div className="text-base font-medium">
           Select a note to edit
         </div>
@@ -122,7 +125,7 @@ export function NoteEditor() {
       },
     },
     {
-      icon: "❝",
+      icon: <Icon name="quote" size={18} />,
       title: "Blockquote",
       run: (view) => {
         const node = schema.nodes.blockquote;
@@ -131,7 +134,7 @@ export function NoteEditor() {
       },
     },
     {
-      icon: "•",
+      icon: <Icon name="list" size={12} />,
       title: "Bullet List",
       run: (view) => {
         const node = schema.nodes.bullet_list;
