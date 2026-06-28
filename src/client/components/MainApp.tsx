@@ -1,4 +1,5 @@
 import { useAppContext } from "../AppContext";
+import { AgentsView } from "./AgentsView";
 import { CalendarView } from "./CalendarView";
 import { ContactDetail } from "./ContactDetail";
 import { LayoutShell } from "./LayoutShell";
@@ -37,22 +38,7 @@ export function MainApp({ onLogout }: MainAppProps) {
       case "notes":
         return <NoteEditor />;
       case "agents":
-        return (
-          <div
-            style={{
-              flex: 1,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              color: "var(--r-t2)",
-              flexDirection: "column",
-              gap: "12px",
-            }}
-          >
-            <div style={{ fontSize: "48px" }}>🤖</div>
-            <div>Select an agent to view details</div>
-          </div>
-        );
+        return <AgentsView />;
       default:
         return null;
     }

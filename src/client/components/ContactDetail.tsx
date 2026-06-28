@@ -49,14 +49,14 @@ export function ContactDetail() {
       >
         <div
           style={{
-            width: "64px",
-            height: "64px",
-            borderRadius: "12px",
+            width: "48px",
+            height: "48px",
+            borderRadius: "8px",
             backgroundColor: contact.color,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            fontSize: "28px",
+            fontSize: "20px",
             fontWeight: "600",
             color: "white",
             flexShrink: 0,
@@ -67,8 +67,8 @@ export function ContactDetail() {
         <div style={{ flex: 1 }}>
           <h2
             style={{
-              fontSize: "20px",
-              fontWeight: "600",
+              fontSize: "18px",
+              fontWeight: "700",
               color: "var(--r-t1)",
               margin: "0 0 4px 0",
             }}

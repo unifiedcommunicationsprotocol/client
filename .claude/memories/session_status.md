@@ -10,10 +10,10 @@ metadata:
 ## Latest Commits
 
 ```
-[TBD] Phase 5 Complete: Calendar View (Week/Month views, time grid, event cards)
+[TBD] Phase 6 Complete: Contacts & Agents (profiles, agent grid, activity log)
+a404495 Phase 5 Complete: Calendar View (Week/Month views, time grid, event cards)
 d7c2e98 Phase 4 Complete: Notes View with ProseMirror
 c3e2da8 Phase 3 Complete: Messaging View Implementation
-f2d74a8 Docs & Memory Update: Phase 2 Completion
 ```
 
 ## Current Implementation Status
@@ -41,27 +41,25 @@ f2d74a8 Docs & Memory Update: Phase 2 Completion
 - Identity resolution (HTTP fallback)
 - Commit: `69c877d`
 
-### ✅ Complete (Phases 3, 4 & 5)
+### ✅ Complete (Phases 3-6)
 
 **Phase 3: Messaging View** — COMPLETE
-- ChannelList (secondary, 185 lines), MessageThread (main, 257 lines), ComposeBar (120 lines) ✅
-- Commit: `c3e2da8`
+- ChannelList, MessageThread, ComposeBar (562 lines total) ✅
 
 **Phase 4: Notes View with ProseMirror** — COMPLETE
-- NoteEditor + ProseMirror rich editor, 8 toolbar buttons ✅
-- prosemirror-setup.ts utility, auto-save, undo/redo ✅
-- 8 ProseMirror dependencies ✅
-- Commit: `d7c2e98`
+- NoteEditor + ProseMirror editor, 8 toolbar buttons, auto-save ✅
 
 **Phase 5: Calendar View** — COMPLETE
-- CalendarWeek (time grid, event positioning) ✅
-- CalendarMonth (month grid, event chips) ✅
-- CalendarView (header, view toggle, navigation) ✅
-- Week/Month views with full interaction ✅
-- TypeScript strict: PASS
-- See [[phase5_complete.md]] for implementation details
+- CalendarWeek + CalendarMonth, time grid, event cards (914 lines) ✅
 
-### ⏳ Planned (Phases 6-8)
+**Phase 6: Contacts & Agents** — COMPLETE
+- ContactDetail: 48px avatar, 18px 700 name, verified badges ✅
+- AgentsView: agent grid cards, status toggle, activity log ✅
+- MainApp: agents route updated to AgentsView ✅
+- TypeScript strict: PASS
+- See [[phase6_complete.md]] for implementation details
+
+### ⏳ Planned (Phases 7-8)
 
 - Phase 4: Notes (ProseMirror rich editor)
 - Phase 5: Calendar (week/month, event CRUD)
