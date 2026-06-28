@@ -24,7 +24,8 @@
 **Phase Implementation:**
 - [Design Handoff Implementation](design_handoff_implementation.md) — 8-phase systematic plan to match UI 1:1 with design
 - [Phase 1 Crypto Complete](phase1_crypto_complete.md) — WebSocket transport, Ed25519 signing, identity resolution
-- [Phase 3 Messaging Readiness](phase3_messaging_readiness.md) — **START HERE FOR PHASE 3**: Complete checklist, components, state, integration
+- [Phase 3 Messaging Complete](phase3_complete.md) — **JUST FINISHED**: ChannelList, MessageThread, ComposeBar fully integrated
+- [Phase 3 Messaging Readiness](phase3_messaging_readiness.md) — Checklist (for reference, now implemented)
 
 **Architecture & System:**
 - [Full-Stack Architecture v2.0](fullstack_architecture.md) — Bun serve() + Hono API + Drizzle DB (PostgreSQL)

@@ -2,7 +2,7 @@ import { useAppContext } from "../AppContext";
 import { CalendarView } from "./CalendarView";
 import { ContactDetail } from "./ContactDetail";
 import { LayoutShell } from "./LayoutShell";
-import { MessagingView } from "./MessagingView";
+import { MessageThread } from "./MessageThread";
 import { NoteEditor } from "./NoteEditor";
 import { SettingsPanel } from "./SettingsPanel";
 import { Sidebar } from "./Sidebar";
@@ -29,7 +29,7 @@ export function MainApp({ onLogout }: MainAppProps) {
       case "inbox":
         return <ThreadDetail />;
       case "messaging":
-        return <MessagingView />;
+        return <MessageThread />;
       case "calendar":
         return <CalendarView />;
       case "contacts":

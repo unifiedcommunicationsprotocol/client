@@ -10,6 +10,7 @@ metadata:
 ## Latest Commits
 
 ```
+[TBD] Phase 3 Complete: Messaging View Implementation (ChannelList, MessageThread, ComposeBar)
 f2d74a8 Docs & Memory Update: Phase 2 Completion
 3d7d877 Phase 2 Complete: Inbox View Implementation
 849e282 Session 1 Wrap: Phase 1 Complete, Memory Updated for Phase 2-8 Resumption
@@ -40,13 +41,17 @@ f2d74a8 Docs & Memory Update: Phase 2 Completion
 - Identity resolution (HTTP fallback)
 - Commit: `69c877d`
 
-### 🔄 In Progress
+### ✅ Complete (Phase 3)
 
-**Phase 3: Messaging View** — Ready to implement
-- ChannelList (secondary panel)
-- MessageThread (main content)
-- ComposeBar (bottom compose widget)
-- See [[phase3_messaging_readiness.md]] for complete checklist
+**Phase 3: Messaging View** — COMPLETE
+- ChannelList (secondary panel, 185 lines) ✅
+- MessageThread (main content, 257 lines) ✅
+- ComposeBar (bottom compose widget, 120 lines) ✅
+- Sidebar.tsx routing updated ✅
+- MainApp.tsx routing updated ✅
+- TypeScript strict: PASS
+- Biome linting: PASS
+- See [[phase3_complete.md]] for implementation details
 
 ### ⏳ Planned (Phases 4-8)
 

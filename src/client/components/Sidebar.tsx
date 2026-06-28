@@ -1,9 +1,9 @@
 import { useAppContext } from "../AppContext";
 import { AgentsPanel } from "./AgentsPanel";
 import { CalendarPanel } from "./CalendarPanel";
+import { ChannelList } from "./ChannelList";
 import { ContactsPanel } from "./ContactsPanel";
 import { InboxThreadList } from "./InboxThreadList";
-import { MessagesPanel } from "./MessagesPanel";
 import { NotesPanel } from "./NotesPanel";
 
 export function Sidebar() {
@@ -24,7 +24,7 @@ export function Sidebar() {
       {state.view === "inbox" && <InboxThreadList />}
 
       {/* Messages Section */}
-      {state.view === "messaging" && <MessagesPanel />}
+      {state.view === "messaging" && <ChannelList />}
 
       {/* Calendar Section */}
       {state.view === "calendar" && <CalendarPanel />}
