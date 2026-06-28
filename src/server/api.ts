@@ -5,11 +5,29 @@ import { createMessagesRoutes } from "./routes/messages";
 import { createThreadsRoutes } from "./routes/threads";
 import { createWebSocketRoutes } from "./routes/websocket";
 import { createMemoryDBClient } from "../lib/db/client";
+import { createPostgresDBClient } from "../lib/db/postgres";
 import { createMessaging } from "../lib/messaging";
 import { broadcastMessage } from "../index.server";
 
 // Initialize database and messaging service
-const db = createMemoryDBClient();
+// Use PostgreSQL if DATABASE_URL is set, otherwise use in-memory for testing
+let db;
+try {
+  if (process.env.DATABASE_URL) {
+    console.log("[DB] Initializing PostgreSQL client...");
+    db = createPostgresDBClient();
+    console.log("[DB] Connected to PostgreSQL");
+  } else {
+    console.log("[DB] DATABASE_URL not set, using in-memory client");
+    db = createMemoryDBClient();
+  }
+} catch (error) {
+  console.warn(
+    "[DB] PostgreSQL connection failed, falling back to in-memory:",
+    error instanceof Error ? error.message : error
+  );
+  db = createMemoryDBClient();
+}
 
 // Stub transport for now (will be upgraded to real WebSocket)
 const stubTransport = {
