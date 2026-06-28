@@ -14,10 +14,10 @@ interface MainAppProps {
 
 const Icons = {
   relay: (
-    <svg width="16" height="11" viewBox="0 0 16 11" fill="none">
+    <svg width="18" height="12" viewBox="0 0 18 12" fill="none">
       <title>Relay</title>
       <path
-        d="M1 5.5h14M10 1l5 4.5L10 10"
+        d="M1 6h16M11 1l6 5-6 5"
         stroke="white"
         strokeWidth="1.8"
         strokeLinecap="round"
