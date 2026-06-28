@@ -10,119 +10,48 @@ export function CalendarBridgeSettings() {
   ];
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+    <div className="flex flex-col gap-6">
       <div>
-        <h2
-          style={{
-            fontSize: "20px",
-            fontWeight: 700,
-            marginBottom: "4px",
-            color: "var(--r-t1)",
-          }}
-        >
+        <h2 className="text-xl font-bold text-[var(--r-t1)] mb-1">
           Calendar bridge
         </h2>
-        <p style={{ fontSize: "13px", color: "var(--r-t3)" }}>
-          Sync external calendars into your UCP calendar. Events are read/write
-          and clearly marked by source.
+        <p className="text-sm text-[var(--r-t3)]">
+          Sync external calendars into your UCP calendar. Events are read/write and clearly marked by source.
         </p>
       </div>
 
       {/* Connected calendars */}
       {state.settingsCalAccounts.length > 0 && (
-        <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-          <h3
-            style={{
-              fontSize: "13px",
-              fontWeight: 600,
-              color: "var(--r-t1)",
-              textTransform: "uppercase",
-              letterSpacing: "0.08em",
-            }}
-          >
+        <div className="flex flex-col gap-3">
+          <h3 className="text-xs font-semibold text-[var(--r-t1)] uppercase tracking-widest">
             Connected
           </h3>
           {state.settingsCalAccounts.map((account) => (
             <div
               key={account.id}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                padding: "12px",
-                borderRadius: "6px",
-                background: "var(--r-sf)",
-                border: "1px solid var(--r-bd)",
-              }}
+              className="flex items-center justify-between p-3 rounded-md bg-[var(--r-sf)] border border-[var(--r-bd)]"
             >
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "12px",
-                  flex: 1,
-                }}
-              >
+              <div className="flex items-center gap-3 flex-1">
                 <div
+                  className="w-8 h-8 rounded flex items-center justify-center text-white text-sm font-semibold flex-shrink-0"
                   style={{
-                    width: "32px",
-                    height: "32px",
-                    borderRadius: "4px",
-                    background:
-                      account.provider === "google"
-                        ? "#EA4335"
-                        : account.provider === "fastmail"
-                          ? "#1C6EF2"
-                          : "#666666",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    color: "white",
-                    fontSize: "14px",
-                    fontWeight: 600,
-                    flexShrink: 0,
+                    background: account.provider === "google" ? "#EA4335" : account.provider === "fastmail" ? "#1C6EF2" : "#666666",
                   }}
                 >
-                  {account.provider === "google"
-                    ? "G"
-                    : account.provider === "fastmail"
-                      ? "F"
-                      : "⇆"}
+                  {account.provider === "google" ? "G" : account.provider === "fastmail" ? "F" : "⇆"}
                 </div>
-                <div style={{ flex: 1 }}>
-                  <div
-                    style={{
-                      fontSize: "14px",
-                      fontWeight: 500,
-                      color: "var(--r-t1)",
-                    }}
-                  >
+                <div className="flex-1">
+                  <div className="text-sm font-medium text-[var(--r-t1)]">
                     {account.name}
                   </div>
-                  <div style={{ fontSize: "12px", color: "var(--r-t3)" }}>
+                  <div className="text-xs text-[var(--r-t3)]">
                     Syncing · {account.email} · {account.lastSync}
                   </div>
                 </div>
               </div>
               <button
                 type="button"
-                style={{
-                  padding: "6px 12px",
-                  borderRadius: "5px",
-                  border: "none",
-                  background: "transparent",
-                  color: "#EF4444",
-                  fontSize: "13px",
-                  fontWeight: 500,
-                  cursor: "pointer",
-                  transition: "all 120ms",
-                }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.background = "rgba(239,68,68,0.1)")
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.background = "transparent")
-                }
+                className="px-3 py-1.5 rounded text-xs font-medium text-red-500 hover:bg-red-500/10 transition-colors"
               >
                 Disconnect
               </button>
@@ -132,27 +61,11 @@ export function CalendarBridgeSettings() {
       )}
 
       {/* Add calendar section */}
-      <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-        <h3
-          style={{
-            fontSize: "13px",
-            fontWeight: 600,
-            color: "var(--r-t1)",
-            textTransform: "uppercase",
-            letterSpacing: "0.08em",
-          }}
-        >
-          {state.settingsCalAccounts.length > 0
-            ? "Connect another"
-            : "Connect a calendar"}
+      <div className="flex flex-col gap-3">
+        <h3 className="text-xs font-semibold text-[var(--r-t1)] uppercase tracking-widest">
+          {state.settingsCalAccounts.length > 0 ? "Connect another" : "Connect a calendar"}
         </h3>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-            gap: "12px",
-          }}
-        >
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {providers.map((provider) => (
             <button
               key={provider.id}
@@ -165,55 +78,19 @@ export function CalendarBridgeSettings() {
                 dispatch({ type: "setBridgeOauthStep", payload: "info" });
                 dispatch({ type: "setBridgeAccountType", payload: "calendar" });
               }}
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "12px",
-                padding: "20px",
-                borderRadius: "6px",
-                background: "var(--r-sf)",
-                border: "1px solid var(--r-bd)",
-                cursor: "pointer",
-                transition: "all 120ms",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = "var(--r-acc)";
-                e.currentTarget.style.background = "var(--r-accd)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = "var(--r-bd)";
-                e.currentTarget.style.background = "var(--r-sf)";
-              }}
+              className="flex flex-col items-center justify-center gap-3 p-5 rounded-md bg-[var(--r-sf)] border border-[var(--r-bd)] cursor-pointer hover:border-[var(--r-acc)] hover:bg-[var(--r-accd)] transition-all"
             >
               <div
-                style={{
-                  width: "40px",
-                  height: "40px",
-                  borderRadius: "4px",
-                  background: provider.color,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: "white",
-                  fontSize: "18px",
-                  fontWeight: 600,
-                }}
+                className="w-10 h-10 rounded flex items-center justify-center text-white text-lg font-semibold"
+                style={{ background: provider.color }}
               >
                 {provider.icon}
               </div>
-              <div style={{ textAlign: "center" }}>
-                <div
-                  style={{
-                    fontSize: "13px",
-                    fontWeight: 600,
-                    color: "var(--r-t1)",
-                  }}
-                >
+              <div className="text-center">
+                <div className="text-xs font-semibold text-[var(--r-t1)]">
                   {provider.name}
                 </div>
-                <div style={{ fontSize: "11px", color: "var(--r-acc)" }}>
+                <div className="text-xs text-[var(--r-acc)]">
                   Connect →
                 </div>
               </div>
@@ -223,19 +100,8 @@ export function CalendarBridgeSettings() {
       </div>
 
       {/* Info box */}
-      <div
-        style={{
-          padding: "12px",
-          borderRadius: "6px",
-          background: "var(--r-sf)",
-          border: "1px solid var(--r-bd)",
-          fontSize: "13px",
-          color: "var(--r-t2)",
-          lineHeight: "1.5",
-        }}
-      >
-        Synced events are read/write. CalDAV sources require a server URL and
-        credentials. Events from bridged sources are labelled with their origin.
+      <div className="p-3 rounded-md bg-[var(--r-sf)] border border-[var(--r-bd)] text-xs text-[var(--r-t2)] leading-relaxed">
+        Synced events are read/write. CalDAV sources require a server URL and credentials. Events from bridged sources are labelled with their origin.
       </div>
     </div>
   );

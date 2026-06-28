@@ -4,135 +4,58 @@ export function NotificationsSettings() {
   const { state, dispatch } = useAppContext();
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+    <div className="flex flex-col gap-6">
       <div>
-        <h2
-          style={{
-            fontSize: "20px",
-            fontWeight: 700,
-            marginBottom: "4px",
-            color: "var(--r-t1)",
-          }}
-        >
+        <h2 className="text-xl font-bold text-[var(--r-t1)] mb-1">
           Notifications
         </h2>
-        <p style={{ fontSize: "13px", color: "var(--r-t3)" }}>
-          Manage how and when you receive alerts
-        </p>
+        <p className="text-sm text-[var(--r-t3)]">Manage how and when you receive alerts</p>
       </div>
 
       {/* Push notifications */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          paddingBottom: "16px",
-          borderBottom: "1px solid var(--r-bd)",
-        }}
-      >
+      <div className="flex justify-between items-center pb-4 border-b border-[var(--r-bd)]">
         <div>
-          <div
-            style={{
-              fontSize: "14px",
-              fontWeight: 500,
-              color: "var(--r-t1)",
-              marginBottom: "2px",
-            }}
-          >
+          <div className="text-sm font-medium text-[var(--r-t1)] mb-0.5">
             Push notifications
           </div>
-          <p style={{ fontSize: "13px", color: "var(--r-t3)" }}>
-            Receive alerts for new messages
-          </p>
+          <p className="text-xs text-[var(--r-t3)]">Receive alerts for new messages</p>
         </div>
         <input
           type="checkbox"
           checked={state.notifBadge}
-          onChange={(e) =>
-            dispatch({ type: "setNotifBadge", payload: e.target.checked })
-          }
-          style={{
-            width: "36px",
-            height: "20px",
-            cursor: "pointer",
-            accentColor: "var(--r-acc)",
-          }}
+          onChange={(e) => dispatch({ type: "setNotifBadge", payload: e.target.checked })}
+          className="w-9 h-5 cursor-pointer accent-[var(--r-acc)]"
         />
       </div>
 
       {/* Sound alerts */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          paddingBottom: "16px",
-          borderBottom: "1px solid var(--r-bd)",
-        }}
-      >
+      <div className="flex justify-between items-center pb-4 border-b border-[var(--r-bd)]">
         <div>
-          <div
-            style={{
-              fontSize: "14px",
-              fontWeight: 500,
-              color: "var(--r-t1)",
-              marginBottom: "2px",
-            }}
-          >
+          <div className="text-sm font-medium text-[var(--r-t1)] mb-0.5">
             Sound alerts
           </div>
-          <p style={{ fontSize: "13px", color: "var(--r-t3)" }}>
-            Play a sound for new messages
-          </p>
+          <p className="text-xs text-[var(--r-t3)]">Play a sound for new messages</p>
         </div>
         <input
           type="checkbox"
           checked={state.notifSound}
-          onChange={(e) =>
-            dispatch({ type: "setNotifSound", payload: e.target.checked })
-          }
-          style={{
-            width: "36px",
-            height: "20px",
-            cursor: "pointer",
-            accentColor: "var(--r-acc)",
-          }}
+          onChange={(e) => dispatch({ type: "setNotifSound", payload: e.target.checked })}
+          className="w-9 h-5 cursor-pointer accent-[var(--r-acc)]"
         />
       </div>
 
       {/* Badge count */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
+      <div className="flex justify-between items-center">
         <div>
-          <div
-            style={{
-              fontSize: "14px",
-              fontWeight: 500,
-              color: "var(--r-t1)",
-              marginBottom: "2px",
-            }}
-          >
+          <div className="text-sm font-medium text-[var(--r-t1)] mb-0.5">
             Badge count
           </div>
-          <p style={{ fontSize: "13px", color: "var(--r-t3)" }}>
-            Show unread count on app icon
-          </p>
+          <p className="text-xs text-[var(--r-t3)]">Show unread count on app icon</p>
         </div>
         <input
           type="checkbox"
           defaultChecked
-          style={{
-            width: "36px",
-            height: "20px",
-            cursor: "pointer",
-            accentColor: "var(--r-acc)",
-          }}
+          className="w-9 h-5 cursor-pointer accent-[var(--r-acc)]"
         />
       </div>
     </div>

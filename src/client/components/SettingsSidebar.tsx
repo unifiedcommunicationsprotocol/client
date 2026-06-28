@@ -39,58 +39,25 @@ export function SettingsSidebar({ onLogout }: SettingsSidebarProps) {
   ];
 
   return (
-    <div
-      style={{
-        width: "220px",
-        backgroundColor: "var(--r-sf)",
-        borderRight: "1px solid var(--r-bd)",
-        overflow: "auto",
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
+    <div className="w-55 bg-[var(--r-sf)] border-r border-[var(--r-bd)] overflow-auto flex flex-col">
       {/* Settings title */}
-      <div
-        style={{
-          padding: "16px 20px",
-          borderBottom: "1px solid var(--r-bd)",
-          flexShrink: 0,
-        }}
-      >
-        <h2
-          style={{
-            fontSize: "16px",
-            fontWeight: "600",
-            color: "var(--r-t1)",
-            margin: "0",
-          }}
-        >
+      <div className="px-5 py-4 border-b border-[var(--r-bd)] flex-shrink-0">
+        <h2 className="text-base font-semibold text-[var(--r-t1)] m-0">
           Settings
         </h2>
       </div>
 
       {/* Menu items */}
-      <div style={{ flex: 1, overflow: "auto", padding: "12px 0" }}>
+      <div className="flex-1 overflow-auto py-3">
         {categories.map((category) => (
           <div key={category.id}>
             {/* Category header */}
-            <div
-              style={{
-                padding: "12px 20px 8px",
-                fontSize: "10px",
-                fontWeight: "600",
-                color: "var(--r-t3)",
-                textTransform: "uppercase",
-                letterSpacing: "0.02em",
-              }}
-            >
+            <div className="px-5 py-2 text-xs font-semibold text-[var(--r-t3)] uppercase tracking-wider">
               {category.label}
             </div>
 
             {/* Category items */}
-            <div
-              style={{ display: "flex", flexDirection: "column", gap: "2px" }}
-            >
+            <div className="flex flex-col gap-0.5">
               {category.items.map((item) => {
                 const isActive = state.settingsSection === item.id;
                 return (
@@ -100,36 +67,11 @@ export function SettingsSidebar({ onLogout }: SettingsSidebarProps) {
                     onClick={() =>
                       dispatch({ type: "setSettingsSection", payload: item.id })
                     }
-                    style={{
-                      padding: "8px 20px",
-                      margin: "0 8px",
-                      width: "calc(100% - 16px)",
-                      border: "none",
-                      borderRadius: "6px",
-                      backgroundColor: isActive
-                        ? "var(--r-sel)"
-                        : "transparent",
-                      color: isActive ? "var(--r-t1)" : "var(--r-t2)",
-                      cursor: "pointer",
-                      fontSize: "13px",
-                      fontWeight: isActive ? "500" : "400",
-                      textAlign: "left",
-                      transition: "background-color 150ms",
-                    }}
-                    onMouseEnter={(e) => {
-                      if (!isActive) {
-                        (
-                          e.currentTarget as HTMLButtonElement
-                        ).style.backgroundColor = "var(--r-hov)";
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      if (!isActive) {
-                        (
-                          e.currentTarget as HTMLButtonElement
-                        ).style.backgroundColor = "transparent";
-                      }
-                    }}
+                    className={`mx-2 px-5 py-2 rounded-md text-sm text-left transition-colors ${
+                      isActive
+                        ? "bg-[var(--r-sel)] text-[var(--r-t1)] font-medium"
+                        : "bg-transparent text-[var(--r-t2)] font-normal hover:bg-[var(--r-hov)]"
+                    }`}
                   >
                     {item.label}
                   </button>
@@ -141,27 +83,11 @@ export function SettingsSidebar({ onLogout }: SettingsSidebarProps) {
       </div>
 
       {/* Logout button */}
-      <div
-        style={{
-          padding: "12px",
-          borderTop: "1px solid var(--r-bd)",
-          flexShrink: 0,
-        }}
-      >
+      <div className="p-3 border-t border-[var(--r-bd)] flex-shrink-0">
         <button
           type="button"
           onClick={onLogout}
-          style={{
-            width: "100%",
-            padding: "8px 12px",
-            border: "1px solid var(--r-bd)",
-            borderRadius: "6px",
-            backgroundColor: "transparent",
-            color: "var(--r-t2)",
-            cursor: "pointer",
-            fontSize: "13px",
-            fontWeight: "500",
-          }}
+          className="w-full px-3 py-2 border border-[var(--r-bd)] rounded-md bg-transparent text-[var(--r-t2)] cursor-pointer text-xs font-medium hover:bg-[var(--r-hov)]"
         >
           Logout
         </button>

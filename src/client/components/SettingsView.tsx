@@ -48,28 +48,13 @@ export function SettingsView({ onLogout }: SettingsViewProps) {
   };
 
   return (
-    <div
-      style={{
-        flex: 1,
-        display: "flex",
-        overflow: "hidden",
-      }}
-    >
+    <div className="flex-1 flex overflow-hidden">
       {/* Sidebar */}
       <SettingsSidebar onLogout={onLogout} />
 
       {/* Content Area */}
-      <div
-        style={{
-          flex: 1,
-          overflow: "auto",
-          padding: "36px 44px",
-          backgroundColor: "var(--r-bg)",
-          display: "flex",
-          justifyContent: "center",
-        }}
-      >
-        <div style={{ maxWidth: "640px", width: "100%" }}>
+      <div className="flex-1 overflow-auto bg-[var(--r-bg)] px-11 py-9 flex justify-center">
+        <div className="w-full max-w-2xl">
           {renderContent()}
         </div>
       </div>

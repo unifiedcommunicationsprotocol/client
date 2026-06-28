@@ -4,37 +4,20 @@ export function PreferencesSettings() {
   const { state, dispatch } = useAppContext();
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+    <div className="flex flex-col gap-6">
       <div>
-        <h2
-          style={{
-            fontSize: "20px",
-            fontWeight: 700,
-            marginBottom: "4px",
-            color: "var(--r-t1)",
-          }}
-        >
+        <h2 className="text-xl font-bold text-[var(--r-t1)] mb-1">
           Preferences
         </h2>
-        <p style={{ fontSize: "13px", color: "var(--r-t3)" }}>
-          Customize how content is displayed
-        </p>
+        <p className="text-sm text-[var(--r-t3)]">Customize how content is displayed</p>
       </div>
 
       {/* Message rendering */}
       <div>
-        <div
-          style={{
-            fontSize: "14px",
-            fontWeight: 500,
-            color: "var(--r-t1)",
-            marginBottom: "12px",
-            display: "block",
-          }}
-        >
+        <div className="text-sm font-medium text-[var(--r-t1)] mb-3 block">
           Message rendering
         </div>
-        <div style={{ display: "flex", gap: "8px", marginBottom: "12px" }}>
+        <div className="flex gap-2 mb-3">
           {[
             { id: "blocks", label: "Blocks" },
             { id: "html", label: "HTML" },
@@ -48,67 +31,27 @@ export function PreferencesSettings() {
                   payload: mode.id as "blocks" | "html",
                 })
               }
-              style={{
-                flex: 1,
-                padding: "8px 16px",
-                borderRadius: "6px",
-                border: "1px solid var(--r-bd)",
-                background:
-                  state.renderingMode === mode.id
-                    ? "var(--r-accd)"
-                    : "transparent",
-                color:
-                  state.renderingMode === mode.id
-                    ? "var(--r-acc)"
-                    : "var(--r-t2)",
-                fontSize: "13px",
-                fontWeight: state.renderingMode === mode.id ? 600 : 500,
-                cursor: "pointer",
-                transition: "all 120ms",
-              }}
+              className={`flex-1 px-4 py-2 rounded-md text-xs font-medium transition-all ${
+                state.renderingMode === mode.id
+                  ? "bg-[var(--r-accd)] text-[var(--r-acc)]"
+                  : "border border-[var(--r-bd)] bg-transparent text-[var(--r-t2)]"
+              }`}
             >
               {mode.label}
             </button>
           ))}
         </div>
-        <div
-          style={{
-            padding: "12px",
-            borderRadius: "6px",
-            background: "var(--r-accd)",
-            border: "1px solid rgba(99,102,241,0.2)",
-            fontSize: "13px",
-            color: "var(--r-t2)",
-            lineHeight: "1.5",
-          }}
-        >
-          <strong style={{ color: "var(--r-t1)" }}>Blocks mode:</strong>{" "}
-          Messages are stripped of HTML and rendered as plain text blocks. This
-          is the default and most secure mode.
+        <div className="p-3 rounded-md bg-[var(--r-accd)] border border-[rgba(99,102,241,0.2)] text-xs text-[var(--r-t2)] leading-relaxed">
+          <strong className="text-[var(--r-t1)]">Blocks mode:</strong> Messages are stripped of HTML and rendered as plain text blocks. This is the default and most secure mode.
         </div>
       </div>
 
       {/* AI metadata language */}
       <div>
-        <div
-          style={{
-            fontSize: "14px",
-            fontWeight: 500,
-            color: "var(--r-t1)",
-            marginBottom: "12px",
-            display: "block",
-          }}
-        >
+        <div className="text-sm font-medium text-[var(--r-t1)] mb-3 block">
           AI metadata language
         </div>
-        <div
-          style={{
-            display: "flex",
-            gap: "8px",
-            marginBottom: "12px",
-            flexWrap: "wrap",
-          }}
-        >
+        <div className="flex gap-2 mb-3 flex-wrap">
           {[
             { id: "EN", label: "EN" },
             { id: "FR", label: "FR" },
@@ -118,38 +61,14 @@ export function PreferencesSettings() {
             <button
               key={lang.id}
               type="button"
-              style={{
-                flex: "0 1 auto",
-                padding: "8px 16px",
-                borderRadius: "6px",
-                border: "1px solid var(--r-bd)",
-                background: "transparent",
-                color: "var(--r-t2)",
-                fontSize: "13px",
-                fontWeight: 500,
-                cursor: "pointer",
-                transition: "all 120ms",
-              }}
+              className="px-4 py-2 rounded-md border border-[var(--r-bd)] bg-transparent text-xs font-medium text-[var(--r-t2)] cursor-pointer transition-all"
             >
               {lang.label}
             </button>
           ))}
         </div>
-        <div
-          style={{
-            padding: "12px",
-            borderRadius: "6px",
-            background: "var(--r-sf)",
-            border: "1px solid var(--r-bd)",
-            fontSize: "13px",
-            color: "var(--r-t2)",
-            lineHeight: "1.5",
-          }}
-        >
-          <strong style={{ color: "var(--r-t1)" }}>
-            AI metadata is always generated locally on your device.
-          </strong>{" "}
-          It is never sent to Relay servers or external services.
+        <div className="p-3 rounded-md bg-[var(--r-sf)] border border-[var(--r-bd)] text-xs text-[var(--r-t2)] leading-relaxed">
+          <strong className="text-[var(--r-t1)]">AI metadata is always generated locally on your device.</strong> It is never sent to Relay servers or external services.
         </div>
       </div>
     </div>
