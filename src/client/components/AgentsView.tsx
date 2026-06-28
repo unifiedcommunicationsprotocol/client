@@ -93,89 +93,29 @@ export function AgentsView() {
   ];
 
   return (
-    <div
-      style={{
-        flex: 1,
-        display: "flex",
-        flexDirection: "column",
-        overflow: "hidden",
-      }}
-    >
+    <div className="flex-1 flex flex-col overflow-hidden">
       {/* Header */}
-      <div
-        style={{
-          padding: "20px",
-          borderBottom: "1px solid var(--r-bd)",
-          backgroundColor: "var(--r-bg)",
-        }}
-      >
-        <h1
-          style={{
-            fontSize: "22px",
-            fontWeight: "700",
-            color: "var(--r-t1)",
-            margin: "0 0 4px 0",
-          }}
-        >
+      <div className="p-5 border-b border-[var(--r-bd)] bg-[var(--r-bg)]">
+        <h1 className="text-[22px] font-bold text-[var(--r-t1)] mb-1">
           Agents
         </h1>
-        <p
-          style={{
-            fontSize: "14px",
-            color: "var(--r-t3)",
-            margin: "0",
-          }}
-        >
+        <p className="text-sm text-[var(--r-t3)]">
           Automate tasks across your workflow
         </p>
       </div>
 
       {/* Main content */}
-      <div
-        style={{
-          flex: 1,
-          overflow: "auto",
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: "20px",
-          padding: "20px",
-          backgroundColor: "var(--r-bg)",
-        }}
-      >
+      <div className="flex-1 overflow-auto grid grid-cols-2 gap-5 p-5 bg-[var(--r-bg)]">
         {/* Agents Grid */}
-        <div style={{ gridColumn: "1 / -1" }}>
-          <h2
-            style={{
-              fontSize: "16px",
-              fontWeight: "600",
-              color: "var(--r-t1)",
-              marginBottom: "12px",
-              margin: "0 0 12px 0",
-            }}
-          >
+        <div className="col-span-2">
+          <h2 className="text-base font-semibold text-[var(--r-t1)] mb-3">
             Available Agents
           </h2>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-              gap: "12px",
-              marginBottom: "32px",
-            }}
-          >
+          <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-3 mb-8">
             {agents.map((agent) => (
               <div
                 key={agent.id}
-                style={{
-                  backgroundColor: "var(--r-sf)",
-                  border: "1px solid var(--r-bd)",
-                  borderRadius: "8px",
-                  padding: "16px",
-                  display: "flex",
-                  flexDirection: "column",
-                  transition: "border-color 150ms, box-shadow 150ms",
-                  cursor: "pointer",
-                }}
+                className="bg-[var(--r-sf)] border border-[var(--r-bd)] rounded-lg p-4 flex flex-col cursor-pointer transition-all duration-150"
                 onMouseEnter={(e) => {
                   const elem = e.currentTarget as HTMLDivElement;
                   elem.style.borderColor = "var(--r-acc)";
@@ -188,91 +128,47 @@ export function AgentsView() {
                 }}
               >
                 {/* Status indicator + Name */}
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "8px",
-                    marginBottom: "8px",
-                  }}
-                >
+                <div className="flex items-center gap-2 mb-2">
                   <div
+                    className="w-2 h-2 rounded-full flex-shrink-0"
                     style={{
-                      width: "8px",
-                      height: "8px",
-                      borderRadius: "50%",
                       backgroundColor:
                         agent.status === "active"
                           ? "#22C55E"
                           : agent.status === "paused"
                             ? "#F59E0B"
                             : "#9CA3AF",
-                      flexShrink: 0,
                     }}
                   />
-                  <h3
-                    style={{
-                      fontSize: "14px",
-                      fontWeight: "600",
-                      color: "var(--r-t1)",
-                      margin: "0",
-                      flex: 1,
-                    }}
-                  >
+                  <h3 className="text-sm font-semibold text-[var(--r-t1)] flex-1">
                     {agent.name}
                   </h3>
                   {/* Status toggle */}
                   <div
+                    className="inline-flex items-center w-8 h-[18px] rounded-full px-0.5 cursor-pointer transition-colors duration-150"
                     style={{
-                      display: "inline-flex",
-                      alignItems: "center",
-                      width: "32px",
-                      height: "18px",
-                      borderRadius: "9px",
                       backgroundColor:
                         agent.status === "active"
                           ? "var(--r-acc)"
                           : "var(--r-bd)",
-                      padding: "2px",
-                      cursor: "pointer",
-                      transition: "background-color 150ms",
                     }}
                   >
                     <div
+                      className="w-[14px] h-[14px] rounded-full bg-white transition-all duration-150"
                       style={{
-                        width: "14px",
-                        height: "14px",
-                        borderRadius: "50%",
-                        backgroundColor: "white",
                         marginLeft: agent.status === "active" ? "14px" : "0",
-                        transition: "margin 150ms",
                       }}
                     />
                   </div>
                 </div>
 
                 {/* Description */}
-                <p
-                  style={{
-                    fontSize: "13px",
-                    color: "var(--r-t2)",
-                    margin: "0 0 12px 0",
-                    lineHeight: "1.5",
-                  }}
-                >
+                <p className="text-xs text-[var(--r-t2)] mb-3 leading-relaxed">
                   {agent.description}
                 </p>
 
                 {/* Stats */}
-                <div
-                  style={{
-                    display: "flex",
-                    gap: "12px",
-                    fontSize: "12px",
-                    color: "var(--r-t3)",
-                    marginTop: "auto",
-                  }}
-                >
+                <div className="flex gap-3 text-[11px] text-[var(--r-t3)] mt-auto">
                   {agent.lastRun && <div>Last run: {agent.lastRun}</div>}
                   {agent.runCount && (
                     <div>{agent.runCount.toLocaleString()} runs</div>
@@ -284,86 +180,45 @@ export function AgentsView() {
         </div>
 
         {/* Activity Log */}
-        <div style={{ gridColumn: "1 / -1" }}>
-          <h2
-            style={{
-              fontSize: "16px",
-              fontWeight: "600",
-              color: "var(--r-t1)",
-              marginBottom: "12px",
-              margin: "0 0 12px 0",
-            }}
-          >
+        <div className="col-span-2">
+          <h2 className="text-base font-semibold text-[var(--r-t1)] mb-3">
             Recent Activity
           </h2>
-          <div
-            style={{
-              backgroundColor: "var(--r-sf)",
-              border: "1px solid var(--r-bd)",
-              borderRadius: "8px",
-              overflow: "hidden",
-            }}
-          >
+          <div className="bg-[var(--r-sf)] border border-[var(--r-bd)] rounded-lg overflow-hidden">
             {activityLog.map((entry, idx) => (
               <div
                 key={entry.id}
-                style={{
-                  padding: "12px 16px",
-                  borderBottom:
-                    idx < activityLog.length - 1
-                      ? "1px solid var(--r-bd)"
-                      : "none",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "12px",
-                }}
+                className={`px-4 py-3 flex items-center gap-3 ${
+                  idx < activityLog.length - 1
+                    ? "border-b border-[var(--r-bd)]"
+                    : ""
+                }`}
               >
                 {/* Status dot */}
                 <div
+                  className="w-1.5 h-1.5 rounded-full flex-shrink-0"
                   style={{
-                    width: "6px",
-                    height: "6px",
-                    borderRadius: "50%",
                     backgroundColor:
                       entry.status === "success"
                         ? "#22C55E"
                         : entry.status === "error"
                           ? "#EF4444"
                           : "#9CA3AF",
-                    flexShrink: 0,
                   }}
                 />
 
                 {/* Activity info */}
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <div
-                    style={{
-                      fontSize: "13px",
-                      fontWeight: "500",
-                      color: "var(--r-t1)",
-                      marginBottom: "2px",
-                    }}
-                  >
+                <div className="flex-1 min-w-0">
+                  <div className="text-xs font-medium text-[var(--r-t1)] mb-0.5">
                     {entry.agentName}
                   </div>
-                  <div
-                    style={{
-                      fontSize: "12px",
-                      color: "var(--r-t3)",
-                    }}
-                  >
+                  <div className="text-[11px] text-[var(--r-t3)]">
                     {entry.action}
                   </div>
                 </div>
 
                 {/* Timestamp */}
-                <div
-                  style={{
-                    fontSize: "11px",
-                    color: "var(--r-t3)",
-                    whiteSpace: "nowrap",
-                  }}
-                >
+                <div className="text-[10px] text-[var(--r-t3)] whitespace-nowrap">
                   {entry.timestamp}
                 </div>
               </div>

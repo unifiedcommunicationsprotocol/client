@@ -40,34 +40,13 @@ export function CalendarMonth() {
   };
 
   return (
-    <div
-      style={{
-        flex: 1,
-        display: "flex",
-        flexDirection: "column",
-        overflow: "hidden",
-      }}
-    >
+    <div className="flex-1 flex flex-col overflow-hidden">
       {/* Day labels */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(7, 1fr)",
-          borderBottom: "1px solid var(--r-bd)",
-          backgroundColor: "var(--r-bg)",
-        }}
-      >
+      <div className="grid grid-cols-7 border-b border-[var(--r-bd)] bg-[var(--r-bg)]">
         {dayLabels.map((day) => (
           <div
             key={day}
-            style={{
-              padding: "12px 8px",
-              textAlign: "center",
-              fontSize: "12px",
-              fontWeight: "600",
-              color: "var(--r-t2)",
-              borderRight: "1px solid var(--r-bd)",
-            }}
+            className="px-2 py-3 text-center text-xs font-semibold text-[var(--r-t2)] border-r border-[var(--r-bd)]"
           >
             {day}
           </div>
@@ -75,23 +54,11 @@ export function CalendarMonth() {
       </div>
 
       {/* Calendar grid */}
-      <div
-        style={{
-          flex: 1,
-          overflow: "auto",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
+      <div className="flex-1 overflow-auto flex flex-col">
         {weeks.map((week, weekIdx) => (
           <div
             key={weekIdx}
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(7, 1fr)",
-              flex: 1,
-              borderBottom: "1px solid var(--r-bd)",
-            }}
+            className="grid grid-cols-7 flex-1 border-b border-[var(--r-bd)]"
           >
             {week.map((date, dayIdx) => {
               const events = getEventsForDate(date);
@@ -106,53 +73,27 @@ export function CalendarMonth() {
                     dispatch({ type: "setCalCreating", payload: true });
                     dispatch({ type: "setCalNewTitle", payload: "" });
                   }}
-                  style={{
-                    borderRight: dayIdx < 6 ? "1px solid var(--r-bd)" : "none",
-                    backgroundColor: inCurrentMonth
-                      ? "var(--r-bg)"
-                      : "var(--r-sf)",
-                    padding: "8px",
-                    cursor: "pointer",
-                    border: "none",
-                    textAlign: "left",
-                    position: "relative",
-                    overflow: "hidden",
-                  }}
+                  className={`${
+                    dayIdx < 6 ? "border-r border-[var(--r-bd)]" : ""
+                  } ${
+                    inCurrentMonth ? "bg-[var(--r-bg)]" : "bg-[var(--r-sf)]"
+                  } p-2 cursor-pointer border-none text-left relative overflow-hidden`}
                 >
                   {/* Date number */}
                   <div
-                    style={{
-                      fontSize: "13px",
-                      fontWeight: "500",
-                      color: today_check
-                        ? "var(--r-acc)"
+                    className={`text-sm font-medium mb-1 w-6 h-6 flex items-center justify-center rounded-full ${
+                      today_check
+                        ? "bg-[var(--r-accd)] text-[var(--r-acc)]"
                         : inCurrentMonth
-                          ? "var(--r-t1)"
-                          : "var(--r-t3)",
-                      marginBottom: "4px",
-                      width: "24px",
-                      height: "24px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      borderRadius: "50%",
-                      backgroundColor: today_check
-                        ? "var(--r-accd)"
-                        : "transparent",
-                    }}
+                          ? "bg-transparent text-[var(--r-t1)]"
+                          : "bg-transparent text-[var(--r-t3)]"
+                    }`}
                   >
                     {date.getDate()}
                   </div>
 
                   {/* Event dots/chips */}
-                  <div
-                    style={{
-                      display: "flex",
-                      flexWrap: "wrap",
-                      gap: "2px",
-                      marginTop: "2px",
-                    }}
-                  >
+                  <div className="flex flex-wrap gap-0.5 mt-0.5">
                     {events.slice(0, 2).map((event, idx) => (
                       <div
                         key={idx}
@@ -163,30 +104,14 @@ export function CalendarMonth() {
                             payload: event.id,
                           });
                         }}
-                        style={{
-                          fontSize: "9px",
-                          padding: "1px 3px",
-                          borderRadius: "2px",
-                          backgroundColor: event.color,
-                          color: "white",
-                          cursor: "pointer",
-                          whiteSpace: "nowrap",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                          maxWidth: "100%",
-                        }}
+                        className="text-xs px-0.5 py-px rounded cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis max-w-full text-white"
+                        style={{ backgroundColor: event.color }}
                       >
                         {event.title.substring(0, 8)}
                       </div>
                     ))}
                     {events.length > 2 && (
-                      <div
-                        style={{
-                          fontSize: "9px",
-                          color: "var(--r-t3)",
-                          padding: "1px 3px",
-                        }}
-                      >
+                      <div className="text-xs text-[var(--r-t3)] px-0.5 py-px">
                         +{events.length - 2}
                       </div>
                     )}

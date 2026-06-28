@@ -56,45 +56,18 @@ export function SettingsPanel({ onLogout }: SettingsPanelProps) {
     if (state.view.startsWith("settings/appearance")) {
       return (
         <div>
-          <h2
-            style={{
-              fontSize: "20px",
-              fontWeight: "600",
-              marginBottom: "24px",
-              color: "var(--r-t1)",
-            }}
-          >
+          <h2 className="text-xl font-semibold mb-6 text-[var(--r-t1)]">
             Appearance
           </h2>
-          <div
-            style={{
-              backgroundColor: "var(--r-sf)",
-              padding: "20px",
-              borderRadius: "8px",
-              border: "1px solid var(--r-bd)",
-            }}
-          >
-            <div style={{ marginBottom: "20px" }}>
-              <div
-                style={{
-                  fontSize: "14px",
-                  fontWeight: "500",
-                  marginBottom: "8px",
-                  color: "var(--r-t1)",
-                }}
-              >
+          <div className="bg-[var(--r-sf)] p-5 rounded-lg border border-[var(--r-bd)]">
+            <div className="mb-5">
+              <div className="text-sm font-medium mb-2 text-[var(--r-t1)]">
                 Color scheme
               </div>
-              <div
-                style={{
-                  fontSize: "12px",
-                  color: "var(--r-t2)",
-                  marginBottom: "12px",
-                }}
-              >
+              <div className="text-xs text-[var(--r-t2)] mb-3">
                 Light or dark
               </div>
-              <div style={{ display: "flex", gap: "8px" }}>
+              <div className="flex gap-2">
                 <button
                   type="button"
                   onClick={() => {
@@ -102,17 +75,11 @@ export function SettingsPanel({ onLogout }: SettingsPanelProps) {
                       dispatch({ type: "toggleDarkMode" });
                     }
                   }}
-                  style={{
-                    padding: "8px 16px",
-                    borderRadius: "6px",
-                    border: state.darkMode ? "1px solid var(--r-bd)" : "none",
-                    backgroundColor: state.darkMode
-                      ? "var(--r-bg)"
-                      : "var(--r-acc)",
-                    color: state.darkMode ? "var(--r-t1)" : "white",
-                    cursor: "pointer",
-                    fontSize: "14px",
-                  }}
+                  className={`px-4 py-2 rounded-md text-sm cursor-pointer ${
+                    state.darkMode
+                      ? "border border-[var(--r-bd)] bg-[var(--r-bg)] text-[var(--r-t1)]"
+                      : "border-none bg-[var(--r-acc)] text-white"
+                  }`}
                 >
                   Light
                 </button>
@@ -123,75 +90,44 @@ export function SettingsPanel({ onLogout }: SettingsPanelProps) {
                       dispatch({ type: "toggleDarkMode" });
                     }
                   }}
-                  style={{
-                    padding: "8px 16px",
-                    borderRadius: "6px",
-                    border: !state.darkMode ? "1px solid var(--r-bd)" : "none",
-                    backgroundColor: !state.darkMode
-                      ? "var(--r-bg)"
-                      : "var(--r-acc)",
-                    color: !state.darkMode ? "var(--r-t1)" : "white",
-                    cursor: "pointer",
-                    fontSize: "14px",
-                  }}
+                  className={`px-4 py-2 rounded-md text-sm cursor-pointer ${
+                    !state.darkMode
+                      ? "border border-[var(--r-bd)] bg-[var(--r-bg)] text-[var(--r-t1)]"
+                      : "border-none bg-[var(--r-acc)] text-white"
+                  }`}
                 >
                   Dark
                 </button>
               </div>
             </div>
 
-            <div style={{ marginBottom: "20px" }}>
-              <div
-                style={{
-                  fontSize: "14px",
-                  fontWeight: "500",
-                  marginBottom: "8px",
-                  color: "var(--r-t1)",
-                }}
-              >
+            <div className="mb-5">
+              <div className="text-sm font-medium mb-2 text-[var(--r-t1)]">
                 Thread list density
               </div>
-              <div
-                style={{
-                  fontSize: "12px",
-                  color: "var(--r-t2)",
-                  marginBottom: "12px",
-                }}
-              >
+              <div className="text-xs text-[var(--r-t2)] mb-3">
                 Compact or spacious rows
               </div>
-              <div style={{ display: "flex", gap: "8px" }}>
+              <div className="flex gap-2">
                 <button
                   type="button"
                   onClick={() => dispatch({ type: "setVariant", payload: "A" })}
-                  style={{
-                    padding: "8px 16px",
-                    borderRadius: "6px",
-                    border:
-                      state.variant === "A" ? "none" : "1px solid var(--r-bd)",
-                    backgroundColor:
-                      state.variant === "A" ? "var(--r-acc)" : "var(--r-bg)",
-                    color: state.variant === "A" ? "white" : "var(--r-t1)",
-                    cursor: "pointer",
-                    fontSize: "14px",
-                  }}
+                  className={`px-4 py-2 rounded-md text-sm cursor-pointer ${
+                    state.variant === "A"
+                      ? "border-none bg-[var(--r-acc)] text-white"
+                      : "border border-[var(--r-bd)] bg-[var(--r-bg)] text-[var(--r-t1)]"
+                  }`}
                 >
                   Compact
                 </button>
                 <button
                   type="button"
                   onClick={() => dispatch({ type: "setVariant", payload: "B" })}
-                  style={{
-                    padding: "8px 16px",
-                    borderRadius: "6px",
-                    border:
-                      state.variant === "B" ? "none" : "1px solid var(--r-bd)",
-                    backgroundColor:
-                      state.variant === "B" ? "var(--r-acc)" : "var(--r-bg)",
-                    color: state.variant === "B" ? "white" : "var(--r-t1)",
-                    cursor: "pointer",
-                    fontSize: "14px",
-                  }}
+                  className={`px-4 py-2 rounded-md text-sm cursor-pointer ${
+                    state.variant === "B"
+                      ? "border-none bg-[var(--r-acc)] text-white"
+                      : "border border-[var(--r-bd)] bg-[var(--r-bg)] text-[var(--r-t1)]"
+                  }`}
                 >
                   Spacious
                 </button>
@@ -204,47 +140,21 @@ export function SettingsPanel({ onLogout }: SettingsPanelProps) {
 
     return (
       <div>
-        <h2
-          style={{
-            fontSize: "20px",
-            fontWeight: "600",
-            marginBottom: "24px",
-            color: "var(--r-t1)",
-          }}
-        >
+        <h2 className="text-xl font-semibold mb-6 text-[var(--r-t1)]">
           {getSettingTitle()}
         </h2>
-        <div style={{ color: "var(--r-t2)" }}>Coming soon...</div>
+        <div className="text-[var(--r-t2)]">Coming soon...</div>
       </div>
     );
   };
 
   return (
-    <div style={{ display: "flex", height: "100%", width: "100%" }}>
+    <div className="flex h-full w-full">
       {/* Settings Sidebar */}
-      <div
-        style={{
-          width: "240px",
-          backgroundColor: "var(--r-sf)",
-          borderRight: "1px solid var(--r-bd)",
-          padding: "20px 12px",
-          overflowY: "auto",
-          flexShrink: 0,
-        }}
-      >
+      <div className="w-60 bg-[var(--r-sf)] border-r border-[var(--r-bd)] p-5 px-3 overflow-y-auto flex-shrink-0">
         {categories.map((category) => (
           <div key={category.id}>
-            <div
-              style={{
-                fontSize: "11px",
-                fontWeight: "600",
-                color: "var(--r-t3)",
-                textTransform: "uppercase",
-                paddingLeft: "12px",
-                marginTop: "16px",
-                marginBottom: "8px",
-              }}
-            >
+            <div className="text-xs font-bold text-[var(--r-t3)] uppercase pl-3 mt-4 mb-2">
               {category.label}
             </div>
             {category.items.map((item) => (
@@ -254,24 +164,11 @@ export function SettingsPanel({ onLogout }: SettingsPanelProps) {
                 onClick={() =>
                   dispatch({ type: "setView", payload: `settings/${item.id}` })
                 }
-                style={{
-                  width: "100%",
-                  textAlign: "left",
-                  padding: "8px 12px",
-                  fontSize: "14px",
-                  border: "none",
-                  backgroundColor:
-                    state.view === `settings/${item.id}`
-                      ? "rgba(99, 102, 241, 0.1)"
-                      : "transparent",
-                  color:
-                    state.view === `settings/${item.id}`
-                      ? "var(--r-acc)"
-                      : "var(--r-t1)",
-                  cursor: "pointer",
-                  borderRadius: "6px",
-                  transition: "all 0.2s ease",
-                }}
+                className={`w-full text-left px-3 py-2 text-sm border-none rounded-md cursor-pointer transition-all duration-200 ${
+                  state.view === `settings/${item.id}`
+                    ? "bg-[rgba(99,102,241,0.1)] text-[var(--r-acc)]"
+                    : "bg-transparent text-[var(--r-t1)]"
+                }`}
                 onMouseEnter={(e) => {
                   if (state.view !== `settings/${item.id}`) {
                     (
@@ -297,19 +194,7 @@ export function SettingsPanel({ onLogout }: SettingsPanelProps) {
         <button
           type="button"
           onClick={onLogout}
-          style={{
-            width: "100%",
-            padding: "12px",
-            marginTop: "24px",
-            borderRadius: "6px",
-            border: "1px solid #EF4444",
-            backgroundColor: "transparent",
-            color: "#EF4444",
-            cursor: "pointer",
-            fontSize: "14px",
-            fontWeight: "500",
-            transition: "all 0.2s ease",
-          }}
+          className="w-full px-3 py-3 mt-6 rounded-md border border-red-500 bg-transparent text-red-500 cursor-pointer text-sm font-medium transition-all duration-200"
           onMouseEnter={(e) => {
             (e.currentTarget as HTMLButtonElement).style.backgroundColor =
               "rgba(239, 68, 68, 0.1)";
@@ -324,15 +209,7 @@ export function SettingsPanel({ onLogout }: SettingsPanelProps) {
       </div>
 
       {/* Settings Content */}
-      <div
-        style={{
-          flex: 1,
-          padding: "24px",
-          overflowY: "auto",
-        }}
-      >
-        {renderContent()}
-      </div>
+      <div className="flex-1 p-6 overflow-y-auto">{renderContent()}</div>
     </div>
   );
 }

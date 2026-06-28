@@ -26,19 +26,9 @@ export function NoteEditor() {
 
   if (!selectedNote) {
     return (
-      <div
-        style={{
-          flex: 1,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          color: "var(--r-t3)",
-          flexDirection: "column",
-          gap: "16px",
-        }}
-      >
-        <div style={{ fontSize: "48px" }}>📝</div>
-        <div style={{ fontSize: "16px", fontWeight: "500" }}>
+      <div className="flex-1 flex items-center justify-center text-[var(--r-t3)] flex-col gap-4">
+        <div className="text-6xl">📝</div>
+        <div className="text-base font-medium">
           Select a note to edit
         </div>
       </div>
@@ -158,25 +148,9 @@ export function NoteEditor() {
   };
 
   return (
-    <div
-      style={{
-        flex: 1,
-        display: "flex",
-        flexDirection: "column",
-        overflow: "hidden",
-      }}
-    >
+    <div className="flex-1 flex flex-col overflow-hidden">
       {/* Header */}
-      <div
-        style={{
-          padding: "16px 20px",
-          borderBottom: "1px solid var(--r-bd)",
-          backgroundColor: "var(--r-bg)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
-      >
+      <div className="px-5 py-4 border-b border-[var(--r-bd)] bg-[var(--r-bg)] flex items-center justify-between">
         <input
           type="text"
           value={note.title}
@@ -191,64 +165,21 @@ export function NoteEditor() {
             })
           }
           placeholder="Note title..."
-          style={{
-            fontSize: "22px",
-            fontWeight: "700",
-            color: "var(--r-t1)",
-            backgroundColor: "transparent",
-            border: "none",
-            outline: "none",
-            flex: 1,
-            fontFamily: "inherit",
-            padding: "0",
-          }}
+          className="text-2xl font-bold text-[var(--r-t1)] bg-transparent border-none outline-none flex-1 p-0"
         />
-        <div
-          style={{
-            fontSize: "11px",
-            color: "var(--r-t3)",
-            marginLeft: "16px",
-            whiteSpace: "nowrap",
-          }}
-        >
+        <div className="text-xs text-[var(--r-t3)] ml-4 whitespace-nowrap">
           {lastSaved}
         </div>
       </div>
 
       {/* Toolbar */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "4px",
-          padding: "8px 12px",
-          borderBottom: "1px solid var(--r-bd)",
-          backgroundColor: "var(--r-sf)",
-          flexShrink: 0,
-          flexWrap: "wrap",
-        }}
-      >
+      <div className="flex items-center gap-1 px-3 py-2 border-b border-[var(--r-bd)] bg-[var(--r-sf)] flex-shrink-0 flex-wrap">
         {toolbarButtons.map((button, idx) => (
           <button
             key={idx}
             type="button"
             onClick={() => handleToolbarButtonClick(button)}
-            style={{
-              width: "28px",
-              height: "26px",
-              padding: "0",
-              border: "1px solid var(--r-bd)",
-              borderRadius: "5px",
-              backgroundColor: "transparent",
-              color: "var(--r-t2)",
-              cursor: "pointer",
-              fontSize: "12px",
-              fontWeight: "600",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              transition: "background-color 150ms",
-            }}
+            className="w-7 h-[26px] p-0 border border-[var(--r-bd)] rounded-sm bg-transparent text-[var(--r-t2)] cursor-pointer text-xs font-semibold flex items-center justify-center transition-colors duration-150"
             title={button.title}
             onMouseEnter={(e) => {
               (e.currentTarget as HTMLButtonElement).style.backgroundColor =
@@ -267,13 +198,7 @@ export function NoteEditor() {
       {/* Editor */}
       <div
         ref={editorRef}
-        style={{
-          flex: 1,
-          overflow: "auto",
-          padding: "20px",
-          backgroundColor: "var(--r-bg)",
-        }}
-        className="prosemirror-editor"
+        className="flex-1 overflow-auto p-5 bg-[var(--r-bg)] prosemirror-editor"
       />
     </div>
   );

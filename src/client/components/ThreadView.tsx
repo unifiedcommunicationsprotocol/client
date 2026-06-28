@@ -11,26 +11,11 @@ export function ThreadView() {
 
   if (!selectedThread) {
     return (
-      <div
-        style={{
-          flex: 1,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          color: "var(--r-t3)",
-          textAlign: "center",
-          flexDirection: "column",
-          gap: "24px",
-        }}
-      >
+      <div className="flex-1 flex flex-col items-center justify-center gap-6 text-[var(--r-t3)] text-center">
         <div>
-          <div style={{ fontSize: "48px", marginBottom: "16px" }}>📧</div>
-          <div
-            style={{ fontSize: "16px", fontWeight: "500", marginBottom: "8px" }}
-          >
-            No thread selected
-          </div>
-          <div style={{ fontSize: "14px", color: "var(--r-t3)" }}>
+          <div className="text-6xl mb-4">📧</div>
+          <div className="text-base font-medium mb-2">No thread selected</div>
+          <div className="text-sm text-[var(--r-t3)]">
             Select a thread from the sidebar to view messages
           </div>
         </div>
@@ -39,97 +24,37 @@ export function ThreadView() {
   }
 
   return (
-    <div
-      style={{
-        flex: 1,
-        display: "flex",
-        flexDirection: "column",
-        overflow: "hidden",
-      }}
-    >
+    <div className="flex-1 flex flex-col overflow-hidden">
       {/* Thread Header */}
-      <div
-        style={{
-          borderBottom: "1px solid var(--r-bd)",
-          padding: "16px 20px",
-          backgroundColor: "var(--r-bg)",
-        }}
-      >
-        <h2
-          style={{
-            fontSize: "16px",
-            fontWeight: "600",
-            marginBottom: "4px",
-            color: "var(--r-t1)",
-          }}
-        >
+      <div className="border-b border-[var(--r-bd)] px-5 py-4 bg-[var(--r-bg)]">
+        <h2 className="text-base font-semibold mb-1 text-[var(--r-t1)]">
           {selectedThread.subject}
         </h2>
-        <div style={{ fontSize: "13px", color: "var(--r-t2)" }}>
-          {selectedThread.from}
-        </div>
+        <div className="text-xs text-[var(--r-t2)]">{selectedThread.from}</div>
       </div>
 
       {/* Messages */}
-      <div
-        style={{
-          flex: 1,
-          overflowY: "auto",
-          padding: "20px",
-          display: "flex",
-          flexDirection: "column",
-          gap: "16px",
-        }}
-      >
+      <div className="flex-1 overflow-y-auto p-5 flex flex-col gap-4">
         {threadMessages.map((msg) => (
           <div
             key={msg.id}
-            style={{
-              padding: "16px",
-              backgroundColor:
-                msg.from === "you@relay.im" ? "var(--r-sel)" : "var(--r-sf)",
-              borderRadius: "8px",
-              borderLeft: `4px solid ${msg.from === "you@relay.im" ? "var(--r-acc)" : "var(--r-bd)"}`,
-            }}
+            className={`p-4 rounded-lg border-l-4 ${
+              msg.from === "you@relay.im"
+                ? "bg-[var(--r-sel)] border-[var(--r-acc)]"
+                : "bg-[var(--r-sf)] border-[var(--r-bd)]"
+            }`}
           >
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                marginBottom: "8px",
-              }}
-            >
-              <div
-                style={{
-                  fontWeight: "600",
-                  fontSize: "14px",
-                  color: "var(--r-t1)",
-                }}
-              >
+            <div className="flex justify-between items-center mb-2">
+              <div className="font-semibold text-sm text-[var(--r-t1)]">
                 {msg.from === "you@relay.im" ? "You" : msg.from}
               </div>
-              <div style={{ fontSize: "12px", color: "var(--r-t3)" }}>
-                {msg.timestamp}
-              </div>
+              <div className="text-xs text-[var(--r-t3)]">{msg.timestamp}</div>
             </div>
-            <div
-              style={{
-                fontSize: "14px",
-                color: "var(--r-t1)",
-                lineHeight: "1.5",
-              }}
-            >
+            <div className="text-sm text-[var(--r-t1)] leading-relaxed">
               {msg.body}
             </div>
             {msg.encrypted && (
-              <div
-                style={{
-                  fontSize: "11px",
-                  color: "var(--r-safe)",
-                  marginTop: "8px",
-                }}
-              >
+              <div className="text-[10px] text-[var(--r-safe)] mt-2">
                 ✓ Encrypted end-to-end
               </div>
             )}
@@ -139,20 +64,8 @@ export function ThreadView() {
 
       {/* Reply/Forward Compose Area */}
       {state.replyOpen ? (
-        <div
-          style={{
-            borderTop: "1px solid var(--r-bd)",
-            padding: "16px 20px",
-            backgroundColor: "var(--r-bg)",
-          }}
-        >
-          <div
-            style={{
-              marginBottom: "12px",
-              fontSize: "13px",
-              color: "var(--r-t2)",
-            }}
-          >
+        <div className="border-t border-[var(--r-bd)] p-4 bg-[var(--r-bg)]">
+          <div className="mb-3 text-xs text-[var(--r-t2)]">
             {state.replyIsForward ? "Forwarding to:" : "Replying to:"}{" "}
             {state.replyTo}
             {state.replyShowCc && state.replyCc && `, ${state.replyCc}`}
@@ -164,36 +77,13 @@ export function ThreadView() {
               dispatch({ type: "setReplyText", payload: e.target.value })
             }
             placeholder="Type your reply..."
-            style={{
-              width: "100%",
-              minHeight: "100px",
-              marginBottom: "12px",
-              fontFamily: "inherit",
-              padding: "10px",
-              border: "1px solid var(--r-bd)",
-              borderRadius: "6px",
-              backgroundColor: "var(--r-sf)",
-              color: "var(--r-t1)",
-              fontSize: "14px",
-              resize: "vertical",
-            }}
+            className="w-full min-h-[100px] mb-3 font-inherit p-2.5 border border-[var(--r-bd)] rounded-md bg-[var(--r-sf)] text-[var(--r-t1)] text-sm resize-vertical"
           />
-          <div
-            style={{ display: "flex", gap: "8px", justifyContent: "flex-end" }}
-          >
+          <div className="flex gap-2 justify-end">
             <button
               type="button"
               onClick={() => dispatch({ type: "setReplyOpen", payload: false })}
-              style={{
-                padding: "8px 16px",
-                borderRadius: "6px",
-                border: "1px solid var(--r-bd)",
-                backgroundColor: "transparent",
-                color: "var(--r-t1)",
-                cursor: "pointer",
-                fontSize: "13px",
-                fontWeight: "500",
-              }}
+              className="px-4 py-2 rounded-md border border-[var(--r-bd)] bg-transparent text-[var(--r-t1)] cursor-pointer text-xs font-medium"
             >
               Cancel
             </button>
@@ -221,31 +111,14 @@ export function ThreadView() {
                   dispatch({ type: "setReplyOpen", payload: false });
                 }
               }}
-              style={{
-                padding: "8px 16px",
-                borderRadius: "6px",
-                border: "none",
-                backgroundColor: "var(--r-acc)",
-                color: "white",
-                cursor: "pointer",
-                fontSize: "13px",
-                fontWeight: "500",
-              }}
+              className="px-4 py-2 rounded-md border-none bg-[var(--r-acc)] text-white cursor-pointer text-xs font-medium"
             >
               Send
             </button>
           </div>
         </div>
       ) : (
-        <div
-          style={{
-            borderTop: "1px solid var(--r-bd)",
-            padding: "16px 20px",
-            backgroundColor: "var(--r-bg)",
-            display: "flex",
-            gap: "8px",
-          }}
-        >
+        <div className="border-t border-[var(--r-bd)] p-4 bg-[var(--r-bg)] flex gap-2">
           <button
             type="button"
             onClick={() => {
@@ -253,16 +126,7 @@ export function ThreadView() {
               dispatch({ type: "setReplyIsForward", payload: false });
               dispatch({ type: "setReplyTo", payload: selectedThread.from });
             }}
-            style={{
-              padding: "8px 16px",
-              borderRadius: "6px",
-              border: "1px solid var(--r-bd)",
-              backgroundColor: "transparent",
-              color: "var(--r-t1)",
-              cursor: "pointer",
-              fontSize: "13px",
-              fontWeight: "500",
-            }}
+            className="px-4 py-2 rounded-md border border-[var(--r-bd)] bg-transparent text-[var(--r-t1)] cursor-pointer text-xs font-medium"
           >
             Reply
           </button>
@@ -273,16 +137,7 @@ export function ThreadView() {
               dispatch({ type: "setReplyIsForward", payload: true });
               dispatch({ type: "setReplyTo", payload: selectedThread.from });
             }}
-            style={{
-              padding: "8px 16px",
-              borderRadius: "6px",
-              border: "1px solid var(--r-bd)",
-              backgroundColor: "transparent",
-              color: "var(--r-t1)",
-              cursor: "pointer",
-              fontSize: "13px",
-              fontWeight: "500",
-            }}
+            className="px-4 py-2 rounded-md border border-[var(--r-bd)] bg-transparent text-[var(--r-t1)] cursor-pointer text-xs font-medium"
           >
             Forward
           </button>

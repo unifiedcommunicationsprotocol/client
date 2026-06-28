@@ -12,50 +12,18 @@ export function UserMenu({ onLogout }: UserMenuProps) {
       <button
         type="button"
         onClick={() => dispatch({ type: "setShowUserMenu", payload: false })}
-        style={{
-          position: "fixed",
-          inset: 0,
-          zIndex: 98,
-          border: "none",
-          padding: "0",
-          background: "none",
-          cursor: "pointer",
-        }}
+        className="fixed inset-0 z-[98] border-0 p-0 cursor-pointer bg-none"
         aria-label="Close menu"
       />
       <div
-        style={{
-          position: "fixed",
-          left: "60px",
-          bottom: "10px",
-          width: "224px",
-          backgroundColor: "var(--r-sf)",
-          borderRadius: "8px",
-          border: "1px solid var(--r-bd)",
-          boxShadow: "0 8px 32px rgba(0, 0, 0, 0.35)",
-          zIndex: 99,
-          overflow: "hidden",
-        }}
+        className="fixed left-[60px] bottom-[10px] w-56 bg-[var(--r-sf)] rounded-lg border border-[var(--r-bd)] z-[99] overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.35)]"
       >
         {/* User Info */}
-        <div
-          style={{
-            padding: "12px 14px",
-            borderBottom: "1px solid var(--r-bd)",
-          }}
-        >
-          <div
-            style={{
-              fontSize: "12px",
-              fontWeight: "600",
-              color: "var(--r-t1)",
-            }}
-          >
+        <div className="px-[14px] py-3 border-b border-b-[var(--r-bd)]">
+          <div className="text-xs font-semibold text-[var(--r-t1)]">
             You
           </div>
-          <div
-            style={{ fontSize: "11px", color: "var(--r-t3)", marginTop: "2px" }}
-          >
+          <div className="text-[11px] text-[var(--r-t3)] mt-0.5">
             you@relay.im
           </div>
         </div>
@@ -66,28 +34,7 @@ export function UserMenu({ onLogout }: UserMenuProps) {
           <button
             type="button"
             onClick={() => dispatch({ type: "toggleDarkMode" })}
-            style={{
-              width: "100%",
-              padding: "9px 14px",
-              backgroundColor: "transparent",
-              border: "none",
-              textAlign: "left",
-              fontSize: "13px",
-              color: "var(--r-t1)",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              transition: "background-color 150ms",
-            }}
-            onMouseEnter={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.backgroundColor =
-                "var(--r-hov)";
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.backgroundColor =
-                "transparent";
-            }}
+            className="w-full px-[14px] py-[9px] bg-transparent border-0 text-left text-[13px] text-[var(--r-t1)] cursor-pointer flex items-center justify-between transition-colors duration-150 hover:bg-[var(--r-hov)]"
           >
             <span>{state.darkMode ? "Light mode" : "Dark mode"}</span>
           </button>
@@ -98,26 +45,7 @@ export function UserMenu({ onLogout }: UserMenuProps) {
             onClick={() =>
               dispatch({ type: "setView", payload: "settings/appearance" })
             }
-            style={{
-              width: "100%",
-              padding: "9px 14px",
-              backgroundColor: "transparent",
-              border: "none",
-              textAlign: "left",
-              fontSize: "13px",
-              color: "var(--r-t1)",
-              cursor: "pointer",
-              transition: "background-color 150ms",
-              borderTop: "1px solid var(--r-bd)",
-            }}
-            onMouseEnter={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.backgroundColor =
-                "var(--r-hov)";
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.backgroundColor =
-                "transparent";
-            }}
+            className="w-full px-[14px] py-[9px] bg-transparent border-0 text-left text-[13px] text-[var(--r-t1)] cursor-pointer transition-colors duration-150 border-t border-t-[var(--r-bd)] hover:bg-[var(--r-hov)]"
           >
             Settings
           </button>
@@ -129,25 +57,7 @@ export function UserMenu({ onLogout }: UserMenuProps) {
               dispatch({ type: "setShowUserMenu", payload: false });
               onLogout();
             }}
-            style={{
-              width: "100%",
-              padding: "9px 14px",
-              backgroundColor: "transparent",
-              border: "none",
-              textAlign: "left",
-              fontSize: "13px",
-              color: "var(--r-t1)",
-              cursor: "pointer",
-              transition: "background-color 150ms",
-            }}
-            onMouseEnter={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.backgroundColor =
-                "var(--r-hov)";
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.backgroundColor =
-                "transparent";
-            }}
+            className="w-full px-[14px] py-[9px] bg-transparent border-0 text-left text-[13px] text-[var(--r-t1)] cursor-pointer transition-colors duration-150 hover:bg-[var(--r-hov)]"
           >
             Logout
           </button>

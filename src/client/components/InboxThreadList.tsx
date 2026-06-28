@@ -25,74 +25,29 @@ export function InboxThreadList() {
   const isCompact = state.variant === "A";
   const avatarSize = isCompact ? 28 : 36;
   const avatarSizeStr = `${avatarSize}px`;
-  const padding = isCompact ? "9px 12px" : "14px 12px";
-  const gap = isCompact ? "10px" : "12px";
+  const padding = isCompact ? "py-2 px-3" : "py-3 px-3";
+  const gap = isCompact ? "gap-2.5" : "gap-3";
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        height: "100%",
-        overflow: "hidden",
-      }}
-    >
+    <div className="flex flex-col h-full overflow-hidden">
       {/* Header */}
-      <div
-        style={{
-          padding: "11px 12px 9px",
-          borderBottom: "1px solid var(--r-bd)",
-          flexShrink: 0,
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-            <span
-              style={{
-                fontSize: "14px",
-                fontWeight: "600",
-                color: "var(--r-t1)",
-              }}
-            >
+      <div className="px-3 py-2 border-b border-[var(--r-bd)] flex-shrink-0">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="text-sm font-semibold text-[var(--r-t1)]">
               Inbox
             </span>
             {unreadCount > 0 && (
-              <span
-                style={{
-                  fontSize: "10px",
-                  fontWeight: "700",
-                  color: "var(--r-acc)",
-                  backgroundColor: "var(--r-accd)",
-                  padding: "1px 6px",
-                  borderRadius: "10px",
-                }}
-              >
+              <span className="text-[10px] font-bold text-[var(--r-acc)] bg-[var(--r-accd)] px-1.5 py-0.5 rounded-full">
                 {unreadCount}
               </span>
             )}
           </div>
-          <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+          <div className="flex items-center gap-1">
             <button
               type="button"
               onClick={toggleVariant}
-              style={{
-                padding: "3px 8px",
-                border: "1px solid var(--r-bd)",
-                borderRadius: "4px",
-                backgroundColor: "transparent",
-                color: "var(--r-t3)",
-                fontSize: "10.5px",
-                fontWeight: "600",
-                cursor: "pointer",
-                fontFamily: "inherit",
-                letterSpacing: "0.02em",
-              }}
+              className="px-2 py-0.5 border border-[var(--r-bd)] rounded bg-transparent text-[var(--r-t3)] text-[10.5px] font-bold cursor-pointer tracking-wider"
               title="Toggle thread view variant"
             >
               {isCompact ? "C" : "S"}
@@ -100,19 +55,7 @@ export function InboxThreadList() {
             <button
               type="button"
               onClick={() => dispatch({ type: "setComposing", payload: true })}
-              style={{
-                width: "28px",
-                height: "28px",
-                border: "none",
-                borderRadius: "5px",
-                backgroundColor: "var(--r-acc)",
-                color: "white",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                cursor: "pointer",
-                flexShrink: 0,
-              }}
+              className="w-7 h-7 border-none rounded bg-[var(--r-acc)] text-white flex items-center justify-center cursor-pointer flex-shrink-0"
               title="Compose new message"
             >
               <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
@@ -130,42 +73,20 @@ export function InboxThreadList() {
       </div>
 
       {/* Search */}
-      <div style={{ padding: "12px", flexShrink: 0 }}>
+      <div className="px-3 py-3 flex-shrink-0">
         <input
           type="text"
           placeholder="Search..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          style={{
-            width: "100%",
-            padding: "8px 12px",
-            fontSize: "13px",
-            border: "1px solid var(--r-bd)",
-            borderRadius: "6px",
-            backgroundColor: "var(--r-bg)",
-            color: "var(--r-t1)",
-          }}
+          className="w-full px-3 py-2 text-xs border border-[var(--r-bd)] rounded-md bg-[var(--r-bg)] text-[var(--r-t1)]"
         />
       </div>
 
       {/* Thread List */}
-      <div
-        style={{
-          flex: 1,
-          overflowY: "auto",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
+      <div className="flex-1 overflow-y-auto flex flex-col">
         {filteredThreads.length === 0 ? (
-          <div
-            style={{
-              padding: "20px 12px",
-              textAlign: "center",
-              color: "var(--r-t3)",
-              fontSize: "13px",
-            }}
-          >
+          <div className="px-3 py-5 text-center text-[var(--r-t3)] text-xs">
             No threads found
           </div>
         ) : (
@@ -184,104 +105,53 @@ export function InboxThreadList() {
                 onClick={() =>
                   dispatch({ type: "selectThread", payload: thread.id })
                 }
-                style={{
-                  padding,
-                  borderBottom: "1px solid var(--r-bd)",
-                  borderLeft: `2px solid ${borderColor}`,
-                  backgroundColor: isSelected ? "var(--r-sel)" : "transparent",
-                  cursor: "pointer",
-                  display: "flex",
-                  gap,
-                  alignItems: "flex-start",
-                  transition: "background-color 150ms",
-                }}
+                className={`${padding} ${gap} border-b border-[var(--r-bd)] cursor-pointer flex items-start transition-colors duration-150 ${
+                  isSelected ? "bg-[var(--r-sel)]" : "bg-transparent"
+                }`}
+                style={{ borderLeftWidth: "2px", borderLeftColor: borderColor }}
               >
                 {/* Avatar */}
                 <div
+                  className="rounded-full flex-shrink-0 flex items-center justify-center text-white font-semibold"
                   style={{
                     width: avatarSizeStr,
                     height: avatarSizeStr,
-                    borderRadius: "50%",
                     backgroundColor: thread.avatarColor,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    color: "white",
                     fontSize: avatarSize > 28 ? "14px" : "12px",
-                    fontWeight: "600",
-                    flexShrink: 0,
                   }}
                 >
                   {thread.avatar}
                 </div>
 
                 {/* Content */}
-                <div
-                  style={{
-                    flex: 1,
-                    minWidth: 0,
-                    position: "relative",
-                  }}
-                >
+                <div className="flex-1 min-w-0 relative">
                   {/* From + Time */}
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "flex-start",
-                      marginBottom: "2px",
-                      gap: "8px",
-                    }}
-                  >
+                  <div className="flex justify-between items-start mb-0.5 gap-2">
                     <div
-                      style={{
-                        fontSize: "12.5px",
-                        fontWeight: thread.unread > 0 ? "600" : "500",
-                        color: "var(--r-t1)",
-                        whiteSpace: "nowrap",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                      }}
+                      className={`text-[12.5px] text-[var(--r-t1)] whitespace-nowrap overflow-hidden text-ellipsis ${
+                        thread.unread > 0 ? "font-semibold" : "font-medium"
+                      }`}
                     >
                       {thread.from}
                     </div>
-                    <div
-                      style={{
-                        fontSize: "11px",
-                        color: "var(--r-t3)",
-                        whiteSpace: "nowrap",
-                        flexShrink: 0,
-                      }}
-                    >
+                    <div className="text-[11px] text-[var(--r-t3)] whitespace-nowrap flex-shrink-0">
                       {thread.timestamp}
                     </div>
                   </div>
 
                   {/* Subject */}
-                  <div
-                    style={{
-                      fontSize: "12.5px",
-                      fontWeight: "500",
-                      color: "var(--r-t1)",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      marginBottom: "4px",
-                    }}
-                  >
+                  <div className="text-[12.5px] font-medium text-[var(--r-t1)] whitespace-nowrap overflow-hidden text-ellipsis mb-1">
                     {thread.subject}
                   </div>
 
                   {/* Preview */}
                   <div
+                    className={`text-[11.5px] text-[var(--r-t3)] overflow-hidden ${
+                      isCompact ? "line-clamp-1" : "line-clamp-2"
+                    } ${isCompact ? "mb-0" : "mb-1.5"}`}
                     style={{
-                      fontSize: "11.5px",
-                      color: "var(--r-t3)",
                       display: "-webkit-box",
-                      WebkitLineClamp: isCompact ? 1 : 2,
                       WebkitBoxOrient: "vertical",
-                      overflow: "hidden",
-                      marginBottom: isCompact ? "0" : "6px",
                     }}
                   >
                     {thread.preview}
@@ -289,34 +159,14 @@ export function InboxThreadList() {
 
                   {/* Spacious: Badges */}
                   {!isCompact && (
-                    <div
-                      style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}
-                    >
+                    <div className="flex gap-1.5 flex-wrap">
                       {thread.subject.includes("Gmail") && (
-                        <span
-                          style={{
-                            fontSize: "10px",
-                            fontWeight: "500",
-                            backgroundColor: "#D9770622",
-                            color: "#D97706",
-                            padding: "2px 6px",
-                            borderRadius: "3px",
-                          }}
-                        >
+                        <span className="text-[10px] font-medium bg-[#D9770622] text-[#D97706] px-1.5 py-0.5 rounded-sm">
                           Bridge
                         </span>
                       )}
                       {thread.subject.includes("scheduler") && (
-                        <span
-                          style={{
-                            fontSize: "10px",
-                            fontWeight: "500",
-                            backgroundColor: "#8B5CF622",
-                            color: "#8B5CF6",
-                            padding: "2px 6px",
-                            borderRadius: "3px",
-                          }}
-                        >
+                        <span className="text-[10px] font-medium bg-[#8B5CF622] text-[#8B5CF6] px-1.5 py-0.5 rounded-sm">
                           Agent
                         </span>
                       )}
@@ -327,12 +177,9 @@ export function InboxThreadList() {
                 {/* Unread Indicator */}
                 {thread.unread > 0 && (
                   <div
+                    className="w-1.5 h-1.5 rounded-full flex-shrink-0"
                     style={{
-                      width: "6px",
-                      height: "6px",
-                      borderRadius: "50%",
                       backgroundColor: "var(--r-acc)",
-                      flexShrink: 0,
                       marginTop: "4px",
                     }}
                   />

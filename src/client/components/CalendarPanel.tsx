@@ -15,34 +15,17 @@ export function CalendarPanel() {
   }));
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+    <div className="flex flex-col h-full">
       {/* Header */}
-      <div
-        style={{
-          padding: "11px 12px 9px",
-          borderBottom: "1px solid var(--r-bd)",
-          flexShrink: 0,
-        }}
-      >
-        <span
-          style={{ fontSize: "14px", fontWeight: "600", color: "var(--r-t1)" }}
-        >
+      <div className="px-3 py-2 border-b border-[var(--r-bd)] flex-shrink-0">
+        <span className="text-sm font-semibold text-[var(--r-t1)]">
           Calendar
         </span>
       </div>
 
       {/* Content */}
-      <div style={{ flex: 1, overflow: "auto", padding: "6px 8px" }}>
-        <div
-          style={{
-            fontSize: "10px",
-            fontWeight: "600",
-            color: "var(--r-t3)",
-            textTransform: "uppercase",
-            letterSpacing: "0.08em",
-            padding: "4px 4px 7px",
-          }}
-        >
+      <div className="flex-1 overflow-auto px-2 py-1.5">
+        <div className="text-xs font-semibold text-[var(--r-t3)] uppercase tracking-[0.08em] px-1 py-1.5">
           Upcoming
         </div>
 
@@ -53,21 +36,11 @@ export function CalendarPanel() {
             onClick={() =>
               dispatch({ type: "setCalSelectedEvent", payload: event.id })
             }
-            style={{
-              width: "100%",
-              textAlign: "left",
-              padding: "10px 8px",
-              marginBottom: "4px",
-              borderRadius: "6px",
-              backgroundColor:
-                state.calSelectedEvent === event.id
-                  ? "var(--r-sel)"
-                  : "var(--r-sf2)",
-              border: "1px solid var(--r-bd)",
-              cursor: "pointer",
-              transition: "background-color 150ms",
-              display: "block",
-            }}
+            className={`w-full text-left px-2 py-2.5 mb-1 rounded-md ${
+              state.calSelectedEvent === event.id
+                ? "bg-[var(--r-sel)]"
+                : "bg-[var(--r-sf2)]"
+            } border border-[var(--r-bd)] cursor-pointer transition-colors duration-150 block`}
             onMouseEnter={(e) => {
               if (state.calSelectedEvent !== event.id) {
                 (e.currentTarget as HTMLButtonElement).style.backgroundColor =
@@ -81,20 +54,10 @@ export function CalendarPanel() {
               }
             }}
           >
-            <div
-              style={{
-                fontSize: "12px",
-                fontWeight: "500",
-                color: "var(--r-t1)",
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                marginBottom: "1px",
-              }}
-            >
+            <div className="text-xs font-medium text-[var(--r-t1)] whitespace-nowrap overflow-hidden text-ellipsis mb-0.5">
               {event.title}
             </div>
-            <div style={{ fontSize: "11px", color: "var(--r-t3)" }}>
+            <div className="text-xs text-[var(--r-t3)]">
               {event.time}
             </div>
           </button>
