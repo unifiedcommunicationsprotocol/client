@@ -1,5 +1,5 @@
-**🚀 START HERE:**
-- [Session Status](session_status.md) — Current status, what's done, what's next, quick reference
+**🎉 COMPLETION MILESTONE:**
+- [Session Status — All 8 Phases Complete](session_status.md) — Final implementation status, ready for API integration
 
 **Governance & Workflow:**
 - [Memory Governance](memory_governance.md) — Only use project-local .claude/memories/, never home directory; version control is source of truth
@@ -15,28 +15,26 @@
 - [Spec Sync Gaps](spec_sync_gaps.md) — 15 documented gaps between local docs and spec; priorities for updates
 - [Docs Updated](docs_update_2026_06_27.md) — All critical gaps fixed; Phase 1 checklist expanded with binding strings, timing, caching
 - [Anonymization](anonymization_2026_06_27.md) — Removed user-specific paths; use relative terms like project root, home directory
-- [Phase 2 Inbox Complete](phase2_inbox_complete.md) — InboxThreadList, ThreadDetail, ComposeArea, FileUploadModal implemented; ready for Phase 3
+
+**Design Handoff Implementation (All 8 Phases Complete):**
+- [Design Handoff Implementation](design_handoff_implementation.md) — 8-phase systematic plan to match UI 1:1 with design
+- [Phase 1 Layout Shell Complete](phase1_complete.md) — 3-column layout, 6-section nav, dark/light mode
+- [Phase 2 Inbox Complete](phase2_inbox_complete.md) — Email threads, reply/forward, file upload modal
+- [Phase 3 Messaging Complete](phase3_complete.md) — Channels, DMs, real-time compose bar
+- [Phase 4 Notes Complete](phase4_complete.md) — ProseMirror rich editor, 8 toolbar buttons, auto-save
+- [Phase 5 Calendar Complete](phase5_complete.md) — Week/month views, time grid, event cards
+- [Phase 6 Contacts & Agents Complete](phase6_complete.md) — Contact profiles, agent grid, activity log
+- [Phase 7 Settings Complete](phase7_complete.md) — Identity, Keys (UCP critical), email bridges
+- [Phase 8 Onboarding Complete](phase8_complete.md) — **FINAL PHASE**: 3-step signup modal, crypto ready
 
 **Frontend Implementation:**
 - [Relay Frontend v1.0](relay_frontend_v1.md) — Desktop UI complete, Biome + TypeScript 7 integrated
-- [Phase 2 Inbox Complete](phase2_inbox_complete.md) — InboxThreadList, ThreadDetail, ComposeArea, FileUploadModal; full documentation
-
-**Phase Implementation:**
-- [Design Handoff Implementation](design_handoff_implementation.md) — 8-phase systematic plan to match UI 1:1 with design
-- [Phase 1 Crypto Complete](phase1_crypto_complete.md) — WebSocket transport, Ed25519 signing, identity resolution
-- [Phase 3 Messaging Complete](phase3_complete.md) — ChannelList, MessageThread, ComposeBar fully integrated
-- [Phase 4 Notes Complete](phase4_complete.md) — ProseMirror rich editor, toolbar, real-time autosave
-- [Phase 5 Calendar Complete](phase5_complete.md) — Week/Month views, time grid, event cards
-- [Phase 6 Contacts & Agents Complete](phase6_complete.md) — Contact profiles, agent grid, activity log
-- [Phase 7 Settings Complete](phase7_complete.md) — Identity, Keys (UCP critical), bridge stubs
-- [Phase 8 Onboarding Complete](phase8_complete.md) — **ALL 8 PHASES DONE**: Full 3-step signup modal, crypto ready
+- [Design System Complete](relay_design_complete.md) — 3-column layout, CSS variables, dark/light mode, semantic colors
 
 **Architecture & System:**
 - [Full-Stack Architecture v2.0](fullstack_architecture.md) — Bun serve() + Hono API + Drizzle DB (PostgreSQL)
-- [Relay UI Design Complete](relay_design_complete.md) — 3-column layout, color system, onboarding flow
+- [Component Tree](component_tree.md) — 38+ components, hierarchical organization, integration points
 
 **Configuration & Constraints:**
 - [Biome Immutable](biome_immutable.md) — Do NOT modify biome.jsonc; all changes require explicit user approval
 - [SVG Icon Rendering Issue](svg_icon_issue.md) — Navigation icons display as dots (design verified)
-- [Commit Workflow](commit_workflow.md) — Update memory/docs BEFORE committing
-- [Functional & Immutable](functional_immutable.md) — const only, no classes, pure functions
