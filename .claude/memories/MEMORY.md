@@ -26,3 +26,6 @@
 **Configuration & Constraints:**
 - [Biome Immutable](biome_immutable.md) — Do NOT modify biome.jsonc; all changes require explicit user approval
 - [SVG Icon Rendering Issue](svg_icon_issue.md) — Navigation icons display as dots (unresolved); verified against design
+
+**Implementation Plan:**
+- [Design Handoff Implementation](design_handoff_implementation.md) — 8-phase systematic plan to match UI 1:1 with design; 50+ components pending
