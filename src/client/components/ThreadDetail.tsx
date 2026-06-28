@@ -1,16 +1,101 @@
+import { useEffect, useState } from "react";
 import { useAppContext } from "../AppContext";
 import { THREAD_MSGS, THREADS } from "../data";
+import { useMessaging } from "../../lib/useMessaging";
 import { ComposeArea } from "./ComposeArea";
 import { Icon } from "./Icon";
 
+interface ApiMessage {
+  id: string;
+  threadId: string;
+  from: string;
+  ciphertext: string;
+  signature: string;
+  clientTs: number;
+  status?: string;
+  serverTs?: number;
+}
+
 export function ThreadDetail() {
   const { state, dispatch } = useAppContext();
+  const [messages, setMessages] = useState<ApiMessage[]>([]);
+  const [loading, setLoading] = useState(false);
+  const { subscribe } = useMessaging(state.selectedThread);
+
+  // Subscribe to real-time message updates
+  useEffect(() => {
+    if (!state.selectedThread) return;
+
+    const unsubscribe = subscribe((newMessage) => {
+      setMessages((prev) => {
+        const exists = prev.find((m) => m.id === newMessage.id);
+        if (exists) return prev;
+        return [...prev, newMessage];
+      });
+    });
+
+    return unsubscribe;
+  }, [state.selectedThread, subscribe]);
+
+  // Fetch messages from API when thread is selected
+  useEffect(() => {
+    if (!state.selectedThread) return;
+
+    const fetchMessages = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch(
+          `/api/message/list?threadId=${state.selectedThread}&limit=50`
+        );
+        if (response.ok) {
+          const data = await response.json();
+          setMessages(data.messages || []);
+        } else {
+          // Fallback to fixture data
+          const fixtureMessages = THREAD_MSGS[state.selectedThread] || [];
+          setMessages(
+            fixtureMessages.map((msg) => ({
+              id: msg.id,
+              threadId: state.selectedThread,
+              from: msg.from,
+              ciphertext: msg.body,
+              signature: "sig_placeholder",
+              clientTs: Date.parse(msg.timestamp),
+              status: "delivered",
+            }))
+          );
+        }
+      } catch (err) {
+        console.error("Failed to fetch messages:", err);
+        // Fallback to fixture data
+        const fixtureMessages = THREAD_MSGS[state.selectedThread] || [];
+        setMessages(
+          fixtureMessages.map((msg) => ({
+            id: msg.id,
+            threadId: state.selectedThread,
+            from: msg.from,
+            ciphertext: msg.body,
+            signature: "sig_placeholder",
+            clientTs: Date.parse(msg.timestamp),
+            status: "delivered",
+          }))
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMessages();
+  }, [state.selectedThread]);
 
   const selectedThread = THREADS.find((t) => t.id === state.selectedThread);
+
+  // Combine API messages with any custom messages from state
   const threadMessages = state.selectedThread
-    ? state.customThreadMsgs[state.selectedThread] ||
-      THREAD_MSGS[state.selectedThread] ||
-      []
+    ? [
+        ...messages,
+        ...(state.customThreadMsgs[state.selectedThread] || []),
+      ]
     : [];
 
   if (!selectedThread) {
@@ -132,9 +217,36 @@ export function ThreadDetail() {
           gap: "16px",
         }}
       >
+        {threadMessages.length === 0 && !loading && (
+          <div
+            style={{
+              textAlign: "center",
+              color: "var(--r-t3)",
+              padding: "40px 20px",
+            }}
+          >
+            No messages yet
+          </div>
+        )}
+        {loading && (
+          <div
+            style={{
+              textAlign: "center",
+              color: "var(--r-t3)",
+              padding: "40px 20px",
+            }}
+          >
+            Loading messages...
+          </div>
+        )}
         {threadMessages.map((msg) => {
           const isOutgoing = msg.from === "you@relay.im";
-          const encrypted = msg.encrypted !== false;
+          const encrypted = msg.signature !== undefined;
+          const body = "body" in msg ? msg.body : msg.ciphertext;
+          const timestamp =
+            "timestamp" in msg
+              ? msg.timestamp
+              : new Date(msg.clientTs).toLocaleString();
 
           return (
             <div
@@ -211,15 +323,9 @@ export function ThreadDetail() {
                   }}
                 >
                   {encrypted ? (
-                    <Icon
-                      name="lock"
-                      size={18}
-                    />
+                    <Icon name="lock" size={18} />
                   ) : (
-                    <Icon
-                      name="unlock"
-                      size={18}
-                    />
+                    <Icon name="unlock" size={18} />
                   )}
                   <div
                     style={{
@@ -228,7 +334,7 @@ export function ThreadDetail() {
                       whiteSpace: "nowrap",
                     }}
                   >
-                    {msg.timestamp}
+                    {timestamp}
                   </div>
                 </div>
               </div>
@@ -243,7 +349,7 @@ export function ThreadDetail() {
                   wordWrap: "break-word",
                 }}
               >
-                {msg.body}
+                {body}
               </div>
             </div>
           );

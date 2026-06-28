@@ -24,12 +24,32 @@ export function ComposeBar() {
     }
   };
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (state.msgInputText.trim()) {
-      console.log("Sending message:", state.msgInputText);
-      // TODO: POST to API
-      dispatch({ type: "setMsgInputText", payload: "" });
-      setTextareaHeight(40);
+      try {
+        // Send via API to current channel/thread
+        const response = await fetch("/api/message/send", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            threadId: state.selectedThreadId || "default",
+            to: [state.selectedChannel || "general"],
+            plaintext: state.msgInputText,
+          }),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log("Message sent:", data.message);
+          dispatch({ type: "setMsgInputText", payload: "" });
+          setTextareaHeight(40);
+        } else {
+          const error = await response.json();
+          console.error("Failed to send message:", error);
+        }
+      } catch (err) {
+        console.error("Error sending message:", err);
+      }
     }
   };
 
