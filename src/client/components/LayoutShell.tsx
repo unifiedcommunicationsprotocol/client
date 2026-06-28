@@ -12,42 +12,19 @@ export function LayoutShell({
   mainContent,
 }: LayoutShellProps) {
   return (
-    <div
-      style={{
-        display: "flex",
-        height: "100vh",
-        backgroundColor: "var(--r-bg)",
-        overflow: "hidden",
-      }}
-    >
+    <div className="flex h-screen bg-[var(--r-bg)] overflow-hidden">
       {/* Left Navigation (52px) */}
       <LeftNav />
 
       {/* Secondary Panel (280px, conditional) */}
       {showSecondary && (
-        <div
-          style={{
-            width: "280px",
-            backgroundColor: "var(--r-sf)",
-            borderRight: "1px solid var(--r-bd)",
-            display: "flex",
-            flexDirection: "column",
-            overflow: "hidden",
-          }}
-        >
+        <div className="w-70 bg-[var(--r-sf)] border-r border-[var(--r-bd)] flex flex-col overflow-hidden">
           {secondaryContent}
         </div>
       )}
 
       {/* Main Content (flex: 1) */}
-      <div
-        style={{
-          flex: 1,
-          display: "flex",
-          flexDirection: "column",
-          overflow: "hidden",
-        }}
-      >
+      <div className="flex-1 flex flex-col overflow-hidden">
         {mainContent}
       </div>
     </div>

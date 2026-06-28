@@ -37,36 +37,12 @@ export function ComposeBar() {
   };
 
   return (
-    <div
-      style={{
-        padding: "12px 16px",
-        borderTop: "1px solid var(--r-bd)",
-        backgroundColor: "var(--r-bg)",
-        display: "flex",
-        alignItems: "flex-end",
-        gap: "8px",
-        flexShrink: 0,
-      }}
-    >
+    <div className="px-4 py-3 border-t border-[var(--r-bd)] bg-[var(--r-bg)] flex items-end gap-2 flex-shrink-0">
       {/* Paperclip Button */}
       <button
         type="button"
         onClick={handleFileClick}
-        style={{
-          width: "28px",
-          height: "28px",
-          padding: "0",
-          border: "none",
-          borderRadius: "4px",
-          backgroundColor: "transparent",
-          color: "var(--r-t2)",
-          cursor: "pointer",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          fontSize: "16px",
-          flexShrink: 0,
-        }}
+        className="w-7 h-7 p-0 border-none rounded bg-transparent text-[var(--r-t2)] cursor-pointer flex items-center justify-center text-base flex-shrink-0 hover:bg-[var(--r-hov)]"
         title="Attach file"
       >
         📎
@@ -78,21 +54,8 @@ export function ComposeBar() {
         onChange={handleTextChange}
         onKeyDown={handleKeyDown}
         placeholder="Type a message..."
-        style={{
-          flex: 1,
-          padding: "8px 12px",
-          fontSize: "13px",
-          border: "1px solid var(--r-bd)",
-          borderRadius: "6px",
-          backgroundColor: "var(--r-sf)",
-          color: "var(--r-t1)",
-          fontFamily: "inherit",
-          resize: "none",
-          height: `${textareaHeight}px`,
-          minHeight: "40px",
-          maxHeight: "200px",
-          lineHeight: "1.4",
-        }}
+        className="flex-1 px-3 py-2 text-xs border border-[var(--r-bd)] rounded-md bg-[var(--r-sf)] text-[var(--r-t1)] resize-none min-h-10 max-h-50 leading-relaxed"
+        style={{ height: `${textareaHeight}px` }}
       />
 
       {/* Send Button */}
@@ -100,23 +63,11 @@ export function ComposeBar() {
         type="button"
         onClick={handleSend}
         disabled={!state.msgInputText.trim()}
-        style={{
-          width: "28px",
-          height: "28px",
-          padding: "0",
-          border: "none",
-          borderRadius: "4px",
-          backgroundColor: state.msgInputText.trim()
-            ? "var(--r-acc)"
-            : "var(--r-bd)",
-          color: "white",
-          cursor: state.msgInputText.trim() ? "pointer" : "not-allowed",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          fontSize: "14px",
-          flexShrink: 0,
-        }}
+        className={`w-7 h-7 p-0 border-none rounded flex items-center justify-center text-sm font-medium flex-shrink-0 ${
+          state.msgInputText.trim()
+            ? "bg-[var(--r-acc)] text-white cursor-pointer hover:opacity-90"
+            : "bg-[var(--r-bd)] text-gray-400 cursor-not-allowed"
+        }`}
         title="Send message"
       >
         ➜

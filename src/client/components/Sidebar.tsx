@@ -10,16 +10,7 @@ export function Sidebar() {
   const { state } = useAppContext();
 
   return (
-    <div
-      style={{
-        width: "272px",
-        backgroundColor: "var(--r-sf)",
-        borderRight: "1px solid var(--r-bd)",
-        display: "flex",
-        flexDirection: "column",
-        overflow: "hidden",
-      }}
-    >
+    <div className="w-68 bg-[var(--r-sf)] border-r border-[var(--r-bd)] flex flex-col overflow-hidden">
       {/* Inbox Section */}
       {state.view === "inbox" && <InboxThreadList />}
 
