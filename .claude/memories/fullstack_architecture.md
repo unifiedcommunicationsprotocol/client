@@ -13,29 +13,34 @@ metadata:
 
 ```
 src/
-├── index.server.ts        # Bun serve() entry point
-├── index.client.tsx       # React frontend entry
+├── index.server.ts        # Bun serve() entry point (routes pattern)
+├── index.html             # Frontend HTML entry (imports client/index.tsx)
+├── client/
+│   ├── index.tsx          # React entry point
+│   ├── App.tsx            # Root component
+│   ├── index.css          # Design system CSS
+│   ├── AppContext.tsx     # Global state management
+│   └── components/        # React components
 ├── server/
-│   ├── api.ts             # Hono API gateway (mounts all route groups)
+│   ├── api.ts             # Hono API gateway
 │   └── routes/
 │       ├── auth.ts        # Authentication endpoints
 │       └── health.ts      # Health check
 └── lib/
     └── db/
         ├── index.ts       # Drizzle client initialization
-        └── schema.ts      # PostgreSQL schema (Drizzle ORM)
+        └── schema.ts      # PostgreSQL schema
 ```
 
 ## Key Implementation Details
 
 ### 1. Server Entry Point (index.server.ts)
-- Uses `serve()` from Bun (not manual Hono setup)
-- Fetch handler with URL routing:
-  - `/api/*` → Rewrite to remove prefix, pass to Hono
-  - `*` → Serve frontend HTML (SPA)
-- **URL Rewriting:** Critical detail — Hono sees paths without `/api` prefix
-  - Strip `/api` from URL pathname before calling `api.fetch()`
-  - Prevents 404s on nested routes
+- Uses Bun's `serve()` with **routes pattern** (not custom fetch handler)
+- Routes configuration:
+  - `"/*": homepage` — Serve index.html for all routes (SPA fallback)
+  - `"/api/*": api.fetch` — Pass API routes directly to Hono instance
+- **HMR:** `development: { hmr: true }` enables hot module reloading
+- No URL rewriting needed — Hono handles `/api/*` paths directly
 
 ### 2. API Gateway (server/api.ts)
 - Single Hono instance mounting all route groups
@@ -113,19 +118,24 @@ docker compose up -d
 psql postgres://localhost/ucp_client
 ```
 
-## Critical Pattern: URL Rewriting
+## Critical Pattern: Routes Pattern
 
-When API is mounted in Hono via `api.route()`, Hono sees full paths. The server must strip the `/api` prefix before passing to Hono:
+Use Bun's routes object instead of custom fetch handler:
 
 ```typescript
-if (url.pathname.startsWith("/api")) {
-  const rewrittenUrl = new URL(req.url);
-  rewrittenUrl.pathname = rewrittenUrl.pathname.slice(4); // Remove "/api"
-  return api.fetch(new Request(rewrittenUrl, req));
-}
+serve({
+  routes: {
+    "/*": homepage,        // SPA fallback: serve index.html for all routes
+    "/api/*": api.fetch,   // API routes go directly to Hono instance
+  },
+  fetch(_req) {
+    return new Response("Not Found", { status: 404 });
+  },
+  development: { hmr: true },
+});
 ```
 
-Without this, all routes return 404.
+**Why:** Cleaner, simpler, and Bun's routes pattern handles path matching efficiently. No manual rewriting needed.
 
 ---
 
