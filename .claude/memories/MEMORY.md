@@ -1,3 +1,6 @@
+**🚀 START HERE:**
+- [Session Status](session_status.md) — Current status, what's done, what's next, quick reference
+
 **Governance & Workflow:**
 - [Memory Governance](memory_governance.md) — Only use project-local .claude/memories/, never home directory; version control is source of truth
 - [Commit Workflow](commit_workflow.md) — ALWAYS update docs + memory BEFORE creating commits; keeps project coherent
@@ -15,18 +18,20 @@
 - [Phase 2 Inbox Complete](phase2_inbox_complete.md) — InboxThreadList, ThreadDetail, ComposeArea, FileUploadModal implemented; ready for Phase 3
 
 **Frontend Implementation:**
-- [Relay Frontend v1.0](relay_frontend_v1.md) — Desktop UI complete, Biome + TypeScript 7 integrated, 4 violations to fix before crypto layer
+- [Relay Frontend v1.0](relay_frontend_v1.md) — Desktop UI complete, Biome + TypeScript 7 integrated
+- [Phase 2 Inbox Complete](phase2_inbox_complete.md) — InboxThreadList, ThreadDetail, ComposeArea, FileUploadModal; full documentation
 
-**Phase 1 Cryptography (Complete 2026-06-27):**
-- [Phase 1 Crypto Complete](phase1_crypto_complete.md) — WebSocket transport, Ed25519 signing, identity resolution; ready for UI integration
+**Phase Implementation:**
+- [Design Handoff Implementation](design_handoff_implementation.md) — 8-phase systematic plan to match UI 1:1 with design
+- [Phase 1 Crypto Complete](phase1_crypto_complete.md) — WebSocket transport, Ed25519 signing, identity resolution
+- [Phase 3 Messaging Readiness](phase3_messaging_readiness.md) — **START HERE FOR PHASE 3**: Complete checklist, components, state, integration
 
-**Architecture:**
-- [Full-Stack Architecture v2.0](fullstack_architecture.md) — Bun serve() + Hono API + Drizzle DB (PostgreSQL); URL rewriting required
-- [Relay UI Design Complete](relay_design_complete.md) — 3-column layout, color system, onboarding flow, implementation roadmap (5 phases)
+**Architecture & System:**
+- [Full-Stack Architecture v2.0](fullstack_architecture.md) — Bun serve() + Hono API + Drizzle DB (PostgreSQL)
+- [Relay UI Design Complete](relay_design_complete.md) — 3-column layout, color system, onboarding flow
 
 **Configuration & Constraints:**
 - [Biome Immutable](biome_immutable.md) — Do NOT modify biome.jsonc; all changes require explicit user approval
-- [SVG Icon Rendering Issue](svg_icon_issue.md) — Navigation icons display as dots (unresolved); verified against design
-
-**Implementation Plan:**
-- [Design Handoff Implementation](design_handoff_implementation.md) — 8-phase systematic plan to match UI 1:1 with design; 50+ components pending
+- [SVG Icon Rendering Issue](svg_icon_issue.md) — Navigation icons display as dots (design verified)
+- [Commit Workflow](commit_workflow.md) — Update memory/docs BEFORE committing
+- [Functional & Immutable](functional_immutable.md) — const only, no classes, pure functions
