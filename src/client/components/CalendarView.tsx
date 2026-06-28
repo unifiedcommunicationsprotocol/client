@@ -1,15 +1,37 @@
 import { useAppContext } from "../AppContext";
-import { CAL_EVENTS } from "../data";
+import { CalendarWeek } from "./CalendarWeek";
+import { CalendarMonth } from "./CalendarMonth";
 
 export function CalendarView() {
   const { state, dispatch } = useAppContext();
 
-  const selectedEvent = state.calSelectedEvent
-    ? CAL_EVENTS.find((e) => e.id === state.calSelectedEvent)
-    : null;
+  // Get week date range for header
+  const today = new Date(2026, 5, 28); // 2026-06-28
+  const monday = new Date(today);
+  monday.setDate(today.getDate() - today.getDay() + 1 + state.calWeekOffset * 7);
 
-  const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-  const hours = Array.from({ length: 24 }, (_, i) => i);
+  const sunday = new Date(monday);
+  sunday.setDate(monday.getDate() + 6);
+
+  const formatDate = (date: Date) => {
+    const options: Intl.DateTimeFormatOptions = {
+      month: "short",
+      day: "numeric",
+    };
+    return date.toLocaleDateString("en-US", options);
+  };
+
+  const getDateRangeLabel = () => {
+    if (state.calViewType === "week") {
+      return `${formatDate(monday)} - ${formatDate(sunday)}`;
+    } else {
+      const monthName = new Date(2026, 5 + state.calWeekOffset, 1).toLocaleDateString(
+        "en-US",
+        { month: "long", year: "numeric" },
+      );
+      return monthName;
+    }
+  };
 
   return (
     <div
@@ -20,7 +42,7 @@ export function CalendarView() {
         overflow: "hidden",
       }}
     >
-      {/* Header with navigation */}
+      {/* Header with navigation and controls */}
       <div
         style={{
           padding: "16px 20px",
@@ -29,19 +51,74 @@ export function CalendarView() {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
+          flexWrap: "wrap",
+          gap: "12px",
         }}
       >
-        <h2
-          style={{
-            fontSize: "18px",
-            fontWeight: "600",
-            color: "var(--r-t1)",
-            margin: "0",
-          }}
-        >
-          Calendar
-        </h2>
-        <div style={{ display: "flex", gap: "8px" }}>
+        {/* Left: View toggle + Title */}
+        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+          {/* View toggle (Week/Month) */}
+          <div
+            style={{
+              display: "flex",
+              gap: "0",
+              border: "1px solid var(--r-bd)",
+              borderRadius: "4px",
+              backgroundColor: "var(--r-sf)",
+              padding: "2px",
+            }}
+          >
+            <button
+              type="button"
+              onClick={() => dispatch({ type: "setCalViewType", payload: "week" })}
+              style={{
+                padding: "6px 12px",
+                border: "none",
+                backgroundColor:
+                  state.calViewType === "week" ? "var(--r-bg)" : "transparent",
+                color: "var(--r-t1)",
+                cursor: "pointer",
+                fontSize: "12px",
+                fontWeight: "600",
+                borderRadius: "3px",
+              }}
+            >
+              Week
+            </button>
+            <button
+              type="button"
+              onClick={() => dispatch({ type: "setCalViewType", payload: "month" })}
+              style={{
+                padding: "6px 12px",
+                border: "none",
+                backgroundColor:
+                  state.calViewType === "month" ? "var(--r-bg)" : "transparent",
+                color: "var(--r-t1)",
+                cursor: "pointer",
+                fontSize: "12px",
+                fontWeight: "600",
+                borderRadius: "3px",
+              }}
+            >
+              Month
+            </button>
+          </div>
+
+          {/* Date range label */}
+          <div
+            style={{
+              fontSize: "13px",
+              fontWeight: "500",
+              color: "var(--r-t1)",
+              minWidth: "120px",
+            }}
+          >
+            {getDateRangeLabel()}
+          </div>
+        </div>
+
+        {/* Right: Navigation + New event button */}
+        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
           <button
             type="button"
             onClick={() =>
@@ -58,10 +135,13 @@ export function CalendarView() {
               color: "var(--r-t1)",
               cursor: "pointer",
               fontSize: "12px",
+              fontWeight: "600",
             }}
+            title="Previous"
           >
-            ← Prev
+            ‹
           </button>
+
           <button
             type="button"
             onClick={() => dispatch({ type: "setCalWeekOffset", payload: 0 })}
@@ -73,10 +153,13 @@ export function CalendarView() {
               color: "var(--r-t1)",
               cursor: "pointer",
               fontSize: "12px",
+              fontWeight: "600",
             }}
+            title="Today"
           >
             Today
           </button>
+
           <button
             type="button"
             onClick={() =>
@@ -93,198 +176,37 @@ export function CalendarView() {
               color: "var(--r-t1)",
               cursor: "pointer",
               fontSize: "12px",
+              fontWeight: "600",
+            }}
+            title="Next"
+          >
+            ›
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              dispatch({ type: "setCalCreating", payload: true });
+              dispatch({ type: "setCalNewTitle", payload: "" });
+            }}
+            style={{
+              padding: "6px 12px",
+              borderRadius: "4px",
+              border: "none",
+              backgroundColor: "var(--r-acc)",
+              color: "white",
+              cursor: "pointer",
+              fontSize: "12px",
+              fontWeight: "600",
             }}
           >
-            Next →
+            + New event
           </button>
         </div>
       </div>
 
-      {/* Calendar Grid */}
-      <div
-        style={{
-          flex: 1,
-          overflow: "auto",
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
-        {/* Day headers */}
-        <div
-          style={{
-            display: "flex",
-            borderBottom: "1px solid var(--r-bd)",
-            backgroundColor: "var(--r-bg)",
-          }}
-        >
-          <div
-            style={{
-              width: "60px",
-              padding: "8px",
-              borderRight: "1px solid var(--r-bd)",
-              flexShrink: 0,
-            }}
-          />
-          {days.map((day) => (
-            <div
-              key={day}
-              style={{
-                flex: 1,
-                padding: "8px",
-                textAlign: "center",
-                fontSize: "12px",
-                fontWeight: "600",
-                color: "var(--r-t2)",
-                borderRight: "1px solid var(--r-bd)",
-              }}
-            >
-              {day}
-            </div>
-          ))}
-        </div>
-
-        {/* Time slots */}
-        {hours.map((hour) => (
-          <div
-            key={hour}
-            style={{
-              display: "flex",
-              borderBottom: "1px solid var(--r-bd)",
-              minHeight: "56px",
-            }}
-          >
-            <div
-              style={{
-                width: "60px",
-                padding: "8px",
-                textAlign: "right",
-                fontSize: "11px",
-                color: "var(--r-t3)",
-                borderRight: "1px solid var(--r-bd)",
-                flexShrink: 0,
-              }}
-            >
-              {String(hour).padStart(2, "0")}:00
-            </div>
-            {days.map((day, dayIdx) => (
-              <button
-                key={`${hour}-${day}`}
-                type="button"
-                onClick={() => {
-                  dispatch({ type: "setCalCreating", payload: true });
-                  dispatch({ type: "setCalNewDayIdx", payload: dayIdx });
-                  dispatch({ type: "setCalNewStartH", payload: hour });
-                  dispatch({ type: "setCalNewEndH", payload: hour + 1 });
-                }}
-                style={{
-                  flex: 1,
-                  borderRight: "1px solid var(--r-bd)",
-                  cursor: "pointer",
-                  backgroundColor: "transparent",
-                  border: "none",
-                  padding: "0",
-                  transition: "background-color 150ms",
-                }}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLButtonElement).style.backgroundColor =
-                    "var(--r-hov)";
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLButtonElement).style.backgroundColor =
-                    "transparent";
-                }}
-              />
-            ))}
-          </div>
-        ))}
-      </div>
-
-      {/* Event detail panel */}
-      {selectedEvent && (
-        <div
-          style={{
-            padding: "16px 20px",
-            borderTop: "1px solid var(--r-bd)",
-            backgroundColor: "var(--r-bg)",
-            maxHeight: "200px",
-            overflowY: "auto",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "flex-start",
-              marginBottom: "12px",
-            }}
-          >
-            <h3
-              style={{
-                fontSize: "16px",
-                fontWeight: "600",
-                color: "var(--r-t1)",
-                margin: "0",
-              }}
-            >
-              {selectedEvent.title}
-            </h3>
-            <button
-              type="button"
-              onClick={() =>
-                dispatch({ type: "setCalSelectedEvent", payload: null })
-              }
-              style={{
-                background: "none",
-                border: "none",
-                color: "var(--r-t2)",
-                cursor: "pointer",
-                fontSize: "16px",
-              }}
-            >
-              ✕
-            </button>
-          </div>
-          <div style={{ fontSize: "13px", color: "var(--r-t2)" }}>
-            {String(Math.floor(selectedEvent.startH)).padStart(2, "0")}:
-            {String(Math.round((selectedEvent.startH % 1) * 60)).padStart(
-              2,
-              "0",
-            )}{" "}
-            - {String(Math.floor(selectedEvent.endH)).padStart(2, "0")}:
-            {String(Math.round((selectedEvent.endH % 1) * 60)).padStart(2, "0")}
-          </div>
-          <div style={{ display: "flex", gap: "8px", marginTop: "12px" }}>
-            <button
-              type="button"
-              style={{
-                padding: "6px 12px",
-                borderRadius: "4px",
-                border: "1px solid var(--r-bd)",
-                backgroundColor: "transparent",
-                color: "var(--r-t1)",
-                cursor: "pointer",
-                fontSize: "12px",
-              }}
-            >
-              Edit
-            </button>
-            <button
-              type="button"
-              style={{
-                padding: "6px 12px",
-                borderRadius: "4px",
-                border: "1px solid #EF4444",
-                backgroundColor: "transparent",
-                color: "#EF4444",
-                cursor: "pointer",
-                fontSize: "12px",
-              }}
-            >
-              Delete
-            </button>
-          </div>
-        </div>
-      )}
+      {/* Calendar content (Week or Month) */}
+      {state.calViewType === "week" ? <CalendarWeek /> : <CalendarMonth />}
     </div>
   );
 }

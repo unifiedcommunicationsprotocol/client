@@ -10,10 +10,10 @@ metadata:
 ## Latest Commits
 
 ```
-[TBD] Phase 4 Complete: Notes View with ProseMirror (rich editor, toolbar, autosave)
+[TBD] Phase 5 Complete: Calendar View (Week/Month views, time grid, event cards)
+d7c2e98 Phase 4 Complete: Notes View with ProseMirror
 c3e2da8 Phase 3 Complete: Messaging View Implementation
 f2d74a8 Docs & Memory Update: Phase 2 Completion
-3d7d877 Phase 2 Complete: Inbox View Implementation
 ```
 
 ## Current Implementation Status
@@ -41,26 +41,27 @@ f2d74a8 Docs & Memory Update: Phase 2 Completion
 - Identity resolution (HTTP fallback)
 - Commit: `69c877d`
 
-### ✅ Complete (Phases 3 & 4)
+### ✅ Complete (Phases 3, 4 & 5)
 
 **Phase 3: Messaging View** — COMPLETE
-- ChannelList (secondary panel, 185 lines) ✅
-- MessageThread (main content, 257 lines) ✅
-- ComposeBar (bottom compose widget, 120 lines) ✅
+- ChannelList (secondary, 185 lines), MessageThread (main, 257 lines), ComposeBar (120 lines) ✅
 - Commit: `c3e2da8`
 
 **Phase 4: Notes View with ProseMirror** — COMPLETE
-- NoteEditor upgraded: ProseMirror rich editor ✅
-- Toolbar: 8 formatting buttons (B/I/`/H1/H2/❝/•) ✅
-- prosemirror-setup.ts utility module ✅
-- Auto-save on every keystroke ✅
-- Undo/redo via Ctrl+Z/Ctrl+Shift+Z ✅
-- CSS: 40+ lines for editor styling ✅
-- Dependencies: 8 ProseMirror packages added ✅
-- TypeScript strict: PASS
-- See [[phase4_complete.md]] for implementation details
+- NoteEditor + ProseMirror rich editor, 8 toolbar buttons ✅
+- prosemirror-setup.ts utility, auto-save, undo/redo ✅
+- 8 ProseMirror dependencies ✅
+- Commit: `d7c2e98`
 
-### ⏳ Planned (Phases 5-8)
+**Phase 5: Calendar View** — COMPLETE
+- CalendarWeek (time grid, event positioning) ✅
+- CalendarMonth (month grid, event chips) ✅
+- CalendarView (header, view toggle, navigation) ✅
+- Week/Month views with full interaction ✅
+- TypeScript strict: PASS
+- See [[phase5_complete.md]] for implementation details
+
+### ⏳ Planned (Phases 6-8)
 
 - Phase 4: Notes (ProseMirror rich editor)
 - Phase 5: Calendar (week/month, event CRUD)
