@@ -11,29 +11,37 @@ metadata:
 
 ## Current State
 
-✅ **Backend:** 178 tests passing
+✅ **Backend:** 178 tests passing + API routes wired
 - Phase 1: API & Authentication (71 tests)
 - Phase 2: MLS Group Management (18 tests)
 - Phase 3: Database & Storage (22 tests)
 - Phase 4: Real-time Messaging (18 tests)
 - Phase 5: Bridge Integration (21 tests)
 - Phase 6: Polish & Optimization (23 tests)
+- ✅ REST endpoints working (health, threads, messages)
 
-✅ **Frontend:** 44 components, 100% Tailwind, production-ready
+✅ **Frontend:** 44 components, 100% Tailwind, NOW WIRED to backend
 - ✅ 3-column layout (nav + secondary + main)
 - ✅ All message/inbox/calendar/contacts/notes/agents views
 - ✅ AppContext state management (60+ fields)
 - ✅ All 10 settings pages
-- ❌ NOT YET WIRED to backend
+- ✅ ComposeArea wired to /api/message/send
+- ✅ InboxThreadList wired to /api/thread/list
+
+✅ **Database:** PostgreSQL running
+- PostgreSQL 18 via Docker Compose
+- DATABASE_URL configured
+- Drizzle schema ready
 
 ## Implementation Plan
 
 ### 1. Database Setup (PostgreSQL)
-**Status:** ⏳ Ready to start
-- [ ] Start Docker: `docker compose up -d`
-- [ ] Verify PostgreSQL listening on 5432
-- [ ] Add DATABASE_URL to .env
-- [ ] Run Drizzle migrations
+**Status:** ✅ Complete
+- [x] Start Docker: `docker compose up -d` 
+- [x] Verify PostgreSQL listening on 5432
+- [x] Add DATABASE_URL to .env
+- [x] Fixed compose.yml volume path for PostgreSQL 18
+- [ ] Run Drizzle migrations (pending)
 
 **Files:**
 - `compose.yml` ✅ (ready)
@@ -41,31 +49,31 @@ metadata:
 - `src/lib/db/client.ts` ✅ (operations ready)
 
 ### 2. API Endpoints Wiring
-**Status:** ⏳ Ready to start
-- [ ] Add `/api/message/send` endpoint
-- [ ] Add `/api/message/list` endpoint  
-- [ ] Add `/api/thread/list` endpoint
-- [ ] Add `/api/thread/create` endpoint
-- [ ] Wire to backend messaging module (`src/lib/messaging.ts`)
+**Status:** ✅ Complete
+- [x] Add `/api/message/send` endpoint
+- [x] Add `/api/message/list` endpoint  
+- [x] Add `/api/thread/list` endpoint
+- [x] Add `/api/thread/create` endpoint
+- [x] Wire to backend messaging module (`src/lib/messaging.ts`)
 
-**Files:**
-- `src/server/routes/messages.ts` (create new)
-- `src/server/routes/threads.ts` (create new)
+**Files Created:**
+- `src/server/routes/messages.ts` ✅ (3 endpoints: send, list, status)
+- `src/server/routes/threads.ts` ✅ (3 endpoints: create, list, get)
 - `src/lib/messaging.ts` ✅ (backend ready)
 
 ### 3. UI Component Wiring
-**Status:** ⏳ Ready to start
-- [ ] ComposeArea → `POST /api/message/send`
-- [ ] InboxThreadList → `GET /api/thread/list`
+**Status:** ✅ In Progress (50%)
+- [x] ComposeArea → `POST /api/message/send`
+- [x] InboxThreadList → `GET /api/thread/list`
 - [ ] ThreadDetail → `GET /api/message/list?thread_id=...`
 - [ ] ComposeBar (Messaging) → `POST /api/message/send`
 - [ ] Real-time updates (WebSocket) → `src/lib/transport.ts`
 
-**Key Components:**
-- `src/client/components/ComposeArea.tsx` (wire send handler)
-- `src/client/components/InboxThreadList.tsx` (wire thread list)
-- `src/client/components/ThreadDetail.tsx` (wire messages)
-- `src/client/components/ComposeBar.tsx` (wire send)
+**Components Updated:**
+- `src/client/components/ComposeArea.tsx` ✅ (wired send handler)
+- `src/client/components/InboxThreadList.tsx` ✅ (wired thread list with fallback)
+- `src/client/components/ThreadDetail.tsx` ⏳ (next)
+- `src/client/components/ComposeBar.tsx` ⏳ (next)
 
 ### 4. Real MLS & Encryption
 **Status:** ⏳ Conditional
