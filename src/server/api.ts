@@ -4,6 +4,7 @@ import healthRoutes from "./routes/health";
 import { createMessagesRoutes } from "./routes/messages";
 import { createThreadsRoutes } from "./routes/threads";
 import { createWebSocketRoutes } from "./routes/websocket";
+import { createImportRoutes } from "./routes/import";
 import { createMemoryDBClient } from "../lib/db/client";
 import { createPostgresDBClient } from "../lib/db/postgres";
 import { createMessaging } from "../lib/messaging";
@@ -58,6 +59,7 @@ api.route("/health", healthRoutes);
 api.route("/message", createMessagesRoutes(messaging));
 api.route("/thread", createThreadsRoutes(messaging));
 api.route("/ws", createWebSocketRoutes(messaging));
+api.route("/import", createImportRoutes(messaging));
 
 // Catch-all for unmatched API routes
 api.all("*", (c) => {
