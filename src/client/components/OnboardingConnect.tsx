@@ -96,7 +96,7 @@ export const OnboardingConnect = ({
 
           // In real flow, we'd send this signature back to server
           // For now, just verify it locally
-          console.log("Challenge signed:", signature.slice(0, 16) + "...");
+          console.log(`Challenge signed: ${signature.slice(0, 16)}...`);
         } catch (err) {
           console.error("Failed to sign challenge:", err);
         }
@@ -137,7 +137,7 @@ export const OnboardingConnect = ({
 
       {/* Server URL */}
       <div>
-        <label
+        <div
           style={{
             display: "block",
             fontSize: "12px",
@@ -147,7 +147,7 @@ export const OnboardingConnect = ({
           }}
         >
           Server URL
-        </label>
+        </div>
         <div
           style={{
             padding: "8px 10px",

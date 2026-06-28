@@ -123,6 +123,7 @@ export const OnboardingAddress = ({ onComplete }: OnboardingAddressProps) => {
       {/* Username Input */}
       <div>
         <label
+          htmlFor="username"
           style={{
             display: "block",
             fontSize: "12px",
@@ -134,6 +135,7 @@ export const OnboardingAddress = ({ onComplete }: OnboardingAddressProps) => {
           Username
         </label>
         <input
+          id="username"
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value.toLowerCase())}
@@ -155,6 +157,7 @@ export const OnboardingAddress = ({ onComplete }: OnboardingAddressProps) => {
       {!useRelay && (
         <div>
           <label
+            htmlFor="domain"
             style={{
               display: "block",
               fontSize: "12px",
@@ -166,6 +169,7 @@ export const OnboardingAddress = ({ onComplete }: OnboardingAddressProps) => {
             Domain
           </label>
           <input
+            id="domain"
             type="text"
             value={domain}
             onChange={(e) => setDomain(e.target.value.toLowerCase())}

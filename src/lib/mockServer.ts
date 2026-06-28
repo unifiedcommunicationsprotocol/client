@@ -116,7 +116,7 @@ export const testHandshake = async () => {
   });
 
   const ackMsg = server.handleMessage(hello, clientId);
-  if (!ackMsg || ackMsg.type !== "ucp_hello_ack") {
+  if (ackMsg?.type !== "ucp_hello_ack") {
     throw new Error("Expected ucp_hello_ack");
   }
 
