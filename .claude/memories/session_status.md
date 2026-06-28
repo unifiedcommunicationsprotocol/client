@@ -10,10 +10,10 @@ metadata:
 ## Latest Commits
 
 ```
-[TBD] Phase 6 Complete: Contacts & Agents (profiles, agent grid, activity log)
-a404495 Phase 5 Complete: Calendar View (Week/Month views, time grid, event cards)
-d7c2e98 Phase 4 Complete: Notes View with ProseMirror
-c3e2da8 Phase 3 Complete: Messaging View Implementation
+[TBD] Phase 7 Complete: Settings (sidebar, appearance, identity, keys, bridges)
+c0e4974 Phase 6 Complete: Contacts & Agents Views
+a404495 Phase 5 Complete: Calendar View with Week and Month Displays
+d7c2e98 Phase 4 Complete: Notes View with ProseMirror Rich Editor
 ```
 
 ## Current Implementation Status
@@ -59,7 +59,20 @@ c3e2da8 Phase 3 Complete: Messaging View Implementation
 - TypeScript strict: PASS
 - See [[phase6_complete.md]] for implementation details
 
-### ⏳ Planned (Phases 7-8)
+### ✅ Complete (Phase 7 — Foundation)
+
+**Phase 7: Settings** — FOUNDATION COMPLETE
+- SettingsView container + SettingsSidebar navigation ✅
+- AppearanceSettings: Theme toggle, thread density ✅
+- IdentitySettings: UCP address, display name, active keyset ✅
+- KeysSettings: Keyset cards, status, actions (critical for UCP) ✅
+- EmailBridgeSettings: Provider cards stub (Gmail/Fastmail/IMAP) ✅
+- MainApp: Updated settings routing to SettingsView ✅
+- TypeScript strict: PASS
+- See [[phase7_complete.md]] for implementation details
+- TODOs: KeygenCeremony modal, RevokeModal, OAuth flows
+
+### ⏳ Planned (Phase 8)
 
 - Phase 4: Notes (ProseMirror rich editor)
 - Phase 5: Calendar (week/month, event CRUD)

@@ -5,7 +5,7 @@ import { ContactDetail } from "./ContactDetail";
 import { LayoutShell } from "./LayoutShell";
 import { MessageThread } from "./MessageThread";
 import { NoteEditor } from "./NoteEditor";
-import { SettingsPanel } from "./SettingsPanel";
+import { SettingsView } from "./SettingsView";
 import { Sidebar } from "./Sidebar";
 import { ThreadDetail } from "./ThreadDetail";
 
@@ -23,7 +23,7 @@ export function MainApp({ onLogout }: MainAppProps) {
 
   const renderMainContent = () => {
     if (state.view.startsWith("settings")) {
-      return <SettingsPanel onLogout={onLogout} />;
+      return <SettingsView onLogout={onLogout} />;
     }
 
     switch (state.view) {
