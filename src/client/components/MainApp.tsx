@@ -1,12 +1,12 @@
 import { useAppContext } from "../AppContext";
-import { LayoutShell } from "./LayoutShell";
 import { CalendarView } from "./CalendarView";
 import { ContactDetail } from "./ContactDetail";
+import { LayoutShell } from "./LayoutShell";
 import { MessagingView } from "./MessagingView";
 import { NoteEditor } from "./NoteEditor";
 import { SettingsPanel } from "./SettingsPanel";
 import { Sidebar } from "./Sidebar";
-import { ThreadView } from "./ThreadView";
+import { ThreadDetail } from "./ThreadDetail";
 
 interface MainAppProps {
   onLogout: () => void;
@@ -16,12 +16,9 @@ export function MainApp({ onLogout }: MainAppProps) {
   const { state } = useAppContext();
 
   // Views with secondary panels
-  const showSecondary = [
-    "inbox",
-    "messaging",
-    "notes",
-    "contacts",
-  ].includes(state.view);
+  const showSecondary = ["inbox", "messaging", "notes", "contacts"].includes(
+    state.view,
+  );
 
   const renderMainContent = () => {
     if (state.view.startsWith("settings")) {
@@ -30,7 +27,7 @@ export function MainApp({ onLogout }: MainAppProps) {
 
     switch (state.view) {
       case "inbox":
-        return <ThreadView />;
+        return <ThreadDetail />;
       case "messaging":
         return <MessagingView />;
       case "calendar":

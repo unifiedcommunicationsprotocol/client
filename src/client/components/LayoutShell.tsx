@@ -1,4 +1,3 @@
-import { useAppContext } from "../AppContext";
 import { LeftNav } from "./LeftNav";
 
 interface LayoutShellProps {

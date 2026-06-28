@@ -264,7 +264,9 @@
     align-items: center;
     justify-content: center;
     font-family: "Space Grotesk", sans-serif;
-    transition: background 80ms, color 80ms;
+    transition:
+      background 80ms,
+      color 80ms;
     flex-shrink: 0;
   }
 

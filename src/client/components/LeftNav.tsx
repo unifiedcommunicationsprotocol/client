@@ -228,7 +228,10 @@ export function LeftNav() {
                 {/* Settings link */}
                 <div
                   onClick={() => {
-                    dispatch({ type: "setView", payload: "settings/appearance" });
+                    dispatch({
+                      type: "setView",
+                      payload: "settings/appearance",
+                    });
                     setShowUserMenu(false);
                   }}
                   style={{

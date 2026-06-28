@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./index.css";
 import { AppProvider, useAppContext } from "./AppContext";
 import { ComposeModal } from "./components/ComposeModal";
+import { FileUploadModal } from "./components/FileUploadModal";
 import { MainApp } from "./components/MainApp";
 import { Onboarding } from "./components/Onboarding";
 
@@ -62,6 +63,7 @@ function AppContent() {
         <>
           <MainApp onLogout={() => setIsAuthenticated(false)} />
           <ComposeModal />
+          <FileUploadModal />
         </>
       )}
     </div>
