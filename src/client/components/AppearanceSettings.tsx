@@ -89,6 +89,51 @@ export function AppearanceSettings() {
         </div>
       </div>
 
+      {/* AI category badges */}
+      <div
+        style={{
+          backgroundColor: "var(--r-sf)",
+          padding: "20px",
+          borderRadius: "8px",
+          border: "1px solid var(--r-bd)",
+          marginBottom: "24px",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <div>
+          <div
+            style={{
+              fontSize: "14px",
+              fontWeight: "500",
+              marginBottom: "4px",
+              color: "var(--r-t1)",
+            }}
+          >
+            AI category badges
+          </div>
+          <div
+            style={{
+              fontSize: "12px",
+              color: "var(--r-t2)",
+            }}
+          >
+            Show category and source tags in thread list
+          </div>
+        </div>
+        <input
+          type="checkbox"
+          defaultChecked
+          style={{
+            width: "36px",
+            height: "20px",
+            cursor: "pointer",
+            accentColor: "var(--r-acc)",
+          }}
+        />
+      </div>
+
       {/* Thread density */}
       <div
         style={{
