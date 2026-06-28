@@ -1,16 +1,83 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAppContext } from "../AppContext";
 import { THREADS } from "../data";
 
+interface ApiThread {
+  id: string;
+  groupId: string;
+  participants: string[];
+  subject?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export function InboxThreadList() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [threads, setThreads] = useState<ApiThread[]>([]);
+  const [loading, setLoading] = useState(true);
   const { state, dispatch } = useAppContext();
 
-  const unreadCount = THREADS.filter((t) => t.unread > 0).length;
-  const filteredThreads = THREADS.filter((thread) =>
+  // Fetch threads from API
+  useEffect(() => {
+    const fetchThreads = async () => {
+      try {
+        const response = await fetch("/api/thread/list");
+        if (response.ok) {
+          const data = await response.json();
+          setThreads(data.threads || []);
+        } else {
+          // Fallback to fixture data if API fails
+          console.log("Using fixture data (API unavailable)");
+          setThreads(
+            THREADS.map((t) => ({
+              id: t.id,
+              groupId: `group_${t.id}`,
+              participants: [t.from],
+              subject: t.subject,
+              createdAt: new Date().toISOString(),
+              updatedAt: new Date().toISOString(),
+            })),
+          );
+        }
+      } catch (err) {
+        console.error("Failed to fetch threads:", err);
+        // Fallback to fixture data
+        setThreads(
+          THREADS.map((t) => ({
+            id: t.id,
+            groupId: `group_${t.id}`,
+            participants: [t.from],
+            subject: t.subject,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+          })),
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchThreads();
+  }, []);
+
+  // Combine API threads with fixture data for preview/unread info
+  const enrichedThreads = threads.map((apiThread) => {
+    const fixtureThread = THREADS.find((t) => t.id === apiThread.id);
+    return {
+      ...apiThread,
+      from: apiThread.participants[0] || "Unknown",
+      preview: fixtureThread?.preview || "No preview",
+      unread: fixtureThread?.unread || 0,
+    };
+  });
+
+  const unreadCount = enrichedThreads.filter((t) => t.unread > 0).length;
+  const filteredThreads = enrichedThreads.filter((thread) =>
     searchQuery
       ? thread.from.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        thread.subject.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (thread.subject || "")
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase()) ||
         thread.preview.toLowerCase().includes(searchQuery.toLowerCase())
       : true,
   );

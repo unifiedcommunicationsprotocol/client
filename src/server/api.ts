@@ -1,12 +1,29 @@
 import { Hono } from "hono";
 import authRoutes from "./routes/auth";
 import healthRoutes from "./routes/health";
+import { createMessagesRoutes } from "./routes/messages";
+import { createThreadsRoutes } from "./routes/threads";
+import { createMemoryDBClient } from "../lib/db/client";
+import { createMessaging } from "../lib/messaging";
+
+// Initialize database and messaging service
+const db = createMemoryDBClient();
+
+// Stub transport for now (will be upgraded to real WebSocket)
+const stubTransport = {
+  isReady: () => false,
+  send: (_msg: unknown) => {},
+};
+
+const messaging = createMessaging(db, stubTransport as any);
 
 // API gateway - mount all route groups
 const api = new Hono();
 
 api.route("/auth", authRoutes);
 api.route("/health", healthRoutes);
+api.route("/message", createMessagesRoutes(messaging));
+api.route("/thread", createThreadsRoutes(messaging));
 
 // Catch-all for unmatched API routes
 api.all("*", (c) => {

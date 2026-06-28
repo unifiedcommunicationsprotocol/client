@@ -14,16 +14,39 @@ export function ComposeArea() {
     dispatch({ type: "setReplyShowBcc", payload: false });
   };
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (state.replyText.trim()) {
-      // TODO: Send message via API
-      console.log("Sending reply:", {
-        to: state.replyTo,
-        cc: state.replyCc,
-        bcc: state.replyBcc,
-        body: state.replyText,
-      });
-      handleClose();
+      try {
+        // Parse recipients (comma-separated)
+        const parseRecipients = (s: string) =>
+          s
+            .split(",")
+            .map((e) => e.trim())
+            .filter(Boolean);
+
+        const response = await fetch("/api/message/send", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            threadId: state.selectedThreadId || "default",
+            to: parseRecipients(state.replyTo),
+            cc: parseRecipients(state.replyCc),
+            bcc: parseRecipients(state.replyBcc),
+            plaintext: state.replyText,
+          }),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log("Message sent:", data.message);
+          handleClose();
+        } else {
+          const error = await response.json();
+          console.error("Failed to send message:", error);
+        }
+      } catch (err) {
+        console.error("Error sending message:", err);
+      }
     }
   };
 

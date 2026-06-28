@@ -18,6 +18,9 @@
 - [Docs Updated](docs_update_2026_06_27.md) — All critical gaps fixed; Phase 1 checklist expanded with binding strings, timing, caching
 - [Anonymization](anonymization_2026_06_27.md) — Removed user-specific paths; use relative terms like project root, home directory
 
+**Current Work (Phase 7):**
+- [Phase 7 UI Wiring](phase7_ui_wiring.md) — Wire React components to backend + PostgreSQL setup
+
 **Design Handoff Implementation (All 8 Phases Complete):**
 - [Design Handoff Implementation](design_handoff_implementation.md) — 8-phase systematic plan to match UI 1:1 with design
 - [Phase 1 Layout Shell Complete](phase1_complete.md) — 3-column layout, 6-section nav, dark/light mode
