@@ -9,11 +9,12 @@ export function SettingsSidebar({ onLogout }: SettingsSidebarProps) {
 
   const categories = [
     {
-      id: "general",
-      label: "GENERAL",
+      id: "account",
+      label: "ACCOUNT",
       items: [
         { id: "appearance", label: "Appearance" },
         { id: "notifications", label: "Notifications" },
+        { id: "preferences", label: "Preferences" },
       ],
     },
     {
@@ -22,6 +23,8 @@ export function SettingsSidebar({ onLogout }: SettingsSidebarProps) {
       items: [
         { id: "identity", label: "Identity" },
         { id: "keys", label: "Keys" },
+        { id: "read_receipts", label: "Read receipts" },
+        { id: "ext_images", label: "External images" },
       ],
     },
     {
@@ -85,7 +88,9 @@ export function SettingsSidebar({ onLogout }: SettingsSidebarProps) {
             </div>
 
             {/* Category items */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+            <div
+              style={{ display: "flex", flexDirection: "column", gap: "2px" }}
+            >
               {category.items.map((item) => {
                 const isActive = state.settingsSection === item.id;
                 return (
@@ -113,14 +118,16 @@ export function SettingsSidebar({ onLogout }: SettingsSidebarProps) {
                     }}
                     onMouseEnter={(e) => {
                       if (!isActive) {
-                        (e.currentTarget as HTMLButtonElement).style.backgroundColor =
-                          "var(--r-hov)";
+                        (
+                          e.currentTarget as HTMLButtonElement
+                        ).style.backgroundColor = "var(--r-hov)";
                       }
                     }}
                     onMouseLeave={(e) => {
                       if (!isActive) {
-                        (e.currentTarget as HTMLButtonElement).style.backgroundColor =
-                          "transparent";
+                        (
+                          e.currentTarget as HTMLButtonElement
+                        ).style.backgroundColor = "transparent";
                       }
                     }}
                   >

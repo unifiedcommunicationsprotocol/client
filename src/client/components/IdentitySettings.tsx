@@ -120,8 +120,16 @@ export function IdentitySettings() {
             color: "var(--r-t1)",
           }}
         >
-          <div style={{ fontWeight: "600", marginBottom: "8px" }}>Primary Key</div>
-          <div style={{ fontSize: "11px", color: "var(--r-t3)", marginBottom: "8px" }}>
+          <div style={{ fontWeight: "600", marginBottom: "8px" }}>
+            Primary Key
+          </div>
+          <div
+            style={{
+              fontSize: "11px",
+              color: "var(--r-t3)",
+              marginBottom: "8px",
+            }}
+          >
             Created: 2026-01-15
           </div>
           <button

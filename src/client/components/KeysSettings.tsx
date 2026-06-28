@@ -24,7 +24,14 @@ export function KeysSettings() {
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "24px" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: "24px",
+        }}
+      >
         <h1
           style={{
             fontSize: "24px",
@@ -54,7 +61,14 @@ export function KeysSettings() {
       </div>
 
       {/* Keysets */}
-      <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginBottom: "32px" }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "12px",
+          marginBottom: "32px",
+        }}
+      >
         {keysets.map((keyset) => (
           <div
             key={keyset.id}
@@ -62,17 +76,28 @@ export function KeysSettings() {
               backgroundColor: "var(--r-sf)",
               padding: "20px",
               borderRadius: "8px",
-              border: keyset.status === "active" ? "1px solid #6366F1" : "1px solid var(--r-bd)",
+              border:
+                keyset.status === "active"
+                  ? "1px solid #6366F1"
+                  : "1px solid var(--r-bd)",
             }}
           >
             {/* Header with status */}
-            <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "12px" }}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+                marginBottom: "12px",
+              }}
+            >
               <div
                 style={{
                   width: "8px",
                   height: "8px",
                   borderRadius: "50%",
-                  backgroundColor: keyset.status === "active" ? "#22C55E" : "#9CA3AF",
+                  backgroundColor:
+                    keyset.status === "active" ? "#22C55E" : "#9CA3AF",
                 }}
               />
               <h3
@@ -115,9 +140,22 @@ export function KeysSettings() {
             </div>
 
             {/* Details */}
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px", marginBottom: "12px" }}>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: "12px",
+                marginBottom: "12px",
+              }}
+            >
               <div>
-                <div style={{ fontSize: "11px", color: "var(--r-t3)", marginBottom: "4px" }}>
+                <div
+                  style={{
+                    fontSize: "11px",
+                    color: "var(--r-t3)",
+                    marginBottom: "4px",
+                  }}
+                >
                   Created
                 </div>
                 <div style={{ fontSize: "12px", color: "var(--r-t1)" }}>
@@ -125,7 +163,13 @@ export function KeysSettings() {
                 </div>
               </div>
               <div>
-                <div style={{ fontSize: "11px", color: "var(--r-t3)", marginBottom: "4px" }}>
+                <div
+                  style={{
+                    fontSize: "11px",
+                    color: "var(--r-t3)",
+                    marginBottom: "4px",
+                  }}
+                >
                   Rotation date
                 </div>
                 <div style={{ fontSize: "12px", color: "var(--r-t1)" }}>

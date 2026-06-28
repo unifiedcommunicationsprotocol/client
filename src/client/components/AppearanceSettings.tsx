@@ -129,7 +129,8 @@ export function AppearanceSettings() {
               padding: "8px 16px",
               borderRadius: "6px",
               border: state.variant === "A" ? "none" : "1px solid var(--r-bd)",
-              backgroundColor: state.variant === "A" ? "var(--r-acc)" : "var(--r-bg)",
+              backgroundColor:
+                state.variant === "A" ? "var(--r-acc)" : "var(--r-bg)",
               color: state.variant === "A" ? "white" : "var(--r-t1)",
               cursor: "pointer",
               fontSize: "13px",
@@ -149,7 +150,8 @@ export function AppearanceSettings() {
               padding: "8px 16px",
               borderRadius: "6px",
               border: state.variant === "B" ? "none" : "1px solid var(--r-bd)",
-              backgroundColor: state.variant === "B" ? "var(--r-acc)" : "var(--r-bg)",
+              backgroundColor:
+                state.variant === "B" ? "var(--r-acc)" : "var(--r-bg)",
               color: state.variant === "B" ? "white" : "var(--r-t1)",
               cursor: "pointer",
               fontSize: "13px",

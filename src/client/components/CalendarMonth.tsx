@@ -20,13 +20,14 @@ export function CalendarMonth() {
     days.push(date);
   }
 
-  const weeks = Array.from({ length: 6 }, (_, i) => days.slice(i * 7, (i + 1) * 7));
+  const weeks = Array.from({ length: 6 }, (_, i) =>
+    days.slice(i * 7, (i + 1) * 7),
+  );
   const dayLabels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   const getEventsForDate = (date: Date) => {
     return CAL_EVENTS.filter(
-      (e) =>
-        new Date(e.date).toDateString() === date.toDateString(),
+      (e) => new Date(e.date).toDateString() === date.toDateString(),
     );
   };
 
@@ -107,7 +108,9 @@ export function CalendarMonth() {
                   }}
                   style={{
                     borderRight: dayIdx < 6 ? "1px solid var(--r-bd)" : "none",
-                    backgroundColor: inCurrentMonth ? "var(--r-bg)" : "var(--r-sf)",
+                    backgroundColor: inCurrentMonth
+                      ? "var(--r-bg)"
+                      : "var(--r-sf)",
                     padding: "8px",
                     cursor: "pointer",
                     border: "none",
@@ -121,7 +124,11 @@ export function CalendarMonth() {
                     style={{
                       fontSize: "13px",
                       fontWeight: "500",
-                      color: today_check ? "var(--r-acc)" : inCurrentMonth ? "var(--r-t1)" : "var(--r-t3)",
+                      color: today_check
+                        ? "var(--r-acc)"
+                        : inCurrentMonth
+                          ? "var(--r-t1)"
+                          : "var(--r-t3)",
                       marginBottom: "4px",
                       width: "24px",
                       height: "24px",
@@ -129,7 +136,9 @@ export function CalendarMonth() {
                       alignItems: "center",
                       justifyContent: "center",
                       borderRadius: "50%",
-                      backgroundColor: today_check ? "var(--r-accd)" : "transparent",
+                      backgroundColor: today_check
+                        ? "var(--r-accd)"
+                        : "transparent",
                     }}
                   >
                     {date.getDate()}

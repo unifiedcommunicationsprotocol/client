@@ -7,7 +7,9 @@ export function CalendarWeek() {
   // Get week starting Monday
   const today = new Date(2026, 5, 28); // 2026-06-28 (example, replace with actual)
   const monday = new Date(today);
-  monday.setDate(today.getDate() - today.getDay() + 1 + state.calWeekOffset * 7);
+  monday.setDate(
+    today.getDate() - today.getDay() + 1 + state.calWeekOffset * 7,
+  );
 
   const days = Array.from({ length: 7 }, (_, i) => {
     const date = new Date(monday);
@@ -31,7 +33,7 @@ export function CalendarWeek() {
     return eventDate >= firstDay && eventDate <= lastDay;
   });
 
-  const getEventPosition = (event: typeof CAL_EVENTS[0]) => {
+  const getEventPosition = (event: (typeof CAL_EVENTS)[0]) => {
     const eventDate = new Date(event.date);
     const eventDateStr = eventDate.toDateString();
     const dayIdx = days.findIndex((d) => d.toDateString() === eventDateStr);

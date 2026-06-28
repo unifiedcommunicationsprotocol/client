@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { setBlockType, toggleMark, wrapIn } from "prosemirror-commands";
 import { EditorView } from "prosemirror-view";
-import { toggleMark, wrapIn, setBlockType } from "prosemirror-commands";
+import { useEffect, useRef, useState } from "react";
+import { prosemirrorSetup } from "../../lib/prosemirror-setup";
 import { useAppContext } from "../AppContext";
 import { NOTES } from "../data";
-import { prosemirrorSetup } from "../../lib/prosemirror-setup";
 
 interface ToolbarButton {
   icon: string;

@@ -21,7 +21,8 @@ export function AgentsView() {
     {
       id: "1",
       name: "Email Classifier",
-      description: "Automatically categorizes incoming emails by topic and priority",
+      description:
+        "Automatically categorizes incoming emails by topic and priority",
       status: "active",
       lastRun: "2 minutes ago",
       runCount: 1240,
@@ -45,7 +46,8 @@ export function AgentsView() {
     {
       id: "4",
       name: "Contact Enrichment",
-      description: "Automatically enriches contact profiles with public information",
+      description:
+        "Automatically enriches contact profiles with public information",
       status: "active",
       lastRun: "30 minutes ago",
       runCount: 567,
@@ -228,7 +230,9 @@ export function AgentsView() {
                       height: "18px",
                       borderRadius: "9px",
                       backgroundColor:
-                        agent.status === "active" ? "var(--r-acc)" : "var(--r-bd)",
+                        agent.status === "active"
+                          ? "var(--r-acc)"
+                          : "var(--r-bd)",
                       padding: "2px",
                       cursor: "pointer",
                       transition: "background-color 150ms",
@@ -240,8 +244,7 @@ export function AgentsView() {
                         height: "14px",
                         borderRadius: "50%",
                         backgroundColor: "white",
-                        marginLeft:
-                          agent.status === "active" ? "14px" : "0",
+                        marginLeft: agent.status === "active" ? "14px" : "0",
                         transition: "margin 150ms",
                       }}
                     />
@@ -270,9 +273,7 @@ export function AgentsView() {
                     marginTop: "auto",
                   }}
                 >
-                  {agent.lastRun && (
-                    <div>Last run: {agent.lastRun}</div>
-                  )}
+                  {agent.lastRun && <div>Last run: {agent.lastRun}</div>}
                   {agent.runCount && (
                     <div>{agent.runCount.toLocaleString()} runs</div>
                   )}
@@ -309,7 +310,9 @@ export function AgentsView() {
                 style={{
                   padding: "12px 16px",
                   borderBottom:
-                    idx < activityLog.length - 1 ? "1px solid var(--r-bd)" : "none",
+                    idx < activityLog.length - 1
+                      ? "1px solid var(--r-bd)"
+                      : "none",
                   display: "flex",
                   alignItems: "center",
                   gap: "12px",

@@ -37,6 +37,7 @@ export interface BridgeAccount {
   name: string;
   provider: string;
   email: string;
+  lastSync?: string;
 }
 
 export interface Keyset {

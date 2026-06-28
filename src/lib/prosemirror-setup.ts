@@ -1,11 +1,11 @@
-import { EditorState } from "prosemirror-state";
 import { baseKeymap } from "prosemirror-commands";
-import { keymap } from "prosemirror-keymap";
-import { history, undo, redo } from "prosemirror-history";
+import { history, redo, undo } from "prosemirror-history";
 import { inputRules } from "prosemirror-inputrules";
-import { Schema, Node as PmNode } from "prosemirror-model";
+import { keymap } from "prosemirror-keymap";
+import { type Node as PmNode, Schema } from "prosemirror-model";
 import { schema as basicSchema } from "prosemirror-schema-basic";
 import { addListNodes } from "prosemirror-schema-list";
+import { EditorState } from "prosemirror-state";
 
 // Extended schema with list support
 const schema = new Schema({
@@ -46,7 +46,10 @@ const docToText = (doc: PmNode): string => {
   doc.forEach((node) => {
     if (node.type.name === "paragraph") {
       text.push(node.textContent);
-    } else if (node.type.name === "bullet_list" || node.type.name === "ordered_list") {
+    } else if (
+      node.type.name === "bullet_list" ||
+      node.type.name === "ordered_list"
+    ) {
       node.forEach((item) => {
         text.push(`- ${item.textContent}`);
       });

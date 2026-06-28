@@ -1,6 +1,6 @@
 import { useAppContext } from "../AppContext";
-import { CalendarWeek } from "./CalendarWeek";
 import { CalendarMonth } from "./CalendarMonth";
+import { CalendarWeek } from "./CalendarWeek";
 
 export function CalendarView() {
   const { state, dispatch } = useAppContext();
@@ -8,7 +8,9 @@ export function CalendarView() {
   // Get week date range for header
   const today = new Date(2026, 5, 28); // 2026-06-28
   const monday = new Date(today);
-  monday.setDate(today.getDate() - today.getDay() + 1 + state.calWeekOffset * 7);
+  monday.setDate(
+    today.getDate() - today.getDay() + 1 + state.calWeekOffset * 7,
+  );
 
   const sunday = new Date(monday);
   sunday.setDate(monday.getDate() + 6);
@@ -25,10 +27,11 @@ export function CalendarView() {
     if (state.calViewType === "week") {
       return `${formatDate(monday)} - ${formatDate(sunday)}`;
     } else {
-      const monthName = new Date(2026, 5 + state.calWeekOffset, 1).toLocaleDateString(
-        "en-US",
-        { month: "long", year: "numeric" },
-      );
+      const monthName = new Date(
+        2026,
+        5 + state.calWeekOffset,
+        1,
+      ).toLocaleDateString("en-US", { month: "long", year: "numeric" });
       return monthName;
     }
   };
@@ -70,7 +73,9 @@ export function CalendarView() {
           >
             <button
               type="button"
-              onClick={() => dispatch({ type: "setCalViewType", payload: "week" })}
+              onClick={() =>
+                dispatch({ type: "setCalViewType", payload: "week" })
+              }
               style={{
                 padding: "6px 12px",
                 border: "none",
@@ -87,7 +92,9 @@ export function CalendarView() {
             </button>
             <button
               type="button"
-              onClick={() => dispatch({ type: "setCalViewType", payload: "month" })}
+              onClick={() =>
+                dispatch({ type: "setCalViewType", payload: "month" })
+              }
               style={{
                 padding: "6px 12px",
                 border: "none",

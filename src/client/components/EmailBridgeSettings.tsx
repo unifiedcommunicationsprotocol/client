@@ -39,7 +39,11 @@ export function EmailBridgeSettings() {
                 marginBottom: "12px",
               }}
             >
-              {provider === "Gmail" ? "📧" : provider === "Fastmail" ? "⚡" : "🔧"}
+              {provider === "Gmail"
+                ? "📧"
+                : provider === "Fastmail"
+                  ? "⚡"
+                  : "🔧"}
             </div>
             <h3
               style={{

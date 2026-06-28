@@ -1,8 +1,14 @@
 import { useAppContext } from "../AppContext";
 import { AppearanceSettings } from "./AppearanceSettings";
+import { CalendarBridgeSettings } from "./CalendarBridgeSettings";
+import { ContactsBridgeSettings } from "./ContactsBridgeSettings";
+import { EmailBridgeSettings } from "./EmailBridgeSettings";
+import { ExternalImagesSettings } from "./ExternalImagesSettings";
 import { IdentitySettings } from "./IdentitySettings";
 import { KeysSettings } from "./KeysSettings";
-import { EmailBridgeSettings } from "./EmailBridgeSettings";
+import { NotificationsSettings } from "./NotificationsSettings";
+import { PreferencesSettings } from "./PreferencesSettings";
+import { ReadReceiptsSettings } from "./ReadReceiptsSettings";
 import { SettingsSidebar } from "./SettingsSidebar";
 
 interface SettingsViewProps {
@@ -18,12 +24,24 @@ export function SettingsView({ onLogout }: SettingsViewProps) {
     switch (section) {
       case "appearance":
         return <AppearanceSettings />;
+      case "notifications":
+        return <NotificationsSettings />;
+      case "preferences":
+        return <PreferencesSettings />;
       case "identity":
         return <IdentitySettings />;
       case "keys":
         return <KeysSettings />;
+      case "read_receipts":
+        return <ReadReceiptsSettings />;
+      case "ext_images":
+        return <ExternalImagesSettings />;
       case "email_bridge":
         return <EmailBridgeSettings />;
+      case "calendar_bridge":
+        return <CalendarBridgeSettings />;
+      case "contacts_bridge":
+        return <ContactsBridgeSettings />;
       default:
         return <AppearanceSettings />;
     }
