@@ -25,3 +25,4 @@
 
 **Configuration & Constraints:**
 - [Biome Immutable](biome_immutable.md) — Do NOT modify biome.jsonc; all changes require explicit user approval
+- [SVG Icon Rendering Issue](svg_icon_issue.md) — Navigation icons display as dots (unresolved); verified against design
