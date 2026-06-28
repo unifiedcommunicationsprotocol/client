@@ -354,7 +354,113 @@ Current CSS has both light & dark. Verify alignment:
 - [ ] Wire navigation buttons to dispatch actions
 - [ ] Ensure layout shell renders correctly
 
+## Session 1 Completion (2026-06-28)
+
+**Phase 1: Layout Shell & Navigation — COMPLETE ✅**
+- Commit: `0176baa`
+- All code in place, TypeScript strict mode passes
+- Ready for Phase 2 to build within this layout
+
+**Key Implementation Details for Resuming:**
+
+### LayoutShell Component (src/client/components/LayoutShell.tsx)
+- Takes props: `showSecondary`, `secondaryContent`, `mainContent`
+- Renders: nav (52px) | secondary (280px if shown) | main (flex:1)
+- Secondary hidden for: Calendar, Agents, Settings, Identity views
+- Secondary shown for: Inbox, Messaging, Notes, Contacts
+
+### LeftNav Component (src/client/components/LeftNav.tsx)
+- Fixed 52px width, dark background (var(--r-sf))
+- Nav items: Inbox, Messages, Calendar, Contacts, Notes, Agents (40×40px buttons)
+- Settings (⚙️) at bottom, User avatar (Y, #4F46E5) at very bottom
+- Active state: var(--r-accd) bg + var(--r-acc) text
+- User dropdown: theme toggle, settings link
+- All dispatch actions working: setView, toggleDarkMode
+
+### MainApp Refactored (src/client/components/MainApp.tsx)
+- Delegates all layout to LayoutShell
+- Determines showSecondary based on view type
+- Renders main content via renderMainContent()
+- Simple, clean, 60 lines
+
+### AppContext State (verified)
+- All required fields exist for Inbox (selectedThread, replyOpen, etc.)
+- Action types: selectThread (string|null), setView (string), etc.
+- View values: 'inbox' | 'messaging' | 'calendar' | 'notes' | 'contacts' | 'agents' | 'settings/*'
+
+### Tailwind CSS (src/client/index.css)
+- All design tokens imported (colors, animations, ProseMirror styles)
+- CSS variables for light/dark mode
+- @layer: theme, base, utilities
+- 288 lines, production ready
+
 ---
 
-*Created: 2026-06-28*
-*Ref: docs/DESIGN_HANDOFF.md, ~/Downloads/design_handoff_relay_client/*
+## Resuming in Next Session
+
+**Start with Phase 2: Inbox View**
+
+### Phase 2 Checklist (5 components needed)
+
+1. **InboxThreadList** (Secondary panel)
+   - Already started! See notes below
+   - Shows thread rows with compact/spacious variants
+   - Header: "Inbox" + unread count + variant toggle + compose button
+   - Thread rows: avatar, from, subject, preview, time, unread dot
+   - Thread metadata: category pill, bridge badge, agent badge (spacious only)
+   - Compact variant: 28px avatar, 1-line preview, no badges
+   - Spacious variant: 36px avatar, 2-line preview, all badges visible
+   - Actions: Click thread → selectThread(threadId), toggle variant → setVariant
+
+2. **ThreadDetail** (Main content area)
+   - Header: subject (16px 700), from (monospace 12px --r-t3)
+   - Metadata: category pill, Bridge badge, Agent badge
+   - Messages: vertical stack, each message in card (--r-sf bg, 1px --r-bd border)
+     - Avatar (32px) + sender name (13px 600) + handle (11px mono) + time
+     - E2E lock icon (green #22C55E) or open lock (amber #D97706 for bridged)
+     - Body (14px, line-height 1.7)
+     - Attachments: pill chips (file icon, name, size)
+   - Reply/Forward toolbar at bottom (Reply button, Forward button)
+
+3. **ComposeArea** (Reply/Forward)
+   - Container: 1px --r-bd border, 8px radius, --r-sf2 bg
+   - Header row: mode label + To field (forward only) + CC/BCC toggles + close ✕
+   - CC/BCC rows (conditional): label + input
+   - Attachment preview chip: filename + size + remove ✕
+   - Textarea: auto-expanding, min 80px, transparent, 12px padding
+   - Footer: paperclip + send button (6px 18px padding, accent bg)
+
+4. **ComposeModal** (New message)
+   - Centered overlay, 560px width
+   - To/CC/BCC/Subject fields
+   - Full textarea body
+   - Send button
+
+5. **FileUploadModal** (Attachment picker)
+   - Centered overlay, 400px width
+   - Drag & drop zone (dashed border)
+   - File input trigger
+   - Selected file display (name + size)
+   - Confirm button
+
+### Important State for Phase 2
+
+- `selectedThread`: string (thread ID) or null
+- `replyOpen`: boolean
+- `replyIsForward`: boolean
+- `replyText`: string
+- `replyShowCc`, `replyShowBcc`: boolean
+- `replyTo`, `replyCc`, `replyBcc`: string
+- `customThreadMsgs`: Record<number, Message[]>
+- `showFileUpload`: boolean
+- `fileUploadTarget`: 'email' | null
+
+### Design Reference
+
+See **docs/DESIGN_HANDOFF.md lines 54-106** for Inbox view specification.
+
+---
+
+*Session 1 Completed: 2026-06-28*
+*Next: Start Phase 2 (Inbox View) in fresh session*
+*Ref: docs/DESIGN_HANDOFF.md (649 lines, comprehensive spec)*
