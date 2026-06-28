@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import authRoutes from "./routes/auth";
+import { createAuthRoutes } from "./routes/auth";
 import healthRoutes from "./routes/health";
 import { createMessagesRoutes } from "./routes/messages";
 import { createThreadsRoutes } from "./routes/threads";
@@ -53,7 +53,7 @@ messaging.events.on((event) => {
 // API gateway - mount all route groups
 const api = new Hono();
 
-api.route("/auth", authRoutes);
+api.route("/auth", createAuthRoutes(db));
 api.route("/health", healthRoutes);
 api.route("/message", createMessagesRoutes(messaging));
 api.route("/thread", createThreadsRoutes(messaging));
