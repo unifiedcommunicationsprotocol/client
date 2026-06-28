@@ -10,10 +10,10 @@ metadata:
 ## Latest Commits
 
 ```
-[TBD] Phase 3 Complete: Messaging View Implementation (ChannelList, MessageThread, ComposeBar)
+[TBD] Phase 4 Complete: Notes View with ProseMirror (rich editor, toolbar, autosave)
+c3e2da8 Phase 3 Complete: Messaging View Implementation
 f2d74a8 Docs & Memory Update: Phase 2 Completion
 3d7d877 Phase 2 Complete: Inbox View Implementation
-849e282 Session 1 Wrap: Phase 1 Complete, Memory Updated for Phase 2-8 Resumption
 ```
 
 ## Current Implementation Status
@@ -41,19 +41,26 @@ f2d74a8 Docs & Memory Update: Phase 2 Completion
 - Identity resolution (HTTP fallback)
 - Commit: `69c877d`
 
-### ✅ Complete (Phase 3)
+### ✅ Complete (Phases 3 & 4)
 
 **Phase 3: Messaging View** — COMPLETE
 - ChannelList (secondary panel, 185 lines) ✅
 - MessageThread (main content, 257 lines) ✅
 - ComposeBar (bottom compose widget, 120 lines) ✅
-- Sidebar.tsx routing updated ✅
-- MainApp.tsx routing updated ✅
-- TypeScript strict: PASS
-- Biome linting: PASS
-- See [[phase3_complete.md]] for implementation details
+- Commit: `c3e2da8`
 
-### ⏳ Planned (Phases 4-8)
+**Phase 4: Notes View with ProseMirror** — COMPLETE
+- NoteEditor upgraded: ProseMirror rich editor ✅
+- Toolbar: 8 formatting buttons (B/I/`/H1/H2/❝/•) ✅
+- prosemirror-setup.ts utility module ✅
+- Auto-save on every keystroke ✅
+- Undo/redo via Ctrl+Z/Ctrl+Shift+Z ✅
+- CSS: 40+ lines for editor styling ✅
+- Dependencies: 8 ProseMirror packages added ✅
+- TypeScript strict: PASS
+- See [[phase4_complete.md]] for implementation details
+
+### ⏳ Planned (Phases 5-8)
 
 - Phase 4: Notes (ProseMirror rich editor)
 - Phase 5: Calendar (week/month, event CRUD)
